@@ -1,0 +1,27 @@
+{
+    "remotePath": "./ist.never-ends.net/",
+    "host": "ftp.never-ends.net",
+    "username": "fekketcantenel@never-ends.net",
+    "password": "hI30qm$C%HpC",
+    "port": 21,
+    "secure": false,
+    "protocol": "ftp",
+    "uploadOnSave": false,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": null,
+    "passphrase": null,
+    "agent": null,
+    "allow": [],
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.DS_Store",
+        "\\.well-known",
+        ".directory"
+    ],
+    "generatedFiles": {
+        "extensionsToInclude": [""],
+        "path": ""
+    }
+}

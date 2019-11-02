@@ -1,0 +1,128 @@
+@font-face {
+    font-family: "liberation";
+    src: url("lib/LiberationSans-Regular-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #1f1f1f;
+}
+
+#task {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-family: liberation;
+    font-size: 2em;
+}
+
+#task a {
+    color: #de4c4a;
+}
+
+.taskNotes {
+    border: 1px solid white;
+    width: 50%;
+    margin: auto;
+    margin-top: 1.5em !important;
+    text-align: justify;
+    padding: 0.5em;
+    font-size: 0.75em;
+}
+
+.tingle-modal-box__content {
+    display: none;
+}
+
+.mainTask:nth-child(3) {
+    margin-top: 1em;
+    font-size: 0.75em;
+}
+
+button {
+    background-color: #de4c4a !important;
+    border-radius: 3px !important;
+    border: 2px solid #de4c4a;
+    color: #fff;
+    padding: 0.55em;
+    font-weight: bold;
+    font-size: 0.5em;
+    cursor: pointer;
+    margin: 15px;
+}
+button b {
+    font-size: 3em;
+}
+
+.badge {
+    position: absolute;
+    font-size: 0.5em;
+    background: #1f1f1f;
+    color: #de4c4a;
+    width: 1.5em;
+    height: 1.5em;
+    text-align: center;
+    line-height: 1.4em;
+    border-radius: 50%;
+    margin-left: -1.5em;
+}
+.badge[data-badge]:after {
+    content: attr(data-badge);
+    position: absolute;
+    font-size: 1em;
+    background: #1f1f1f;
+    color: #de4c4a;
+    width: 1.5em;
+    height: 1.5em;
+    text-align: center;
+    line-height: 1.4em;
+    border-radius: 50%;
+    margin-left: 0.25em;
+}
+.grey {
+    filter: brightness(50%);
+}
+
+.priorityButton {
+    font-size: 0.5em;
+}
+
+.roundbutton {
+    font-size: 0.75em;
+    background: #de4c4a;
+    text-align: center;
+    line-height: 1.4em;
+    border-radius: 50%;
+    text-decoration: none;
+    padding: 0.15em 0.3em;
+    margin-left: 0.25em;
+}
+
+.tingle-modal-box {
+    width: 64em !important;
+}
+
+.tingle-modal-box__footer {
+    background-color: #353535 !important;
+}
+
+.tingle-modal-box__footer > button {
+    width: 14em;
+    margin-top: 1em;
+}
+
+@media only screen and (max-width: 600px) {
+    .tingle-modal-box__footer > button {
+        width: 5em;
+        margin-top: 0.25em !important;
+    }
+    .tingle-modal-box {
+        width: 100% !important;
+        text-align: center;
+    }
+
+    .taskNotes {
+        width: 90% !important;
+    }
+}
