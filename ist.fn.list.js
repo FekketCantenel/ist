@@ -122,7 +122,14 @@ function getSuggestTasksHTML(allTasks, dueTasks) {
             suggestTaskButton.addClass("grey");
         }
 
-        suggestTasks.append(suggestTaskButton).append(badgeHTML);
+        let listURL =
+            "<a class='suggestLink' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23" +
+            list.special.content +
+            "'>&#128279;</a>";
+
+        suggestTaskButton.append(badgeHTML).append(listURL);
+
+        suggestTasks.append(suggestTaskButton);
     });
 
     return suggestTasks;
