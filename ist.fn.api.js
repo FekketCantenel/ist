@@ -1,8 +1,7 @@
 export { getAPI, uuidv4, postAPI, asyncCall, postNewTaskTime };
 
 let todoistAPI = "https://todoist.com/api/v8/sync",
-    todoistToken = "0d1383928eb454f4113b8fe921292dbc8d32ad4a",
-    randUUID = "";
+    todoistToken = "0d1383928eb454f4113b8fe921292dbc8d32ad4a";
 
 async function getAPI(path) {
     return await $.ajax({
