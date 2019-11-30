@@ -5,12 +5,15 @@ export {
     getTaskNotesHTML
 };
 
-function getHighestPrioritySelfCare(dueTasks) {
-    let highestPrioritySelfCare = {};
+function getHighestPrioritySelfCare(dueTasks, projects) {
+    let highestPrioritySelfCare = {},
+        project_id = _.findWhere(projects, {
+            order: 1
+        }).id;
     $.each([4, 3, 2, 1], function(i, priority) {
         highestPrioritySelfCare = _.findWhere(dueTasks, {
             priority,
-            project_id: 2201916342 // always self-care
+            project_id
         });
 
         return highestPrioritySelfCare == undefined;

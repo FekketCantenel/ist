@@ -14,16 +14,24 @@ import { setEvents } from "./ist.fn.event.js";
 $(document).ready(function() {
     async function asyncCall() {
         let todoistRawTasks = await getAPI("tasks");
+        let projects = await getAPI("projects");
 
         //let todoistRawNotes = await getAPI("comments");
 
         let allTasks = getAllTasks(todoistRawTasks),
             dueTasks = getDueTasks(allTasks);
 
-        let highestPrioritySelfCare = getHighestPrioritySelfCare(dueTasks);
+        let highestPrioritySelfCare = getHighestPrioritySelfCare(
+            dueTasks,
+            projects
+        );
 
         if (highestPrioritySelfCare == undefined) {
-            let suggestTasks = getSuggestTasksHTML(allTasks, dueTasks);
+            let suggestTasks = getSuggestTasksHTML(
+                allTasks,
+                dueTasks,
+                projects
+            );
             $("#task").append(suggestTasks);
         } else {
             let mainTask = getTaskHTML(highestPrioritySelfCare);

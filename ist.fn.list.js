@@ -1,19 +1,21 @@
 import { postNewTaskTime } from "./ist.fn.api.js";
 export { getAllTasks, getDueTasks, getSuggestTasksHTML };
 
-function getAllTasks(todoistRawTasks, todoistRawNotes) {
+function getAllTasks(todoistRawTasks) {
     $.each(todoistRawTasks, function(i, task) {
         if (task.due == null) {
             return true;
         }
+
         task.due.all_day =
             task.due.date != undefined && task.due.date.indexOf("T") == -1
                 ? new Date(task.due.date).getTime()
                 : 0;
-        task.due.moment = moment(task.due.date).local();
+        task.due.moment = moment(task.due.datetime || task.due.date).local();
 
         // check if task is overdue
         if (task.due.moment.isBefore(moment(), "day")) {
+            // MOVE THIS ALL TO EXTERNAL FUNCTION
             $("#task").append("rescheduling overdue tasks, please wait...");
 
             let taskNewMoment = moment(),
@@ -47,10 +49,13 @@ function getAllTasks(todoistRawTasks, todoistRawNotes) {
         }
 
         // add notes
-        task.notes = _.filter(todoistRawNotes, function(note) {
-            return note.item_id == task.id;
-        });
+        // task.notes = _.filter(todoistRawNotes, function(note) {
+        //     return note.item_id == task.id;
+        // });
+        /// TEMPORARY:
+        task.notes = "";
 
+        ////////// REMOVE THIS
         // add special code values, remove them from notes
         let codeNote = _.find(task.notes, function(note) {
             return note.content.charAt(0) == "~";
@@ -58,6 +63,7 @@ function getAllTasks(todoistRawTasks, todoistRawNotes) {
 
         task.special = {};
         if (codeNote !== undefined) {
+            ////////////// UPDATE THIS
             task.notes = _.reject(task.notes, function(note) {
                 return note.id == codeNote.id;
             });
