@@ -13,28 +13,18 @@ import { setEvents } from "./ist.fn.event.js";
 
 $(document).ready(function() {
     async function asyncCall() {
-        console.time("getting tasks");
-        let todoistRawTasks = await getAPI("items");
-        console.timeEnd("getting tasks");
+        let todoistRawTasks = await getAPI("tasks");
 
-        console.time("getting notes");
-        let todoistRawNotes = await getAPI("notes");
-        console.timeEnd("getting notes");
+        //let todoistRawNotes = await getAPI("comments");
 
-        console.time("creating lists of tasks");
-        let allTasks = getAllTasks(todoistRawTasks, todoistRawNotes),
+        let allTasks = getAllTasks(todoistRawTasks),
             dueTasks = getDueTasks(allTasks);
-        console.timeEnd("creating lists of tasks");
 
-        console.time("picking highest-priority task");
         let highestPrioritySelfCare = getHighestPrioritySelfCare(dueTasks);
-        console.timeEnd("picking highest-priority task");
 
         if (highestPrioritySelfCare == undefined) {
-            console.time("generating suggested tasks");
             let suggestTasks = getSuggestTasksHTML(allTasks, dueTasks);
             $("#task").append(suggestTasks);
-            console.timeEnd("generating suggested tasks");
         } else {
             let mainTask = getTaskHTML(highestPrioritySelfCare);
             $("#task").append(mainTask);

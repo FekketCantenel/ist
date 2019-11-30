@@ -4,7 +4,7 @@ let todoistAPI = "https://todoist.com/api/v8/sync",
     todoistToken = "0d1383928eb454f4113b8fe921292dbc8d32ad4a",
     randUUID = "";
 
-async function getAPI(resourceType) {
+async function getAPI2(resourceType) {
     let resourceTypeArray = '["' + resourceType + '"]';
 
     return (await $.getJSON(todoistAPI, {
@@ -12,6 +12,22 @@ async function getAPI(resourceType) {
         sync_token: "*",
         resource_types: resourceTypeArray
     }))[resourceType];
+}
+
+async function getAPI(path) {
+    return await $.ajax({
+        type: "GET",
+        url: "https://api.todoist.com/rest/v1/" + path,
+        dataType: "json",
+        beforeSend: function(request) {
+            if (todoistToken) {
+                request.setRequestHeader(
+                    "Authorization",
+                    "Bearer " + todoistToken
+                );
+            }
+        }
+    });
 }
 
 function uuidv4() {
