@@ -8,10 +8,7 @@ function getAllTasks(todoistRawTasks) {
         }
 
         /// UPDATE THIS TO CHECK FOR task.due.datetime
-        task.due.all_day =
-            task.due.date != undefined && task.due.date.indexOf("T") == -1
-                ? new Date(task.due.date).getTime()
-                : 0;
+        task.due.all_day = task.due.datetime ? 0 : 1;
         task.due.moment = moment(task.due.datetime || task.due.date).local();
 
         // check if task is overdue
@@ -21,7 +18,7 @@ function getAllTasks(todoistRawTasks) {
 
             let taskNewMoment = moment(),
                 taskNewDateString = "";
-            if (task.due.all_day != 0) {
+            if (task.due.all_day === 1) {
                 taskNewDateString = taskNewMoment.format("YYYY-MM-DD");
                 console.log("all-day - " + taskNewDateString); ////
             } else {

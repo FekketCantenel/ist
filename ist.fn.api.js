@@ -54,6 +54,7 @@ function postNewTaskTime(taskID, taskString, taskNewDate) {
                     id: taskID,
                     due: {
                         date: taskNewDate,
+                        datetime: taskNewDate,
                         string: taskString
                     }
                 }

@@ -30,7 +30,7 @@ function setEvents(dueTasks, fullTasks) {
         });
 
         let deferArray =
-            task.due.all_day == 0
+            task.due.all_day === 0
                 ? [
                       ["+5 minutes", 300000],
                       ["+15 minutes", 900000],
@@ -65,15 +65,23 @@ function setEvents(dueTasks, fullTasks) {
                 deferAmount[0],
                 "tingle-btn tingle-btn--primary",
                 function() {
+                    console.log(deferAmount[1]);
                     let newTime = moment().add(deferAmount[1], "ms"),
                         taskNewDate = "";
 
-                    if (task.due.all_day != 0) {
+                    if (task.due.all_day === 1) {
                         taskNewDate = newTime.format("YYYY-MM-DD");
                     } else {
                         taskNewDate = newTime.format("YYYY-MM-DDTHH:mm:ss");
                     }
-                    postNewTaskTime(task.id, task.due.string, taskNewDate);
+                    console.log(task.due.all_day);
+                    console.log(taskNewDate);
+                    postNewTaskTime(
+                        task.id,
+                        task.due.string,
+                        taskNewDate,
+                        task.due.all_day
+                    );
 
                     modal.close();
                 }
