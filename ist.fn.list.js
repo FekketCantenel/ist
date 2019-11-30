@@ -94,48 +94,32 @@ function getDueTasks(allTasks) {
     return dueTasks;
 }
 
-function getSuggestTasksHTML(allTasks, dueTasks) {
+function getSuggestTasksHTML(allTasks, dueTasks, projects) {
     let suggestTasks = $("<div></div>").addClass("suggestTasks"),
-        masterTasks = _.filter(allTasks, function(task) {
-            return task.special && task.special.type == "M";
-        });
+        countedTasks = _.countBy(dueTasks, "project_id");
 
-    masterTasks.sort(function(a, b) {
-        let c = new Date(a.priority),
-            d = new Date(b.priority);
-        return d - c;
-    });
+    $.each(projects, function(i, project) {
+        project.count = countedTasks[project.id] || 0;
 
-    $.each(masterTasks, function(i, list) {
-        let subTaskCount = dueTasks.reduce(function(n, task) {
-                return n + (task.project_id === list.special.list_id);
-            }, 0),
-            badgeHTML = "";
-
-        if (subTaskCount > 0) {
-            badgeHTML = $("<a>" + subTaskCount + "</a>")
+        if (project.count > 0) {
+            let badgeHTML = $("<a>" + project.count + "</a>")
                 .addClass("badge")
-                .data("badge", subTaskCount);
+                .data("badge", project.count);
+
+            let suggestTaskButton = $("<button></button>")
+                .addClass("suggest")
+                .attr("taskID", project.id)
+                .html(project.name);
+
+            // let listURL =
+            //     "<a class='suggestLink' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23" +
+            //     list.special.content +
+            //     "'>&#128279;</a>";
+
+            suggestTaskButton.append(badgeHTML); // .append(listURL)
+
+            suggestTasks.append(suggestTaskButton);
         }
-        let suggestTaskButton = $("<button></button>")
-            .addClass("suggest")
-            .attr("taskID", list.id)
-            .html(
-                "&#x1F" + list.special.emoji + "<br />" + list.special.content
-            );
-
-        if (list.due.moment.isAfter(moment(), "day")) {
-            suggestTaskButton.addClass("grey");
-        }
-
-        let listURL =
-            "<a class='suggestLink' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23" +
-            list.special.content +
-            "'>&#128279;</a>";
-
-        suggestTaskButton.append(badgeHTML).append(listURL);
-
-        suggestTasks.append(suggestTaskButton);
     });
 
     return suggestTasks;
