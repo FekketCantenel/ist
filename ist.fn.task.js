@@ -1,24 +1,16 @@
-export {
-    getHighestPrioritySelfCare,
-    getSubTask,
-    getTaskHTML,
-    getTaskNotesHTML
-};
+export { getHighestPriorityTask, getSubTask, getTaskHTML, getTaskNotesHTML };
 
-function getHighestPrioritySelfCare(dueTasks, projects) {
-    let highestPrioritySelfCare = {},
-        project_id = _.findWhere(projects, {
-            order: 1
-        }).id;
+function getHighestPriorityTask(dueTasks, project) {
+    let task = {};
     $.each([4, 3, 2, 1], function(i, priority) {
-        highestPrioritySelfCare = _.findWhere(dueTasks, {
+        task = _.findWhere(dueTasks, {
             priority,
-            project_id
+            project_id: project.id
         });
 
-        return highestPrioritySelfCare == undefined;
+        return task == undefined;
     });
-    return highestPrioritySelfCare;
+    return task;
 }
 
 function getTaskButtonHTML(taskID, taskClasses, emoji, href) {
@@ -29,14 +21,12 @@ function getTaskButtonHTML(taskID, taskClasses, emoji, href) {
         .attr("taskID", taskID);
 }
 
-function getTaskHTML(task) {
+function getTaskHTML(task, projects) {
     let taskID = task.id,
         converter = new showdown.Converter(),
+        project = projects.find(({ id }) => id === Number(task.project_id)),
         taskName = converter.makeHtml(task.content),
-        taskHTML = $("<div></div>")
-            .addClass("mainTask")
-            .html(taskName),
-        isMasterTask = task.special != undefined && task.special.type == "M",
+        taskHTML = $("<div></div>"),
         priorityEmojis = {
             1: "&#x26AB;", // black
             2: "&#x1F535;", // blue
@@ -54,22 +44,40 @@ function getTaskHTML(task) {
                 "taskLink grey",
                 "&#128279;",
                 "https://todoist.com/app#task%2F" + taskID
-            ),
-            isMasterTask
-                ? getTaskButtonHTML(
-                      taskID,
-                      "listButton grey",
-                      "&#128221;",
-                      "https://todoist.com/app?lang=en#project%2F" +
-                          task.special.list_id +
-                          "%2Ffull"
-                  )
-                : ""
+            )
+            // isMasterTask
+            //     ? getTaskButtonHTML(
+            //           taskID,
+            //           "listButton grey",
+            //           "&#128221;",
+            //           "https://todoist.com/app?lang=en#project%2F" +
+            //               task.special.list_id +
+            //               "%2Ffull"
+            //       )
+            //     : ""
         ],
         buttonsContainer = $("<div></div>").append(priorityHTML, buttonsHTML),
         notesHTML = getTaskNotesHTML(task);
 
-    taskHTML.children("p").append(buttonsContainer, notesHTML);
+    if (project.order !== 1) {
+        taskHTML.append(
+            $("<div></div>")
+                .addClass("projectName")
+                .html(
+                    "<strong id='backToProjects'>&#11013;</strong> " +
+                        project.name
+                )
+        );
+    }
+
+    taskHTML.append(
+        $("<div></div>")
+            .addClass("mainTask")
+            .html(taskName)
+            .append(buttonsContainer, notesHTML)
+    );
+
+    //taskHTML;
 
     return taskHTML;
 }

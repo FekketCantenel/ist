@@ -7,6 +7,7 @@ function getAllTasks(todoistRawTasks) {
             return true;
         }
 
+        /// UPDATE THIS TO CHECK FOR task.due.datetime
         task.due.all_day =
             task.due.date != undefined && task.due.date.indexOf("T") == -1
                 ? new Date(task.due.date).getTime()
@@ -108,7 +109,7 @@ function getSuggestTasksHTML(allTasks, dueTasks, projects) {
 
             let suggestTaskButton = $("<button></button>")
                 .addClass("suggest")
-                .attr("taskID", project.id)
+                .attr("project.id", project.id)
                 .html(project.name);
 
             // let listURL =

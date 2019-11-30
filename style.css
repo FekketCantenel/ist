@@ -35,9 +35,24 @@ body {
     display: none;
 }
 
-.mainTask:nth-child(3) {
+.projectName {
+    font-size: 1.5em;
+}
+
+.projectName:nth-child(3) {
     margin-top: 1em;
     font-size: 0.75em;
+}
+
+#backToProjects {
+    color: rgb(54, 253, 54);
+    cursor: pointer;
+}
+
+.mainTask > p {
+    font-size: 1.25em;
+    margin-block-start: 0.5em;
+    margin-block-end: 0;
 }
 
 button {

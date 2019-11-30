@@ -83,12 +83,12 @@ function setEvents(dueTasks, fullTasks) {
     });
 
     $(".suggest").click(function() {
-        let taskID = Number($(this).attr("taskID")),
-            task = _.findWhere(fullTasks, {
-                id: taskID
-            }),
-            nowTime = moment().format("YYYY-MM-DDTHH:mm:ss");
+        sessionStorage.setItem("project.id", $(this).attr("project.id"));
+        location.reload();
+    });
 
-        postNewTaskTime(taskID, task.due.string, nowTime);
+    $("#backToProjects").click(function() {
+        sessionStorage.removeItem("project.id");
+        location.reload();
     });
 }
