@@ -76,6 +76,11 @@ button b {
     font-size: 3em;
 }
 
+.suggest {
+    width: 11em;
+    position: relative;
+}
+
 .suggestLink {
     text-decoration: none;
     font-size: 0.25em;
@@ -86,16 +91,15 @@ button b {
 
 .badge {
     position: absolute;
-    font-size: 0.5em;
+    font-size: 0.75em;
     background: #1f1f1f;
     color: #de4c4a;
     width: 1.5em;
     height: 1.5em;
     text-align: center;
-    line-height: 1.4em;
     border-radius: 50%;
-    margin-left: 0.5em;
-    margin-top: -3.5em;
+    top: -1em;
+    right: -1em;
 }
 .badge[data-badge]:after {
     content: attr(data-badge);
@@ -143,8 +147,12 @@ button b {
 }
 
 @media only screen and (max-width: 600px) {
+    body {
+        font-size: 1.25em; /* change this to zoom page */
+    }
+
     .tingle-modal-box__footer > button {
-        width: 5em;
+        width: 4em;
         margin-top: 0.25em !important;
     }
     .tingle-modal-box {

@@ -114,7 +114,7 @@ function getSuggestTasksHTML(allTasks, dueTasks, projects) {
 
             suggestTaskButton.append(badgeHTML); // .append(listURL)
 
-            suggestTasks.append(suggestTaskButton);
+            suggestTasks.append(suggestTaskButton, $("<br />"));
         }
     });
 
