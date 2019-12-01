@@ -1,4 +1,4 @@
-export { getHighestPriorityTask, getSubTask, getTaskHTML, getTaskNotesHTML };
+export { getHighestPriorityTask, getSubTask, getTaskHTML, getTaskCommentsHTML };
 
 function getHighestPriorityTask(dueTasks, project) {
     let task = {};
@@ -21,7 +21,7 @@ function getTaskButtonHTML(taskID, taskClasses, emoji, href) {
         .attr("taskID", taskID);
 }
 
-function getTaskHTML(task, projects) {
+function getTaskHTML(task, projects, comments) {
     let taskID = task.id,
         converter = new showdown.Converter(),
         project = projects.find(({ id }) => id === Number(task.project_id)),
@@ -57,7 +57,7 @@ function getTaskHTML(task, projects) {
             //     : ""
         ],
         buttonsContainer = $("<div></div>").append(priorityHTML, buttonsHTML),
-        notesHTML = getTaskNotesHTML(task);
+        commentsHTML = getTaskCommentsHTML(comments);
 
     if (project.order !== 1) {
         taskHTML.append(
@@ -74,33 +74,33 @@ function getTaskHTML(task, projects) {
         $("<div></div>")
             .addClass("mainTask")
             .html(taskName)
-            .append(buttonsContainer, notesHTML)
+            .append(buttonsContainer, commentsHTML)
     );
 
     return taskHTML;
 }
 
-function getTaskNotesHTML(task) {
-    if (task.notes.length == 0) {
+function getTaskCommentsHTML(comments) {
+    if (comments.length == 0) {
         return false;
     }
 
-    let notesHTML = $("<div></div>").addClass("taskNotes");
+    let commentsHTML = $("<div></div>").addClass("taskComments");
 
-    $.each(task.notes, function(i, note) {
+    $.each(comments, function(i, comment) {
         let converter = new showdown.Converter(),
-            noteContent = converter.makeHtml(note.content),
-            noteElement = $("<div></div>")
-                .addClass("taskNote")
-                .html(noteContent);
-        notesHTML.append(noteElement);
+            commentContent = converter.makeHtml(comment.content),
+            commentElement = $("<div></div>")
+                .addClass("taskComment")
+                .html(commentContent);
+        commentsHTML.append(commentElement);
 
-        if (i < _.size(task.notes) - 1) {
-            notesHTML.append("<hr />");
+        if (i < _.size(comments) - 1) {
+            commentsHTML.append("<hr />");
         }
     });
 
-    return notesHTML;
+    return commentsHTML;
 }
 
 function getSubTask(dueTasks, highestPrioritySelfCare) {

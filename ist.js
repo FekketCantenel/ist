@@ -11,9 +11,7 @@ $(document).ready(function() {
     async function asyncCall() {
         let todoistRawTasks = await getAPI("tasks");
 
-        //let todoistRawNotes = await getAPI("comments");
-
-        // create master object with extra useful values, narrow down to 'due'
+        // create master task objects
         let allTasks = getAllTasks(todoistRawTasks),
             dueTasks = getDueTasks(allTasks);
 
@@ -38,7 +36,14 @@ $(document).ready(function() {
         }
 
         if (highestPriorityTask) {
-            let mainTask = getTaskHTML(highestPriorityTask, projects);
+            let todoistRawComments = await getAPI(
+                "comments?task_id=" + highestPriorityTask.id
+            );
+            let mainTask = getTaskHTML(
+                highestPriorityTask,
+                projects,
+                todoistRawComments
+            );
             $("#task").append(mainTask);
         } else {
             sessionStorage.removeItem("project.id");

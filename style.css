@@ -27,7 +27,7 @@ body {
     margin: 1em 2em;
 }
 
-.taskNotes {
+.taskComments {
     border: 1px solid white;
     width: 50%;
     margin: auto;
@@ -152,7 +152,7 @@ button b {
         text-align: center;
     }
 
-    .taskNotes {
+    .taskComments {
         width: 90% !important;
     }
 }
