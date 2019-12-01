@@ -68,7 +68,11 @@ function setEvents(dueTasks, fullTasks) {
                     let newTime = moment().add(deferAmount[1], "ms"),
                         taskNewDate = "";
 
-                    taskNewDate = newTime.format("YYYY-MM-DDTHH:mm:ss");
+                    taskNewDate = newTime.format(
+                        task.due.all_day === 0
+                            ? "YYYY-MM-DDTHH:mm:ss"
+                            : "YYYY-MM-DD"
+                    );
 
                     let taskToDefer = [
                         {
