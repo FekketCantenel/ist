@@ -57,7 +57,8 @@ function setEvents(dueTasks, fullTasks) {
             ["+11 days", 950400000],
             ["+12 days", 1036800000]
         ];
-        deferArray = task.due.all_day === 0 ? deferArrayTimes : deferArrayDays;
+        let deferArray =
+            task.due.all_day === 0 ? deferArrayTimes : deferArrayDays;
 
         $.each(deferArray, function(n, deferAmount) {
             modal.addFooterBtn(
@@ -69,11 +70,13 @@ function setEvents(dueTasks, fullTasks) {
 
                     taskNewDate = newTime.format("YYYY-MM-DDTHH:mm:ss");
 
-                    let taskToDefer = {
-                        id: task.id,
-                        string: task.due.string,
-                        date: taskNewDate
-                    };
+                    let taskToDefer = [
+                        {
+                            id: task.id,
+                            string: task.due.string,
+                            date: taskNewDate
+                        }
+                    ];
 
                     postNewTaskTime(taskToDefer);
 
