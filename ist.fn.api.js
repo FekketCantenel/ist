@@ -20,7 +20,7 @@ async function getAPI(path) {
 }
 
 function uuidv4() {
-    // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+    // copied from https://stackoverflow.com/a/2117523
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
         (
             c ^
@@ -44,21 +44,25 @@ async function asyncCall(commands) {
     location.reload();
 }
 
-function postNewTaskTime(taskID, taskString, taskNewDate) {
-    let randUUID = uuidv4(),
-        commands = [
-            {
-                type: "item_update",
-                uuid: randUUID,
-                args: {
-                    id: taskID,
-                    due: {
-                        date: taskNewDate,
-                        datetime: taskNewDate,
-                        string: taskString
-                    }
+function postNewTaskTime(tasksToDefer) {
+    let randUUID = "",
+        commands = [];
+
+    tasksToDefer.forEach(function(task) {
+        randUUID = uuidv4();
+        commands.push({
+            type: "item_update",
+            uuid: randUUID,
+            args: {
+                id: task.id,
+                due: {
+                    date: task.date,
+                    datetime: task.date,
+                    string: task.string
                 }
             }
-        ];
+        });
+    });
+
     asyncCall(commands);
 }

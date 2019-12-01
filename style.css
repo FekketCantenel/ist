@@ -7,6 +7,7 @@
 
 body {
     background-color: #1f1f1f;
+    font-size: 1.5em; /* change this to zoom page */
 }
 
 #task {

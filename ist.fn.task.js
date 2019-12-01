@@ -45,7 +45,7 @@ function getTaskHTML(task, projects) {
                 "&#128279;",
                 "https://todoist.com/app#task%2F" + taskID
             )
-            // isMasterTask
+            // ADAPT THIS
             //     ? getTaskButtonHTML(
             //           taskID,
             //           "listButton grey",
@@ -76,8 +76,6 @@ function getTaskHTML(task, projects) {
             .html(taskName)
             .append(buttonsContainer, notesHTML)
     );
-
-    //taskHTML;
 
     return taskHTML;
 }

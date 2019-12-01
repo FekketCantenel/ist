@@ -2,29 +2,50 @@ import { postNewTaskTime } from "./ist.fn.api.js";
 export { getAllTasks, getDueTasks, getSuggestTasksHTML };
 
 function getAllTasks(todoistRawTasks) {
+    let overdue = 0;
     $.each(todoistRawTasks, function(i, task) {
         if (task.due == null) {
             return true;
         }
 
-        /// UPDATE THIS TO CHECK FOR task.due.datetime
         task.due.all_day = task.due.datetime ? 0 : 1;
         task.due.moment = moment(task.due.datetime || task.due.date).local();
 
         // check if task is overdue
         if (task.due.moment.isBefore(moment(), "day")) {
-            // MOVE THIS ALL TO EXTERNAL FUNCTION
-            $("#task").append("rescheduling overdue tasks, please wait...");
+            overdue = 1;
+        }
 
+        // add notes
+        // task.notes = _.filter(todoistRawNotes, function(note) {
+        //     return note.item_id == task.id;
+        // });
+        /// TEMPORARY:
+        task.notes = "";
+    });
+
+    if (overdue === 1) {
+        $("#task").append("rescheduling overdue tasks, please wait...");
+        deferOverdueTasks(todoistRawTasks);
+    } else {
+        return todoistRawTasks;
+    }
+}
+
+function deferOverdueTasks(tasks) {
+    let tasksToDefer = [];
+
+    $.each(tasks, function(i, task) {
+        if (task.due.moment.isBefore(moment(), "day")) {
             let taskNewMoment = moment(),
                 taskNewDateString = "";
+
             if (task.due.all_day === 1) {
                 taskNewDateString = taskNewMoment.format("YYYY-MM-DD");
-                console.log("all-day - " + taskNewDateString); ////
             } else {
-                if (/[am|pm]$/.test(task.due.string)) {
+                if (/[AM|PM]$/.test(task.due.string)) {
                     let taskNewTime = task.due.string.split(" ");
-                    taskNewTime = taskNewTime[taskNewTime.length - 1];
+                    taskNewTime = taskNewTime.slice(-2);
                     taskNewMoment = moment(taskNewTime, [
                         "hh:mma",
                         "hha",
@@ -34,45 +55,21 @@ function getAllTasks(todoistRawTasks) {
                     taskNewDateString = taskNewMoment.format(
                         "YYYY-MM-DDTHH:mm:ss"
                     );
-                    console.log("am / pm - " + taskNewDateString); ////
                 } else {
                     taskNewDateString = taskNewMoment.format(
                         "YYYY-MM-DDT05:00:00"
                     );
-                    console.log("others  - " + taskNewDateString); ////
                 }
             }
 
-            postNewTaskTime(task.id, task.due.string, taskNewDateString);
-        }
-
-        // add notes
-        // task.notes = _.filter(todoistRawNotes, function(note) {
-        //     return note.item_id == task.id;
-        // });
-        /// TEMPORARY:
-        task.notes = "";
-
-        ////////// REMOVE THIS
-        // add special code values, remove them from notes
-        let codeNote = _.find(task.notes, function(note) {
-            return note.content.charAt(0) == "~";
-        });
-
-        task.special = {};
-        if (codeNote !== undefined) {
-            ////////////// UPDATE THIS
-            task.notes = _.reject(task.notes, function(note) {
-                return note.id == codeNote.id;
+            tasksToDefer.push({
+                id: task.id,
+                string: task.due.string,
+                date: taskNewDateString
             });
-            let codes = codeNote.content.split("~");
-            task.special.type = codes[1];
-            task.special.content = codes[2];
-            task.special.list_id = Number(codes[3]);
-            task.special.emoji = codes[4];
         }
     });
-    return todoistRawTasks;
+    postNewTaskTime(tasksToDefer);
 }
 
 function getDueTasks(allTasks) {
@@ -109,6 +106,7 @@ function getSuggestTasksHTML(allTasks, dueTasks, projects) {
                 .attr("project.id", project.id)
                 .html(project.name);
 
+            ///// FIX THIS
             // let listURL =
             //     "<a class='suggestLink' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23" +
             //     list.special.content +
