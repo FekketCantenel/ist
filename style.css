@@ -22,6 +22,11 @@ body {
     color: #de4c4a;
 }
 
+#task > p {
+    font-size: 0.65em;
+    margin: 1em 2em;
+}
+
 .taskNotes {
     border: 1px solid white;
     width: 50%;
