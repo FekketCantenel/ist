@@ -1,4 +1,4 @@
-import { getAPI } from "./ist.fn.api.js";
+import { getAPI, getAuth } from "./ist.fn.api.js";
 import {
     getAllTasks,
     getDueTasks,
@@ -9,6 +9,14 @@ import { setEvents } from "./ist.fn.event.js";
 
 $(document).ready(function() {
     async function asyncCall() {
+        let authCode = getUrlParameter("code");
+        if (authCode) {
+            $("#task").append("logging into Todoist, please wait...");
+            let authRaw = await getAuth(authCode);
+            console.log("should come after auth call");
+            //console.log(authRaw);
+        }
+
         let todoistRawTasks = await getAPI("tasks");
 
         // create master task objects
@@ -61,3 +69,13 @@ $(document).ready(function() {
     }
     asyncCall();
 });
+
+// https://davidwalsh.name/query-string-javascript
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(location.search);
+    return results === null
+        ? ""
+        : decodeURIComponent(results[1].replace(/\+/g, " "));
+}

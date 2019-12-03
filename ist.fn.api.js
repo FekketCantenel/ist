@@ -1,4 +1,4 @@
-export { getAPI, uuidv4, postAPI, asyncCall, postNewTaskTime };
+export { getAPI, getAuth, uuidv4, postAPI, asyncCall, postNewTaskTime };
 
 let todoistAPI = "https://todoist.com/api/v8/sync",
     todoistToken = "0d1383928eb454f4113b8fe921292dbc8d32ad4a";
@@ -16,6 +16,21 @@ async function getAPI(path) {
                 );
             }
         }
+    });
+}
+
+async function getAuth(code) {
+    let commands = {
+        client_id: "711cd8b82f8e433f83f4972c4cae127f",
+        client_secret: "ab65c865eef846e89ae64452746a8524",
+        code,
+        redirect_uri: "https://ist.never-ends.net/2"
+    };
+
+    $.post("https://todoist.com/oauth/access_token", commands, function(data) {
+        console.log("made it here");
+    }).done(function() {
+        console("second success");
     });
 }
 
