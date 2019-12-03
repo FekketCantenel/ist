@@ -81,8 +81,8 @@ function getDueTasks(allTasks) {
     });
 
     dueTasks.sort(function(a, b) {
-        let c = new Date(a.due.date),
-            d = new Date(b.due.date);
+        let c = new Date(a.due.datetime || a.due.date),
+            d = new Date(b.due.datetime || b.due.date);
         return c - d;
     });
 
