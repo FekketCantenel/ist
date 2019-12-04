@@ -43,7 +43,7 @@ function deferOverdueTasks(tasks) {
             if (task.due.all_day === 1) {
                 taskNewDateString = taskNewMoment.format("YYYY-MM-DD");
             } else {
-                if (/[AM|PM]$/.test(task.due.string)) {
+                if (/[AM|PM]$/i.test(task.due.string)) {
                     let taskNewTime = task.due.string.split(" ");
                     taskNewTime = taskNewTime.slice(-2);
                     taskNewMoment = moment(taskNewTime, [
