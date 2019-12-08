@@ -19,7 +19,7 @@ body {
 }
 
 #task a {
-    color: #de4c4a;
+    color: #e44332;
 }
 
 #task > p {
@@ -62,9 +62,9 @@ body {
 }
 
 button {
-    background-color: #de4c4a !important;
+    background-color: #e44332 !important;
     border-radius: 3px !important;
-    border: 2px solid #de4c4a;
+    border: 2px solid #e44332;
     color: #fff;
     padding: 0.55em;
     font-weight: bold;
@@ -143,7 +143,7 @@ button b {
     position: absolute;
     font-size: 0.75em;
     background: #1f1f1f;
-    color: #de4c4a;
+    color: #e44332;
     width: 1.5em;
     height: 1.5em;
     text-align: center;
@@ -156,7 +156,7 @@ button b {
     position: absolute;
     font-size: 1em;
     background: #1f1f1f;
-    color: #de4c4a;
+    color: #e44332;
     width: 1.5em;
     height: 1.5em;
     text-align: center;
@@ -174,7 +174,7 @@ button b {
 
 .roundbutton {
     font-size: 0.75em;
-    background: #de4c4a;
+    background: #e44332;
     text-align: center;
     line-height: 1.4em;
     border-radius: 50%;
