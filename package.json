@@ -1,0 +1,12 @@
+{
+    "name": "ist",
+    "version": "0.1",
+    "private": true,
+    "dependencies": {
+        "jquery": "3.4.1",
+        "moment": "2.24.0",
+        "showdown": "1.9.0",
+        "tingle": "0.15.2",
+        "underscore": "1.9.1"
+    }
+}
