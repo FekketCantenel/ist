@@ -94,6 +94,10 @@ function getSuggestTasksHTML(allTasks, dueTasks, projects) {
         countedTasks = _.countBy(dueTasks, "project_id");
 
     $.each(projects, function(i, project) {
+        if (project.name.slice(project.name.length - 1) === "_") {
+            return true;
+        }
+
         project.count = countedTasks[project.id] || 0;
 
         if (project.count > 0) {
