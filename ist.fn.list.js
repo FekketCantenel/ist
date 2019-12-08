@@ -110,15 +110,14 @@ function getSuggestTasksHTML(allTasks, dueTasks, projects) {
                 .attr("project.id", project.id)
                 .html(project.name);
 
-            ///// FIX THIS
-            // let listURL =
-            //     "<a class='suggestLink' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23" +
-            //     list.special.content +
-            //     "'>&#128279;</a>";
+            let projectURL =
+                "<a class='suggestLink' target='_blank' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23" +
+                project.name +
+                "'>&#128279;</a>";
 
             suggestTaskButton.append(badgeHTML); // .append(listURL)
 
-            suggestTasks.append(suggestTaskButton, $("<br />"));
+            suggestTasks.append(suggestTaskButton, projectURL, $("<br />"));
         }
     });
 
