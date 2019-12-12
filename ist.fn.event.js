@@ -85,6 +85,7 @@ function setEvents(dueTasks, fullTasks) {
                     postNewTaskTime(taskToDefer);
 
                     modal.close();
+                    $("#spinner, #task").toggle();
                 }
             );
         });
