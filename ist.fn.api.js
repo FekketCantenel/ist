@@ -55,6 +55,7 @@ async function postAPI(commands) {
 
 async function asyncCall(commands) {
     $("body, .roundbutton").css("cssText", "cursor: progress !important");
+    $("#spinner, #task").toggle();
     let result = await postAPI(JSON.stringify(commands));
     location.reload();
 }

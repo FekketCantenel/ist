@@ -93,11 +93,13 @@ function setEvents(dueTasks, fullTasks) {
 
     $(".suggest").click(function() {
         sessionStorage.setItem("project.id", $(this).attr("project.id"));
+        $("#spinner, #task").toggle();
         location.reload();
     });
 
     $("#backToProjects").click(function() {
         sessionStorage.removeItem("project.id");
+        $("#spinner, #task").toggle();
         location.reload();
     });
 }

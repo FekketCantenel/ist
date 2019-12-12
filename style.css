@@ -10,7 +10,15 @@ body {
     font-size: 1.5em; /* change this to zoom page */
 }
 
-#task {
+:focus {
+    outline: none;
+}
+::-moz-focus-inner {
+    border: 0;
+}
+
+#task,
+#spinner {
     width: 100%;
     text-align: center;
     color: white;
