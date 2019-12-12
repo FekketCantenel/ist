@@ -1,4 +1,12 @@
-export { getAPI, getAuth, uuidv4, postAPI, asyncCall, postNewTaskTime };
+export {
+    getAPI,
+    getAuth,
+    uuidv4,
+    postAPI,
+    asyncCall,
+    postNewTaskTime,
+    getUrlParameter
+};
 
 let todoistAPI = "https://todoist.com/api/v8/sync",
     todoistToken = "0d1383928eb454f4113b8fe921292dbc8d32ad4a";
@@ -17,6 +25,16 @@ async function getAPI(path) {
             }
         }
     });
+}
+
+// https://davidwalsh.name/query-string-javascript
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(location.search);
+    return results === null
+        ? ""
+        : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 async function getAuth(code) {

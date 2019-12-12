@@ -1,4 +1,4 @@
-import { getAPI, getAuth } from "./ist.fn.api.js";
+import { getAPI, getAuth, getUrlParameter } from "./ist.fn.api.js";
 import {
     getAllTasks,
     getDueTasks,
@@ -26,22 +26,7 @@ $(document).ready(function() {
         let projects = await getAPI("projects");
 
         // checks first for 'routine' tasks in top project
-        let highestPriorityTask = getHighestPriorityTask(
-            dueTasks,
-            projects.find(({ order }) => order === 1)
-        );
-
-        if (highestPriorityTask == undefined) {
-            // check if a project has already been chosen for viewing
-            let chosenProjectID = sessionStorage.getItem("project.id");
-
-            if (chosenProjectID) {
-                highestPriorityTask = getHighestPriorityTask(
-                    dueTasks,
-                    projects.find(({ id }) => id === Number(chosenProjectID))
-                );
-            }
-        }
+        let highestPriorityTask = getHighestPriorityTask(dueTasks, projects);
 
         if (highestPriorityTask) {
             let todoistRawComments = await getAPI(
@@ -69,13 +54,3 @@ $(document).ready(function() {
     }
     asyncCall();
 });
-
-// https://davidwalsh.name/query-string-javascript
-function getUrlParameter(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-    var results = regex.exec(location.search);
-    return results === null
-        ? ""
-        : decodeURIComponent(results[1].replace(/\+/g, " "));
-}

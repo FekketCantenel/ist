@@ -1,13 +1,26 @@
 export { getHighestPriorityTask, getSubTask, getTaskHTML, getTaskCommentsHTML };
 
-function getHighestPriorityTask(dueTasks, project) {
-    let task = {};
+function getHighestPriorityTask(dueTasks, projects) {
+    let task = {},
+        projectRoutine = projects.find(({ order }) => order === 1),
+        projectChosenID = Number(sessionStorage.getItem("project.id")) || 0;
+
+    $.each([projectRoutine.id, projectChosenID], function(i, projectID) {
+        task = getHighestPriorityTaskByProject(dueTasks, projectID);
+        if (task !== undefined) {
+            return false;
+        }
+    });
+
+    return task;
+}
+
+function getHighestPriorityTaskByProject(dueTasks, projectID) {
     $.each([4, 3, 2, 1], function(i, priority) {
         task = _.findWhere(dueTasks, {
             priority,
-            project_id: project.id
+            project_id: projectID
         });
-
         return task == undefined;
     });
     return task;
