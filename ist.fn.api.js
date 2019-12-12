@@ -71,9 +71,11 @@ async function postAPI(commands) {
     });
 }
 
-async function asyncCall(commands) {
+async function asyncCall(commands, toggle = 1) {
     $("body, .roundbutton").css("cssText", "cursor: progress !important");
-    $("#spinner, #task").toggle();
+    if (toggle === 1) {
+        $("#spinner, #task").toggle();
+    }
     let result = await postAPI(JSON.stringify(commands));
     location.reload();
 }
@@ -98,5 +100,5 @@ function postNewTaskTime(tasksToDefer) {
         });
     });
 
-    asyncCall(commands);
+    asyncCall(commands, 0);
 }

@@ -20,6 +20,7 @@ function getAllTasks(todoistRawTasks) {
     if (overdue === 1) {
         $("#task").append("rescheduling overdue tasks, please wait...");
         deferOverdueTasks(todoistRawTasks);
+        return "overdue";
     } else {
         return todoistRawTasks;
     }
@@ -60,6 +61,9 @@ function deferOverdueTasks(tasks) {
                 string: task.due.string,
                 date: taskNewDateString
             });
+        }
+        if (tasksToDefer.count == 99) {
+            return false;
         }
     });
     postNewTaskTime(tasksToDefer);

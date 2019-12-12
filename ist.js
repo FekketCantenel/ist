@@ -23,6 +23,10 @@ $(document).ready(function() {
         let allTasks = getAllTasks(todoistRawTasks),
             dueTasks = getDueTasks(allTasks);
 
+        if (allTasks == "overdue") {
+            throw "overdue";
+        }
+
         let projects = await getAPI("projects");
 
         // checks first for 'routine' tasks in top project
