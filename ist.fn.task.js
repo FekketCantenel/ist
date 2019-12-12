@@ -1,4 +1,4 @@
-export { getHighestPriorityTask, getSubTask, getTaskHTML, getTaskCommentsHTML };
+export { getHighestPriorityTask, getTaskHTML, getTaskCommentsHTML };
 
 function getHighestPriorityTask(dueTasks, projects) {
     let task = {},
@@ -58,16 +58,6 @@ function getTaskHTML(task, projects, comments) {
                 "&#128279;",
                 "https://todoist.com/app#task%2F" + taskID
             )
-            // ADAPT THIS
-            //     ? getTaskButtonHTML(
-            //           taskID,
-            //           "listButton grey",
-            //           "&#128221;",
-            //           "https://todoist.com/app?lang=en#project%2F" +
-            //               task.special.list_id +
-            //               "%2Ffull"
-            //       )
-            //     : ""
         ],
         buttonsContainer = $("<div></div>").append(priorityHTML, buttonsHTML),
         commentsHTML = getTaskCommentsHTML(comments);
@@ -114,21 +104,4 @@ function getTaskCommentsHTML(comments) {
     });
 
     return commentsHTML;
-}
-
-function getSubTask(dueTasks, highestPrioritySelfCare) {
-    dueTasks.sort(function(a, b) {
-        var c = a.priority;
-        var d = b.priority;
-        return d - c;
-    });
-
-    if (highestPrioritySelfCare.special.type == "M") {
-        let subTask = _.findWhere(dueTasks, {
-            project_id: highestPrioritySelfCare.special.list_id
-        });
-        if (subTask != undefined) {
-            return subTask;
-        }
-    }
 }

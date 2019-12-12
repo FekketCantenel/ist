@@ -15,13 +15,6 @@ function getAllTasks(todoistRawTasks) {
         if (task.due.moment.isBefore(moment(), "day")) {
             overdue = 1;
         }
-
-        // add notes
-        // task.notes = _.filter(todoistRawNotes, function(note) {
-        //     return note.item_id == task.id;
-        // });
-        /// TEMPORARY:
-        task.notes = "";
     });
 
     if (overdue === 1) {
@@ -115,7 +108,7 @@ function getSuggestTasksHTML(allTasks, dueTasks, projects) {
                 project.name +
                 "'>&#128279;</a>";
 
-            suggestTaskButton.append(badgeHTML); // .append(listURL)
+            suggestTaskButton.append(badgeHTML);
 
             suggestTasks.append(suggestTaskButton, projectURL, $("<br />"));
         }

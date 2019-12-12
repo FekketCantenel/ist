@@ -1,11 +1,11 @@
 export {
     getAPI,
+    getUrlParameter,
     getAuth,
     uuidv4,
     postAPI,
     asyncCall,
-    postNewTaskTime,
-    getUrlParameter
+    postNewTaskTime
 };
 
 let todoistAPI = "https://todoist.com/api/v8/sync",
@@ -27,8 +27,8 @@ async function getAPI(path) {
     });
 }
 
-// https://davidwalsh.name/query-string-javascript
 function getUrlParameter(name) {
+    // copied from https://davidwalsh.name/query-string-javascript
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
     var results = regex.exec(location.search);
