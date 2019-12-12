@@ -49,7 +49,12 @@ $(document).ready(function() {
                 dueTasks,
                 projects
             );
-            $("#task").append(suggestTasks);
+
+            if (suggestTasks.count > 0) {
+                $("#task").append(suggestTasks);
+            } else {
+                $("#task").append("You have no due tasks!");
+            }
         }
 
         $("#spinner").hide();
