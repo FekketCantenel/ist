@@ -65,7 +65,7 @@ $(document).ready(function() {
                 projects
             );
 
-            if (suggestTasks.count > 0) {
+            if (suggestTasks[0].childElementCount > 0) {
                 $("#task").append(suggestTasks);
             } else {
                 $("#task").append("You have no due tasks!");
