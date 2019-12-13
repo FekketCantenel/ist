@@ -9,12 +9,27 @@ import { setEvents } from "./ist.fn.event.js";
 
 $(document).ready(function() {
     async function asyncCall() {
-        let authCode = getUrlParameter("code");
-        if (authCode) {
-            $("#task").append("logging into Todoist, please wait...");
-            let authRaw = await getAuth(authCode),
-                authToken = authRaw.access_token;
-            console.log(authToken);
+        if (Cookies.get("todoistToken") === undefined) {
+            let authCode = getUrlParameter("code");
+            if (authCode) {
+                $("#task").append("logging into Todoist, please wait...");
+                let authRaw = await getAuth(authCode),
+                    authToken = authRaw.access_token;
+                Cookies.set("todoistToken", authToken);
+                window.location.replace("/");
+            } else {
+                $.get("README.md", function(readme) {
+                    let converter = new showdown.Converter(),
+                        readmeHTML = converter.makeHtml(readme);
+
+                    $("#task").append(
+                        readmeHTML,
+                        '<a href="https://todoist.com/oauth/authorize?client_id=711cd8b82f8e433f83f4972c4cae127f&scope=data:read_write"><button>when ready, log in with Todoist</button></a>'
+                    );
+                });
+                $("#spinner").hide();
+                return false;
+            }
         }
 
         let todoistRawTasks = await getAPI("tasks");
