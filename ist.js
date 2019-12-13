@@ -12,9 +12,9 @@ $(document).ready(function() {
         let authCode = getUrlParameter("code");
         if (authCode) {
             $("#task").append("logging into Todoist, please wait...");
-            let authRaw = await getAuth(authCode);
-            console.log("should come after auth call");
-            //console.log(authRaw);
+            let authRaw = await getAuth(authCode),
+                authToken = authRaw.access_token;
+            console.log(authToken);
         }
 
         let todoistRawTasks = await getAPI("tasks");

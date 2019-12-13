@@ -45,11 +45,7 @@ async function getAuth(code) {
         redirect_uri: "https://ist.never-ends.net/2"
     };
 
-    $.post("https://todoist.com/oauth/access_token", commands, function(data) {
-        console.log("made it here");
-    }).done(function() {
-        console("second success");
-    });
+    return await $.post("https://todoist.com/oauth/access_token", commands);
 }
 
 function uuidv4() {
