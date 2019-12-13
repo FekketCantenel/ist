@@ -44,7 +44,6 @@ $(document).ready(function() {
 
         let projects = await getAPI("projects");
 
-        // checks first for 'routine' tasks in top project
         let highestPriorityTask = getHighestPriorityTask(dueTasks, projects);
 
         if (highestPriorityTask) {
