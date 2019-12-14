@@ -15,7 +15,7 @@ $(document).ready(function() {
                 $("#task").append("logging into Todoist, please wait...");
                 let authRaw = await getAuth(authCode),
                     authToken = authRaw.access_token;
-                Cookies.set("todoistToken", authToken);
+                Cookies.set("todoistToken", authToken, { expires: 182 });
                 window.location.replace("/");
             } else {
                 $.get("README.md", function(readme) {
