@@ -8,4 +8,4 @@ Now add tasks to these contexts, each with a priority and due date (and repeat r
 
 When ready, click the button at the bottom of Ist to authorize it to access your Todoist account.
 
-<small>Ist is not created by, affiliated with, or supported by Doist.</small>
+<small>Ist is not created by, affiliated with, or supported by Doist. None of your data is sent to or stored on the Ist server.</small>
