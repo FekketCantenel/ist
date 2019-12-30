@@ -23,6 +23,9 @@ async function getAPI(path) {
                     "Bearer " + todoistToken
                 );
             }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            location.reload();
         }
     });
 }
