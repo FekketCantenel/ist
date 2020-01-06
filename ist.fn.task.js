@@ -7,7 +7,8 @@ function getHighestPriorityTask(dueTasks, projects) {
 
     $.each([projectRoutine.id, projectChosenID], function(i, projectID) {
         task = getHighestPriorityTaskByProject(dueTasks, projectID);
-        if (task !== undefined) {
+
+        if (_.size(task) > 0) {
             return false;
         }
     });
@@ -16,13 +17,19 @@ function getHighestPriorityTask(dueTasks, projects) {
 }
 
 function getHighestPriorityTaskByProject(dueTasks, projectID) {
+    let task = {};
+
     $.each([4, 3, 2, 1], function(i, priority) {
         task = _.findWhere(dueTasks, {
             priority,
             project_id: projectID
         });
-        return task == undefined;
+
+        if (_.size(task) > 0) {
+            return false;
+        }
     });
+
     return task;
 }
 
