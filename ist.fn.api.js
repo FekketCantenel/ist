@@ -12,22 +12,26 @@ let todoistAPI = "https://todoist.com/api/v8/sync",
     todoistToken = Cookies.get("todoistToken");
 
 async function getAPI(path) {
-    return await $.ajax({
-        type: "GET",
-        url: "https://api.todoist.com/rest/v1/" + path,
-        dataType: "json",
-        beforeSend: function(request) {
-            if (todoistToken) {
-                request.setRequestHeader(
-                    "Authorization",
-                    "Bearer " + todoistToken
-                );
+    try {
+        return await $.ajax({
+            type: "GET",
+            url: "https://api.todoist.com/rest/v1/" + path,
+            dataType: "json",
+            beforeSend: function(request) {
+                if (todoistToken) {
+                    request.setRequestHeader(
+                        "Authorization",
+                        "Bearer " + todoistToken
+                    );
+                }
             }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            location.reload();
-        }
-    });
+        });
+    } catch (e) {
+        console.error(e);
+        $("#task").append(
+            "An error occurred. See the console for more information."
+        );
+    }
 }
 
 function getUrlParameter(name) {
