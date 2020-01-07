@@ -1,6 +1,6 @@
 export {
     getAPI,
-    getUrlParameter,
+    getURLParameter,
     getAuth,
     uuidv4,
     postAPI,
@@ -34,11 +34,12 @@ async function getAPI(path) {
     }
 }
 
-function getUrlParameter(name) {
-    // copied from https://davidwalsh.name/query-string-javascript
+function getURLParameter(name) {
+    // modified from https://davidwalsh.name/query-string-javascript
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-    var results = regex.exec(location.search);
+
+    let regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
     return results === null
         ? ""
         : decodeURIComponent(results[1].replace(/\+/g, " "));
