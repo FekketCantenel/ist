@@ -98,12 +98,22 @@ function getTaskCommentsHTML(comments) {
     let commentsHTML = $("<div></div>").addClass("taskComments");
 
     $.each(comments, function(i, comment) {
-        let converter = new showdown.Converter(),
-            commentContent = converter.makeHtml(comment.content),
+        let commentContent = comment.content,
+            converter = new showdown.Converter(),
+            commentContentHTML = converter.makeHtml(commentContent),
             commentElement = $("<div></div>")
                 .addClass("taskComment")
-                .html(commentContent);
+                .html(commentContentHTML);
         commentsHTML.append(commentElement);
+
+        let regex = new RegExp("^https:\\/\\/dynalist.io\\/d\\/"),
+            results = regex.exec(commentContent);
+
+        if (results != null) {
+            commentsHTML.append(
+                "<em>This comment contains a Dynalist link. Would you like to authorize Ist to access and display your Dynalist documents? Nothing is sent to Ist's server.</em>"
+            );
+        }
 
         if (i < _.size(comments) - 1) {
             commentsHTML.append("<hr />");
