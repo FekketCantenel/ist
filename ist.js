@@ -1,4 +1,4 @@
-import { getAPI, getAuth, getUrlParameter } from "./ist.fn.api.js";
+import { getAPI, getAuth, getURLParameter } from "./ist.fn.api.js";
 import {
     getAllTasks,
     getDueTasks,
@@ -10,7 +10,7 @@ import { setEvents } from "./ist.fn.event.js";
 $(document).ready(function() {
     async function asyncCall() {
         if (Cookies.get("todoistToken") === undefined) {
-            let authCode = getUrlParameter("code");
+            let authCode = getURLParameter("code");
             if (authCode) {
                 $("#task").append("logging into Todoist, please wait...");
                 let authRaw = await getAuth(authCode),
