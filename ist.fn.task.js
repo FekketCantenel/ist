@@ -123,13 +123,17 @@ function getTaskCommentsHTML(comments) {
 }
 
 function getDynalistContent(commentContent) {
-    return (
-        "<small>" +
-        "<em>To authorize Ist to display your Dynalist documents, enter your <a href='https://dynalist.io/developer' target='_blank'>secret token</a>:</em> " +
-        '<form action=\'javascript:window.location.replace("?state=dynalist&code=" + $("input[name=dynalistSecret]").val().replace(/[^a-z0-9áéíóúñü .,_-]/gim, ""));\'>' +
-        "<input type='text' name='dynalistSecret'>" +
-        "<input name='submit' type='submit' value='↵'/>" +
-        "</form>" +
-        "</small>"
-    );
+    if (Cookies.get("dynalistToken") === undefined) {
+        return (
+            "<small>" +
+            "<em>To authorize Ist to display your Dynalist documents, enter your <a href='https://dynalist.io/developer' target='_blank'>secret token</a>:</em> " +
+            '<form action=\'javascript:window.location.replace("?state=dynalist&code=" + $("input[name=dynalistSecret]").val().replace(/[^a-z0-9áéíóúñü .,_-]/gim, ""));\'>' +
+            "<input type='text' name='dynalistSecret'>" +
+            "<input name='submit' type='submit' value='↵'/>" +
+            "</form>" +
+            "</small>"
+        );
+    } else {
+        return "Dynalist document goes here";
+    }
 }
