@@ -12,11 +12,14 @@ $(document).ready(function() {
         if (Cookies.get("todoistToken") === undefined) {
             let authCode = getURLParameter("code");
             if (authCode) {
-                $("#task").append("logging into Todoist, please wait...");
-                let authRaw = await getAuth(authCode),
-                    authToken = authRaw.access_token;
-                Cookies.set("todoistToken", authToken, { expires: 182 });
-                window.location.replace("/");
+                let authState = getURLParameter("state");
+                if (authState == "todoist") {
+                    $("#task").append("logging into Todoist, please wait...");
+                    let authRaw = await getAuth(authCode),
+                        authToken = authRaw.access_token;
+                    Cookies.set("todoistToken", authToken, { expires: 182 });
+                    window.location.replace("/");
+                }
             } else {
                 $.get("README.md", function(readme) {
                     let converter = new showdown.Converter(),
@@ -24,7 +27,7 @@ $(document).ready(function() {
 
                     $("#task").append(
                         readmeHTML,
-                        '<a href="https://todoist.com/oauth/authorize?client_id=711cd8b82f8e433f83f4972c4cae127f&scope=data:read_write"><button>when ready, log in with Todoist</button></a>'
+                        '<a href="https://todoist.com/oauth/authorize?client_id=711cd8b82f8e433f83f4972c4cae127f&state=todoist&scope=data:read_write"><button>when ready, log in with Todoist</button></a>'
                     );
                 });
                 $("#spinner").hide();
