@@ -110,9 +110,8 @@ function getTaskCommentsHTML(comments) {
             results = regex.exec(commentContent);
 
         if (results != null) {
-            commentsHTML.append(
-                "<em>This comment contains a Dynalist link. Would you like to authorize Ist to access and display your Dynalist documents? Nothing is sent to Ist's server.</em>"
-            );
+            let dynalistContent = getDynalistContent(commentContent);
+            commentsHTML.append(dynalistContent);
         }
 
         if (i < _.size(comments) - 1) {
@@ -121,4 +120,8 @@ function getTaskCommentsHTML(comments) {
     });
 
     return commentsHTML;
+}
+
+function getDynalistContent(commentContent) {
+    return "<small><em>To authorize Ist to display your Dynalist documents, enter your <a href='https://dynalist.io/developer' target='_blank'>secret token</a>:</em> <form action='javascript:window.location.replace(\"?state=dynalist&code=\" + $(\"input[name=dynalistSecret]\").val());'><input type='text' name='dynalistSecret'><input name='submit' type='submit' value='↵' action='setDynalistSecret(dynalistSecret)'/></form></small>";
 }
