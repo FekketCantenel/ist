@@ -146,16 +146,48 @@ function getDynalistContent(commentContent) {
                 file_id: dynalistFile
             }),
             success: function(data) {
-                console.log(data.nodes);
-                let dynalistNodes = _.filter(data.nodes, function(node) {
-                    if (node.checked !== true) {
-                        return true;
-                    }
-                });
-                console.log(dynalistNodes);
+                let dynalistNodesOpen = _.filter(data.nodes, function(node) {
+                        if (node.checked !== true) {
+                            return true;
+                        }
+                    }),
+                    dynalistNodesOrdered = treeDynalist(
+                        dynalistNodesOpen,
+                        "root"
+                    );
 
                 return "Dynalist document goes here";
             }
         });
     }
+}
+
+function treeDynalist(nodesOpen) {
+    let nodesRoot = _.find(nodesOpen, function(value) {
+            return value.id == "root";
+        }).children,
+        nodesTree = treeGetChildren(nodesRoot, nodesOpen);
+
+    console.log(nodesTree);
+}
+
+function treeGetChildren(ids, nodesOpen) {
+    let nodesNew = [];
+    $.each(ids, function(i, id) {
+        let nodeNew = _.find(nodesOpen, function(value) {
+            return value.id == id;
+        });
+
+        if (nodeNew) {
+            if (nodeNew.children) {
+                nodeNew.childrenNodes = treeGetChildren(
+                    nodeNew.children,
+                    nodesOpen
+                );
+            }
+
+            nodesNew.push(nodeNew);
+        }
+    });
+    return nodesNew;
 }
