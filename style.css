@@ -45,6 +45,14 @@ body {
     font-size: 0.75em;
 }
 
+#dynalistmenu {
+    text-align: center !important;
+}
+
+.taskComment > ul {
+    margin-top: 0;
+}
+
 .tingle-modal-box__content {
     display: none;
 }
