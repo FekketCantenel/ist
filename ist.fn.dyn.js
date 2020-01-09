@@ -52,7 +52,7 @@ function getDynalistContent(commentContent) {
 
             $.each(dynalistMenuButtonsArray, function(i, button) {
                 let buttonHTML = $(
-                    "<button class='dynalistMenuButton' dynalist.view='" +
+                    "<button class='dynalistMenuButton' dynalistview='" +
                         button.name +
                         "' title='" +
                         button.tooltip +
@@ -129,8 +129,11 @@ function treeGetChildren(ids, nodesOpen) {
 function getDynalistHTML(tree) {
     let treeHTML = $("<div></div>").addClass("taskComment");
 
-    let dynalistView = sessionStorage.getItem("dynalist.view");
+    let dynalistView = sessionStorage.getItem("dynalistview");
 
+    if (dynalistView) {
+        $("button[dynalistview=" + dynalistView + "]").addClass("important");
+    }
     switch (dynalistView) {
         default:
         case "read":
@@ -175,12 +178,12 @@ function treeHTMLGetChildren(children) {
 
 function dynalistSetEvents(link) {
     $(".dynalistMenuButton").click(function() {
-        if ($(this).attr("dynalist.view") === "view") {
+        if ($(this).attr("dynalistview") === "view") {
             window.open(link, "_blank");
         } else {
             sessionStorage.setItem(
-                "dynalist.view",
-                $(this).attr("dynalist.view")
+                "dynalistview",
+                $(this).attr("dynalistview")
             );
             $("#spinner, #task").toggle();
             location.reload();
