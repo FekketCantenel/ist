@@ -137,9 +137,15 @@ function getDynalistHTML(tree) {
     switch (dynalistView) {
         default:
         case "read":
-            console.log("READ");
+            treeHTML.append(treeHTMLGetChildren(tree));
             break;
         case "checklist":
+            let treeHTMLChildren = treeHTMLGetChildren(tree);
+            treeHTMLChildren
+                .children()
+                .not(":first")
+                .hide();
+            treeHTML.append(treeHTMLChildren);
             console.log("CHECKLIST");
             break;
         case "rotating":
@@ -149,8 +155,6 @@ function getDynalistHTML(tree) {
             console.log("PROJECT");
             break;
     }
-
-    treeHTML.append(treeHTMLGetChildren(tree));
 
     return treeHTML;
 }
