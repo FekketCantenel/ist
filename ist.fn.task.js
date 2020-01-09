@@ -140,6 +140,56 @@ function getDynalistContent(commentContent) {
         );
 
         getDynalistAPI(dynalistFileID, function(output) {
+            let dynalistMenuButtonsArray = [
+                    {
+                        name: "read",
+                        symbol: "&#128220;",
+                        tooltip:
+                            "View this Dynalist document as a comment. Useful for Todoist comments that require a more robust editing interface."
+                    },
+                    {
+                        name: "checklist",
+                        symbol: "&#9745;",
+                        tooltip:
+                            "View this Dynalist document as a checklist; when each item is checked, the next is shown. Useful for tasks with many steps."
+                    },
+                    {
+                        name: "rotating",
+                        symbol: "&#9196;",
+                        tooltip:
+                            "WARNING! THIS EDITS THIS DOCUMENT. View the first item in this Dynalist document; when marked done, it will be sent to the bottom of the document. Useful for lists of chores that only need to be done once in a while."
+                    },
+                    {
+                        name: "project",
+                        symbol: "&#128240;",
+                        tooltip:
+                            "WARNING! THIS EDITS THIS DOCUMENT. View the first item in this Dynalist document; when marked done, it will be marked done in Dynalist. Useful for projects with a set list of steps."
+                    },
+                    {
+                        name: "view",
+                        symbol: "&#128206;",
+                        tooltip: "Open this document in Dynalist."
+                    }
+                ],
+                dynalistMenu = $("<div id='dynalistmenu'></div>");
+
+            $.each(dynalistMenuButtonsArray, function(i, button) {
+                let buttonHTML = $(
+                    "<button id='button" +
+                        button.name +
+                        "' title='" +
+                        button.tooltip +
+                        "'>" +
+                        button.symbol +
+                        " " +
+                        button.name +
+                        "</button>"
+                );
+                dynalistMenu.append(buttonHTML);
+            });
+
+            $(".taskComments").append(dynalistMenu);
+
             let dynalistNodesOpen = _.filter(output.nodes, function(node) {
                     if (node.checked !== true) {
                         return true;
