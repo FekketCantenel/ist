@@ -52,7 +52,7 @@ function getDynalistContent(commentContent) {
 
             $.each(dynalistMenuButtonsArray, function(i, button) {
                 let buttonHTML = $(
-                    "<button id='button" +
+                    "<button class='dynalistMenuButton' dynalist.view='" +
                         button.name +
                         "' title='" +
                         button.tooltip +
@@ -73,9 +73,11 @@ function getDynalistContent(commentContent) {
                     }
                 }),
                 dynalistNodesOrdered = treeDynalist(dynalistNodesOpen, "root"),
-                dynalistNodesHTML = treeHTML(dynalistNodesOrdered);
+                dynalistHTML = getDynalistHTML(dynalistNodesOrdered);
 
-            $(".taskComments").append(dynalistNodesHTML);
+            $(".taskComments").append(dynalistHTML);
+
+            dynalistSetEvents(commentContent);
         });
     }
 }
@@ -124,10 +126,29 @@ function treeGetChildren(ids, nodesOpen) {
     return nodesNew;
 }
 
-function treeHTML(tree) {
+function getDynalistHTML(tree) {
     let treeHTML = $("<div></div>").addClass("taskComment");
 
+    let dynalistView = sessionStorage.getItem("dynalist.view");
+
+    switch (dynalistView) {
+        default:
+        case "read":
+            console.log("READ");
+            break;
+        case "checklist":
+            console.log("CHECKLIST");
+            break;
+        case "rotating":
+            console.log("ROTATING");
+            break;
+        case "project":
+            console.log("PROJECT");
+            break;
+    }
+
     treeHTML.append(treeHTMLGetChildren(tree));
+
     return treeHTML;
 }
 
@@ -150,4 +171,19 @@ function treeHTMLGetChildren(children) {
     });
 
     return treeHTMLInner;
+}
+
+function dynalistSetEvents(link) {
+    $(".dynalistMenuButton").click(function() {
+        if ($(this).attr("dynalist.view") === "view") {
+            window.open(link, "_blank");
+        } else {
+            sessionStorage.setItem(
+                "dynalist.view",
+                $(this).attr("dynalist.view")
+            );
+            $("#spinner, #task").toggle();
+            location.reload();
+        }
+    });
 }
