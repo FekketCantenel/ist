@@ -147,9 +147,15 @@ function getDynalistContent(commentContent) {
             }),
             success: function(data) {
                 console.log(data.nodes);
+                let dynalistNodes = _.filter(data.nodes, function(node) {
+                    if (node.checked !== true) {
+                        return true;
+                    }
+                });
+                console.log(dynalistNodes);
+
+                return "Dynalist document goes here";
             }
         });
-
-        return "Dynalist document goes here";
     }
 }
