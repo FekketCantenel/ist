@@ -135,32 +135,36 @@ function getDynalistContent(commentContent) {
             "</small>"
         );
     } else {
-        let dynalistFile = commentContent.slice(
+        let dynalistFileID = commentContent.slice(
             commentContent.lastIndexOf("/") + 1
         );
 
-        $.ajax({
-            type: "POST",
-            url: "https://dynalist.io/api/v1/doc/read",
-            data: JSON.stringify({
-                token: Cookies.get("dynalistToken"),
-                file_id: dynalistFile
-            }),
-            success: function(data) {
-                let dynalistNodesOpen = _.filter(data.nodes, function(node) {
-                        if (node.checked !== true) {
-                            return true;
-                        }
-                    }),
-                    dynalistNodesOrdered = treeDynalist(
-                        dynalistNodesOpen,
-                        "root"
-                    );
+        getDynalistAPI(dynalistFileID, function(output) {
+            let dynalistNodesOpen = _.filter(output.nodes, function(node) {
+                    if (node.checked !== true) {
+                        return true;
+                    }
+                }),
+                dynalistNodesOrdered = treeDynalist(dynalistNodesOpen, "root"),
+                dynalistNodesHTML = treeHTML(dynalistNodesOrdered);
 
-                return "Dynalist document goes here";
-            }
+            $(".taskComments").append(dynalistNodesHTML);
         });
     }
+}
+
+function getDynalistAPI(file_id, callback) {
+    $.ajax({
+        type: "POST",
+        url: "https://dynalist.io/api/v1/doc/read",
+        data: JSON.stringify({
+            token: Cookies.get("dynalistToken"),
+            file_id
+        }),
+        success: function(data) {
+            callback(data);
+        }
+    });
 }
 
 function treeDynalist(nodesOpen) {
@@ -169,7 +173,7 @@ function treeDynalist(nodesOpen) {
         }).children,
         nodesTree = treeGetChildren(nodesRoot, nodesOpen);
 
-    console.log(nodesTree);
+    return nodesTree;
 }
 
 function treeGetChildren(ids, nodesOpen) {
@@ -191,4 +195,32 @@ function treeGetChildren(ids, nodesOpen) {
         }
     });
     return nodesNew;
+}
+
+function treeHTML(tree) {
+    let treeHTML = $("<div></div>").addClass("taskComment");
+
+    treeHTML.append(treeHTMLGetChildren(tree));
+    return treeHTML;
+}
+
+function treeHTMLGetChildren(children) {
+    let treeHTMLInner = $("<ul></ul>");
+
+    $.each(children, function(i, node) {
+        let converter = new showdown.Converter(),
+            nodeContentHTML = converter
+                .makeHtml(node.content)
+                .replace(/(<p[^>]+?>|<p>|<\/p>)/gim, "");
+
+        let nodeHTML = $("<li></li>").html(nodeContentHTML);
+        if (node.childrenNodes) {
+            let nodeChildrenHTML = treeHTMLGetChildren(node.childrenNodes);
+            nodeHTML.append(nodeChildrenHTML);
+        }
+
+        treeHTMLInner.append(nodeHTML);
+    });
+
+    return treeHTMLInner;
 }
