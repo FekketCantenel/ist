@@ -134,6 +134,22 @@ function getDynalistContent(commentContent) {
             "</small>"
         );
     } else {
+        let dynalistFile = commentContent.slice(
+            commentContent.lastIndexOf("/") + 1
+        );
+
+        $.ajax({
+            type: "POST",
+            url: "https://dynalist.io/api/v1/doc/read",
+            data: JSON.stringify({
+                token: Cookies.get("dynalistToken"),
+                file_id: dynalistFile
+            }),
+            success: function(data) {
+                console.log(data.nodes);
+            }
+        });
+
         return "Dynalist document goes here";
     }
 }
