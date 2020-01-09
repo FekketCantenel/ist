@@ -104,7 +104,6 @@ function getTaskCommentsHTML(comments) {
             commentElement = $("<div></div>")
                 .addClass("taskComment")
                 .html(commentContentHTML);
-        commentsHTML.append(commentElement);
 
         let regex = new RegExp("^https:\\/\\/dynalist.io\\/d\\/"),
             results = regex.exec(commentContent);
@@ -112,6 +111,8 @@ function getTaskCommentsHTML(comments) {
         if (results != null) {
             let dynalistContent = getDynalistContent(commentContent);
             commentsHTML.append(dynalistContent);
+        } else {
+            commentsHTML.append(commentElement);
         }
 
         if (i < _.size(comments) - 1) {
