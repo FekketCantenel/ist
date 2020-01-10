@@ -16,7 +16,9 @@ function getDynalistContent(commentContent, taskID) {
             commentContent.lastIndexOf("/") + 1
         );
 
-        getDynalistAPI(dynalistFileID, function(output) {
+        let readCommands = { file_id: dynalistFileID };
+
+        postDynalistAPI("read", readCommands, function(output) {
             let dynalistMenuButtonsArray = [
                     {
                         name: "read",
@@ -73,7 +75,11 @@ function getDynalistContent(commentContent, taskID) {
                     }
                 }),
                 dynalistNodesOrdered = treeDynalist(dynalistNodesOpen, "root"),
-                dynalistHTML = getDynalistHTML(dynalistNodesOrdered, taskID);
+                dynalistHTML = getDynalistHTML(
+                    dynalistNodesOrdered,
+                    taskID,
+                    dynalistFileID
+                );
 
             $(".taskComments").append(dynalistHTML);
 
@@ -82,13 +88,13 @@ function getDynalistContent(commentContent, taskID) {
     }
 }
 
-function getDynalistAPI(file_id, callback) {
+function postDynalistAPI(endpoint, commands, callback) {
     $.ajax({
         type: "POST",
-        url: "https://dynalist.io/api/v1/doc/read",
+        url: "https://dynalist.io/api/v1/doc/" + endpoint,
         data: JSON.stringify({
             token: Cookies.get("dynalistToken"),
-            file_id
+            ...commands
         }),
         success: function(data) {
             callback(data);
@@ -126,35 +132,25 @@ function treeGetChildren(ids, nodesOpen) {
     return nodesNew;
 }
 
-function getDynalistHTML(tree, taskID) {
+function getDynalistHTML(tree, taskID, dynalistFileID) {
     let treeHTML = $("<div></div>").addClass("taskComment");
 
     let dynalistView = sessionStorage.getItem("dynalistview." + taskID);
 
-    if (dynalistView) {
-        $("button[dynalistview=" + dynalistView + "]").addClass("important");
-    }
+    $("button[dynalistview=" + (dynalistView || "read") + "]").addClass(
+        "important"
+    );
+
     switch (dynalistView) {
         default:
         case "read":
-            treeHTML.append(treeHTMLGetChildren(tree));
+            treeHTML.append(treeHTMLGetChildren(tree, dynalistFileID));
             break;
         case "checklist":
-            let treeHTMLChildren = treeHTMLGetChildren(tree);
-
-            treeHTMLChildren.addClass("nobullets");
-            treeHTMLChildren
-                .children()
-                .prepend($("<button class='doneChecklist'>done</button>"));
-
-            treeHTMLChildren
-                .children()
-                .not(":first")
-                .hide();
-            treeHTML.append(treeHTMLChildren);
-            break;
         case "rotating":
-            console.log("ROTATING");
+            treeHTML.append(
+                treeHTMLGetChecklist(tree, dynalistView, dynalistFileID)
+            );
             break;
         case "project":
             console.log("PROJECT");
@@ -164,7 +160,7 @@ function getDynalistHTML(tree, taskID) {
     return treeHTML;
 }
 
-function treeHTMLGetChildren(children) {
+function treeHTMLGetChildren(children, dynalistFileID) {
     let treeHTMLInner = $("<ul></ul>");
 
     $.each(children, function(i, node) {
@@ -173,7 +169,10 @@ function treeHTMLGetChildren(children) {
                 .makeHtml(node.content)
                 .replace(/(<p[^>]+?>|<p>|<\/p>)/gim, "");
 
-        let nodeHTML = $("<li></li>").html(nodeContentHTML);
+        let nodeHTML = $("<li></li>")
+            .attr("dynalistid", node.id)
+            .attr("dynalistfileid", dynalistFileID)
+            .html(nodeContentHTML);
         if (node.childrenNodes) {
             let nodeChildrenHTML = treeHTMLGetChildren(node.childrenNodes);
             nodeHTML.append(nodeChildrenHTML);
@@ -183,6 +182,21 @@ function treeHTMLGetChildren(children) {
     });
 
     return treeHTMLInner;
+}
+
+function treeHTMLGetChecklist(tree, view, dynalistFileID) {
+    let treeHTMLChildren = treeHTMLGetChildren(tree, dynalistFileID);
+
+    treeHTMLChildren.addClass("nobullets");
+    treeHTMLChildren
+        .children()
+        .prepend($("<button class='done" + view + "'>done</button>"));
+
+    treeHTMLChildren
+        .children()
+        .not(":first")
+        .hide();
+    return treeHTMLChildren;
 }
 
 function dynalistSetEvents(link, taskID) {
@@ -199,7 +213,7 @@ function dynalistSetEvents(link, taskID) {
         }
     });
 
-    $(".doneChecklist").click(function() {
+    $(".donechecklist").click(function() {
         let dynalistNext = $(this)
             .parent()
             .next("li");
@@ -215,5 +229,50 @@ function dynalistSetEvents(link, taskID) {
         $(this)
             .parent()
             .hide();
+    });
+
+    $(".donerotating").click(function() {
+        let writeCommands = {
+            file_id: $(this)
+                .parent()
+                .attr("dynalistfileid"),
+            changes: [
+                {
+                    action: "move",
+                    node_id: $(this)
+                        .parent()
+                        .attr("dynalistid"),
+                    parent_id: "root",
+                    index: -1
+                }
+            ]
+        };
+
+        postDynalistAPI("edit", writeCommands, function(output) {
+            $("#spinner, #task").toggle();
+            location.reload();
+        });
+    });
+
+    $(".doneproject").click(function() {
+        let writeCommands = {
+            file_id: $(this)
+                .parent()
+                .attr("dynalistfileid"),
+            changes: [
+                {
+                    action: "edit",
+                    node_id: $(this)
+                        .parent()
+                        .attr("dynalistid"),
+                    checked: true
+                }
+            ]
+        };
+
+        postDynalistAPI("edit", writeCommands, function(output) {
+            $("#spinner, #task").toggle();
+            location.reload();
+        });
     });
 }
