@@ -56,8 +56,8 @@ body {
 }
 
 .nobullets > li {
-    text-indent: -2.75em;
-    margin-left: 2.65em;
+    text-indent: 0;
+    margin-left: 2.25em;
 }
 
 .nobullets > li > ul {
@@ -76,13 +76,23 @@ ul:not(.nobullets) > li {
 .donechecklist,
 .donerotating,
 .doneproject {
-    position: relative;
-    top: -0.25em;
+    position: absolute;
+    margin-top: -0.15em;
+    margin-left: -4.5em;
 }
 
 .taskComment > ul {
     margin-top: 0.25em;
     margin-bottom: 0.25em;
+}
+
+.projectParent {
+    font-style: italic;
+    margin-left: -1em;
+}
+
+.projectTask {
+    font-style: normal;
 }
 
 .tingle-modal-box__content {
@@ -282,5 +292,9 @@ button b {
     .projectLinkMobile,
     .taskLinkMobile {
         display: inline !important;
+    }
+
+    .dynalistMenuButton {
+        margin: 0.25em;
     }
 }

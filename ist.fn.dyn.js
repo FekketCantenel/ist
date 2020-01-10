@@ -153,7 +153,7 @@ function getDynalistHTML(tree, taskID, dynalistFileID) {
             );
             break;
         case "project":
-            console.log("PROJECT");
+            treeHTML.append(treeHTMLGetProject(tree, dynalistFileID));
             break;
     }
 
@@ -161,6 +161,7 @@ function getDynalistHTML(tree, taskID, dynalistFileID) {
 }
 
 function treeHTMLGetChildren(children, dynalistFileID) {
+    // console.log(dynalistFileID);
     let treeHTMLInner = $("<ul></ul>");
 
     $.each(children, function(i, node) {
@@ -174,7 +175,10 @@ function treeHTMLGetChildren(children, dynalistFileID) {
             .attr("dynalistfileid", dynalistFileID)
             .html(nodeContentHTML);
         if (node.childrenNodes) {
-            let nodeChildrenHTML = treeHTMLGetChildren(node.childrenNodes);
+            let nodeChildrenHTML = treeHTMLGetChildren(
+                node.childrenNodes,
+                dynalistFileID
+            );
             nodeHTML.append(nodeChildrenHTML);
         }
 
@@ -196,6 +200,32 @@ function treeHTMLGetChecklist(tree, view, dynalistFileID) {
         .children()
         .not(":first")
         .hide();
+    return treeHTMLChildren;
+}
+
+function treeHTMLGetProject(tree, dynalistFileID) {
+    let treeHTMLChildren = treeHTMLGetChildren(tree, dynalistFileID),
+        taskFound = 0;
+
+    $.each($(treeHTMLChildren[0]).find("li"), function(i, node) {
+        node = $(node);
+
+        if (taskFound === 1) {
+            node.remove();
+            return true;
+        }
+
+        let firstChild = node.find("li");
+        if (firstChild.length === 0) {
+            node.addClass("projectTask nobullets").prepend(
+                $("<button class='doneproject'>done</button>")
+            );
+            taskFound = 1;
+        } else {
+            node.addClass("projectParent nobullets").prepend("> ");
+        }
+    });
+
     return treeHTMLChildren;
 }
 
