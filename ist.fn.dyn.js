@@ -1,17 +1,25 @@
 import { spinOut } from "./ist.fn.event.js";
-export { getDynalistContent };
+export { getDynalistContent, dynalistSetAuthEvents };
 
 function getDynalistContent(commentContent, taskID) {
     if (Cookies.get("dynalistToken") === undefined) {
-        return (
-            "<small>" +
-            "<em>To authorize Ist to display your Dynalist documents, enter your <a href='https://dynalist.io/developer' target='_blank'>secret token</a>:</em> " +
-            '<form action=\'javascript:window.location.replace("?state=dynalist&code=" + $("input[name=dynalistSecret]").val().replace(/[^a-z0-9áéíóúñü .,_-]/gim, ""));\'>' +
-            "<input type='text' name='dynalistSecret'>" +
-            "<button name='submit' type='submit'>↵</button>" +
-            "</form>" +
-            "</small>"
+        let dynalistAuthHTML = $("<small></small>").append(
+            $("<em></em>")
+                .html(
+                    "To authorize Ist to display your Dynalist documents, enter your <a href='https://dynalist.io/developer' target='_blank'>secret token</a>:"
+                )
+                .append(
+                    $("<form id='dynalistAuthSubmit'></form>")
+                        .append(
+                            $("<input type='text' name='dynalistSecret' />")
+                        )
+                        .append(
+                            $("<button name='submit' type='submit'>↵</button>")
+                        )
+                )
         );
+
+        return dynalistAuthHTML;
     } else {
         let dynalistFileID = commentContent.slice(
             commentContent.lastIndexOf("/") + 1
@@ -302,5 +310,19 @@ function dynalistSetEvents(link, taskID) {
         postDynalistAPI("edit", writeCommands, function(output) {
             spinOut();
         });
+    });
+}
+
+function dynalistSetAuthEvents() {
+    $("#dynalistAuthSubmit").submit(function(event) {
+        event.preventDefault();
+
+        let authURL =
+            "?state=dynalist&code=" +
+            $("input[name=dynalistSecret]")
+                .val()
+                .replace(/[^a-z0-9áéíóúñü .,_-]/gim);
+
+        window.location.replace(authURL);
     });
 }

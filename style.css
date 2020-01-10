@@ -46,6 +46,11 @@ body {
     font-size: 0.75em;
 }
 
+#dynalistAuthSubmit {
+    display: inline;
+    margin-left: 1em;
+}
+
 #dynalistmenu {
     text-align: center !important;
 }

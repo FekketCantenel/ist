@@ -6,6 +6,7 @@ import {
 } from "./ist.fn.list.js";
 import { getHighestPriorityTask, getTaskHTML } from "./ist.fn.task.js";
 import { setEvents } from "./ist.fn.event.js";
+import { dynalistSetAuthEvents } from "./ist.fn.dyn.js";
 
 $(document).ready(function() {
     async function asyncCall() {
@@ -69,7 +70,9 @@ $(document).ready(function() {
                     projects,
                     todoistRawComments
                 );
+
                 $("#task").append(mainTask);
+                dynalistSetAuthEvents();
             } else {
                 sessionStorage.removeItem("project.id");
                 let suggestTasks = getSuggestTasksHTML(
