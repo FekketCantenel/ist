@@ -28,7 +28,7 @@ function getDynalistContent(commentContent, taskID) {
                     },
                     {
                         name: "checklist",
-                        symbol: "&#9745;",
+                        symbol: "&#127937;",
                         tooltip:
                             "View this Dynalist document as a checklist; when each top-level item is checked, the next is shown. Useful for tasks with many steps."
                     },
@@ -40,13 +40,13 @@ function getDynalistContent(commentContent, taskID) {
                     },
                     {
                         name: "project",
-                        symbol: "&#128240;",
+                        symbol: "&#128206;",
                         tooltip:
                             "WARNING! THIS EDITS THIS DOCUMENT. View the first deepest item in this Dynalist document; when marked done, it will be marked done in Dynalist. Useful for projects with a set list of steps."
                     },
                     {
                         name: "view",
-                        symbol: "&#128206;",
+                        symbol: "&#128279;",
                         tooltip: "Open this document in Dynalist."
                     }
                 ],
@@ -60,9 +60,9 @@ function getDynalistContent(commentContent, taskID) {
                         button.tooltip +
                         "'>" +
                         button.symbol +
-                        " " +
+                        " <span>" +
                         button.name +
-                        "</button>"
+                        "</span></button>"
                 );
                 dynalistMenu.append(buttonHTML);
             });
