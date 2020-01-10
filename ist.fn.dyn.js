@@ -141,6 +141,12 @@ function getDynalistHTML(tree) {
             break;
         case "checklist":
             let treeHTMLChildren = treeHTMLGetChildren(tree);
+
+            treeHTMLChildren.addClass("nobullets");
+            treeHTMLChildren
+                .children()
+                .prepend($("<button class='doneChecklist'>done</button>"));
+
             treeHTMLChildren
                 .children()
                 .not(":first")
@@ -192,5 +198,15 @@ function dynalistSetEvents(link) {
             $("#spinner, #task").toggle();
             location.reload();
         }
+    });
+
+    $(".doneChecklist").click(function() {
+        $(this)
+            .parent()
+            .next("li")
+            .show();
+        $(this)
+            .parent()
+            .hide();
     });
 }
