@@ -1,6 +1,6 @@
 export { getDynalistContent };
 
-function getDynalistContent(commentContent) {
+function getDynalistContent(commentContent, taskID) {
     if (Cookies.get("dynalistToken") === undefined) {
         return (
             "<small>" +
@@ -73,11 +73,11 @@ function getDynalistContent(commentContent) {
                     }
                 }),
                 dynalistNodesOrdered = treeDynalist(dynalistNodesOpen, "root"),
-                dynalistHTML = getDynalistHTML(dynalistNodesOrdered);
+                dynalistHTML = getDynalistHTML(dynalistNodesOrdered, taskID);
 
             $(".taskComments").append(dynalistHTML);
 
-            dynalistSetEvents(commentContent);
+            dynalistSetEvents(commentContent, taskID);
         });
     }
 }
@@ -126,10 +126,10 @@ function treeGetChildren(ids, nodesOpen) {
     return nodesNew;
 }
 
-function getDynalistHTML(tree) {
+function getDynalistHTML(tree, taskID) {
     let treeHTML = $("<div></div>").addClass("taskComment");
 
-    let dynalistView = sessionStorage.getItem("dynalistview");
+    let dynalistView = sessionStorage.getItem("dynalistview." + taskID);
 
     if (dynalistView) {
         $("button[dynalistview=" + dynalistView + "]").addClass("important");
@@ -152,7 +152,6 @@ function getDynalistHTML(tree) {
                 .not(":first")
                 .hide();
             treeHTML.append(treeHTMLChildren);
-            console.log("CHECKLIST");
             break;
         case "rotating":
             console.log("ROTATING");
@@ -186,13 +185,13 @@ function treeHTMLGetChildren(children) {
     return treeHTMLInner;
 }
 
-function dynalistSetEvents(link) {
+function dynalistSetEvents(link, taskID) {
     $(".dynalistMenuButton").click(function() {
         if ($(this).attr("dynalistview") === "view") {
             window.open(link, "_blank");
         } else {
             sessionStorage.setItem(
-                "dynalistview",
+                "dynalistview." + taskID,
                 $(this).attr("dynalistview")
             );
             $("#spinner, #task").toggle();
@@ -201,10 +200,18 @@ function dynalistSetEvents(link) {
     });
 
     $(".doneChecklist").click(function() {
-        $(this)
+        let dynalistNext = $(this)
             .parent()
-            .next("li")
-            .show();
+            .next("li");
+
+        if (dynalistNext.length > 0) {
+            dynalistNext.show();
+        } else {
+            $(".taskComments").append(
+                "Checklist finished! Mark this task done or reload to start over."
+            );
+        }
+
         $(this)
             .parent()
             .hide();

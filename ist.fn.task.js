@@ -117,7 +117,10 @@ function getTaskCommentsHTML(comments) {
             results = regex.exec(commentContent);
 
         if (results != null) {
-            let dynalistContent = getDynalistContent(commentContent);
+            let dynalistContent = getDynalistContent(
+                commentContent,
+                comment.task_id
+            );
             commentsHTML.append(dynalistContent);
         } else {
             commentsHTML.append(commentElement);
