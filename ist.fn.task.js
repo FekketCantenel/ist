@@ -66,6 +66,12 @@ function getTaskHTML(task, projects, comments) {
                 "&#128279;",
                 // "todoist://task?id=" + taskID
                 "https://todoist.com/app#task%2F" + taskID
+            ),
+            getTaskButtonHTML(
+                taskID,
+                "taskLinkMobile grey",
+                "&#128279;",
+                "todoist://task?id=" + taskID
             )
         ],
         buttonsContainer = $("<div></div>").append(priorityHTML, buttonsHTML),

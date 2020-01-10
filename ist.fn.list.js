@@ -108,10 +108,10 @@ function getSuggestTasksHTML(allTasks, dueTasks, projects) {
                 .html(project.name);
 
             let projectURL =
-                "<a class='suggestLink' target='_blank' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23" +
+                "<a class='projectLink' target='_blank' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23" +
                 project.name +
                 "'>&#128279;</a>" +
-                "<a class='suggestLinkMobile' target='_blank' href='todoist://project?id=" +
+                "<a class='projectLinkMobile' target='_blank' href='todoist://project?id=" +
                 project.id +
                 "'>&#128279;</a>";
 

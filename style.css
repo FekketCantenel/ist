@@ -152,8 +152,8 @@ button b {
     color: white !important;
 }
 
-.suggestLink,
-.suggestLinkMobile {
+.projectLink,
+.projectLinkMobile {
     text-decoration: none;
     font-size: 0.25em;
     position: absolute;
@@ -162,7 +162,8 @@ button b {
     opacity: 50%;
 }
 
-.suggestLinkMobile {
+.projectLinkMobile,
+.taskLinkMobile {
     display: none;
 }
 
@@ -241,11 +242,13 @@ button b {
         width: 90% !important;
     }
 
-    .suggestLink {
+    .projectLink,
+    .taskLink {
         display: none !important;
     }
 
-    .suggestLinkMobile {
+    .projectLinkMobile,
+    .taskLinkMobile {
         display: inline !important;
     }
 }
