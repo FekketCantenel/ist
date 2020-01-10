@@ -60,6 +60,19 @@ body {
     margin-left: 2.65em;
 }
 
+.nobullets > li > ul {
+    padding-left: 0;
+    margin-left: -1.45em;
+}
+
+ul:not(.nobullets) {
+    margin-left: 0;
+}
+
+ul:not(.nobullets) > li {
+    text-indent: 0;
+}
+
 .donechecklist,
 .donerotating,
 .doneproject {
