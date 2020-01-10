@@ -107,7 +107,9 @@ function getTaskCommentsHTML(comments) {
 
     $.each(comments, function(i, comment) {
         let commentContent = comment.content,
-            converter = new showdown.Converter(),
+            converter = new showdown.Converter({
+                openLinksInNewWindow: "true"
+            }),
             commentContentHTML = converter.makeHtml(commentContent),
             commentElement = $("<div></div>")
                 .addClass("taskComment")

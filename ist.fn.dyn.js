@@ -174,7 +174,9 @@ function treeHTMLGetChildren(children, dynalistFileID) {
     let treeHTMLInner = $("<ul></ul>");
 
     $.each(children, function(i, node) {
-        let converter = new showdown.Converter(),
+        let converter = new showdown.Converter({
+                openLinksInNewWindow: "true"
+            }),
             nodeContentHTML = converter
                 .makeHtml(node.content)
                 .replace(/(<p[^>]+?>|<p>|<\/p>)/gim, "");
