@@ -1,3 +1,4 @@
+import { spinOut } from "./ist.fn.event.js";
 export { getDynalistContent };
 
 function getDynalistContent(commentContent, taskID) {
@@ -238,8 +239,7 @@ function dynalistSetEvents(link, taskID) {
                 "dynalistview." + taskID,
                 $(this).attr("dynalistview")
             );
-            $("#spinner, #task").toggle();
-            location.reload();
+            spinOut();
         }
     });
 
@@ -279,8 +279,7 @@ function dynalistSetEvents(link, taskID) {
         };
 
         postDynalistAPI("edit", writeCommands, function(output) {
-            $("#spinner, #task").toggle();
-            location.reload();
+            spinOut();
         });
     });
 
@@ -301,8 +300,7 @@ function dynalistSetEvents(link, taskID) {
         };
 
         postDynalistAPI("edit", writeCommands, function(output) {
-            $("#spinner, #task").toggle();
-            location.reload();
+            spinOut();
         });
     });
 }

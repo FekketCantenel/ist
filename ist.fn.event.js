@@ -1,5 +1,5 @@
 import { asyncCall, uuidv4, postNewTaskTime } from "./ist.fn.api.js";
-export { setEvents };
+export { setEvents, spinOut };
 
 function setEvents(dueTasks, fullTasks) {
     $(".doneButton").click(function(event) {
@@ -94,13 +94,16 @@ function setEvents(dueTasks, fullTasks) {
 
     $(".suggest").click(function() {
         sessionStorage.setItem("project.id", $(this).attr("project.id"));
-        $("#spinner, #task").toggle();
-        location.reload();
+        spinOut();
     });
 
     $("#backToProjects").click(function() {
         sessionStorage.removeItem("project.id");
-        $("#spinner, #task").toggle();
-        location.reload();
+        spinOut();
     });
+}
+
+function spinOut() {
+    $("#spinner, #task").toggle();
+    location.reload();
 }
