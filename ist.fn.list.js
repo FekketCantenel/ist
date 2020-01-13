@@ -1,4 +1,5 @@
 import { postNewTaskTime } from "./ist.fn.api.js";
+import { getTaskRepeatMoment } from "./ist.fn.task.js";
 export { getAllTasks, getDueTasks, getSuggestTasksHTML };
 
 function getAllTasks(todoistRawTasks) {
@@ -37,23 +38,8 @@ function deferOverdueTasks(tasks) {
             if (task.due.all_day === 1) {
                 taskNewDateString = taskNewMoment.format("YYYY-MM-DD");
             } else {
-                if (/[AM|PM]$/i.test(task.due.string)) {
-                    let taskNewTime = task.due.string.split(" ");
-                    taskNewTime = taskNewTime.slice(-2);
-                    taskNewMoment = moment(taskNewTime, [
-                        "hh:mma",
-                        "hha",
-                        "ha"
-                    ]);
-
-                    taskNewDateString = taskNewMoment.format(
-                        "YYYY-MM-DDTHH:mm:ss"
-                    );
-                } else {
-                    taskNewDateString = taskNewMoment.format(
-                        "YYYY-MM-DDT05:00:00"
-                    );
-                }
+                taskNewMoment = getTaskRepeatMoment(task);
+                taskNewDateString = taskNewMoment.format("YYYY-MM-DDTHH:mm:ss");
             }
 
             tasksToDefer.push({

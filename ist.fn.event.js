@@ -1,4 +1,5 @@
 import { asyncCall, uuidv4, postNewTaskTime } from "./ist.fn.api.js";
+import { getTaskRepeatMoment } from "./ist.fn.task.js";
 export { setEvents, spinOut };
 
 function setEvents(dueTasks, fullTasks) {
@@ -25,21 +26,29 @@ function setEvents(dueTasks, fullTasks) {
             });
 
         let modal = new tingle.modal({
-            footer: true,
-            closeMethods: ["overlay", "escape"]
-        });
+                footer: true,
+                closeMethods: ["overlay", "escape"]
+            }),
+            taskNewMoment = getTaskRepeatMoment(task).add(1, "days"),
+            nowMoment = moment(),
+            taskNewTime = taskNewMoment.format("LT").replace(":00", ""),
+            taskUntilTomorrow = taskNewMoment.diff(nowMoment);
 
         let deferArrayTimes = [
+            ["tomorrow " + taskNewTime, taskUntilTomorrow],
             ["+5 minutes", 300000],
             ["+15 minutes", 900000],
             ["+30 minutes", 1800000],
             ["+45 minutes", 2700000],
             ["+1 hour", 3600000],
+            ["+90 minutes", 5400000],
             ["+2 hours", 7200000],
             ["+3 hours", 10800000],
             ["+4 hours", 14400000],
             ["+6 hours", 21600000],
+            ["+8 hours", 28800000],
             ["+12 hours", 43200000],
+            ["+18 hours", 64800000],
             ["+24 hours", 86400000],
             ["+48 hours", 172800000]
         ];

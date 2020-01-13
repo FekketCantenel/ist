@@ -1,4 +1,9 @@
-export { getHighestPriorityTask, getTaskHTML, getTaskCommentsHTML };
+export {
+    getHighestPriorityTask,
+    getTaskHTML,
+    getTaskCommentsHTML,
+    getTaskRepeatMoment
+};
 import { getDynalistContent } from "./ist.fn.dyn.js";
 
 function getHighestPriorityTask(dueTasks, projects) {
@@ -141,4 +146,16 @@ function getTaskCommentsHTML(comments) {
     });
 
     return commentsHTML;
+}
+
+function getTaskRepeatMoment(task) {
+    let taskNewTime = task.due.string.split(" ");
+    taskNewTime = taskNewTime.slice(-2);
+    let taskNewMoment = moment(taskNewTime, ["hh:mma", "hha", "ha"]);
+
+    if (!/[AM|PM]$/i.test(task.due.string)) {
+        taskNewMoment.hour(5);
+    }
+
+    return taskNewMoment;
 }
