@@ -119,6 +119,13 @@ function getTaskCommentsHTML(comments) {
             results = regex.exec(commentContent);
 
         if (results != null) {
+            let newSpinner = $("#spinner")
+                .clone()
+                .attr("id", "spinnerDynalist")
+                .show();
+
+            newSpinner.appendTo(commentsHTML);
+
             let dynalistContent = getDynalistContent(
                 commentContent,
                 comment.task_id

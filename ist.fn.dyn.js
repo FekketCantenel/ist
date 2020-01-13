@@ -76,6 +76,7 @@ function getDynalistContent(commentContent, taskID) {
                 dynalistMenu.append(buttonHTML);
             });
 
+            $("#spinnerDynalist").remove();
             $(".taskComments").append(dynalistMenu);
 
             let dynalistNodesOpen = _.filter(output.nodes, function(node) {
