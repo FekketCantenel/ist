@@ -242,7 +242,7 @@ function treeHTMLGetProject(tree, dynalistFileID) {
 }
 
 function dynalistSetEvents(link, taskID) {
-    $(".dynalistMenuButton").click(function() {
+    $(".dynalistMenuButton").on("click auxclick", function() {
         if ($(this).attr("dynalistview") === "view") {
             window.open(link, "_blank");
         } else {
