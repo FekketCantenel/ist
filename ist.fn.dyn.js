@@ -144,7 +144,7 @@ function treeGetChildren(ids, nodesOpen) {
 function getDynalistHTML(tree, taskID, dynalistFileID) {
     let treeHTML = $("<div></div>").addClass("taskComment");
 
-    let dynalistView = sessionStorage.getItem("dynalistview." + taskID);
+    let dynalistView = localStorage.getItem("dynalistview." + taskID);
 
     $("button[dynalistview=" + (dynalistView || "read") + "]").addClass(
         "important"
@@ -245,7 +245,7 @@ function dynalistSetEvents(link, taskID) {
         if ($(this).attr("dynalistview") === "view") {
             window.open(link, "_blank");
         } else {
-            sessionStorage.setItem(
+            localStorage.setItem(
                 "dynalistview." + taskID,
                 $(this).attr("dynalistview")
             );
