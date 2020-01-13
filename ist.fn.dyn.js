@@ -234,7 +234,7 @@ function treeHTMLGetProject(tree, dynalistFileID) {
             );
             taskFound = 1;
         } else {
-            node.addClass("projectParent nobullets").prepend("> ");
+            node.addClass("projectParent nobullets").prepend("... ");
         }
     });
 

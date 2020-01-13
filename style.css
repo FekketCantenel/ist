@@ -94,11 +94,12 @@ ul:not(.nobullets) > li {
 
 .projectParent {
     font-style: italic;
-    margin-left: -1em;
+    margin-left: 0em;
 }
 
 .projectTask {
     font-style: normal;
+    margin-left: 1em;
 }
 
 .tingle-modal-box__content {
