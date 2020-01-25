@@ -1,3 +1,4 @@
+/* global Cookies, $, location, crypto */
 export {
     getAPI,
     getURLParameter,
@@ -8,52 +9,52 @@ export {
     postNewTaskTime
 };
 
-let todoistAPI = "https://todoist.com/api/v8/sync",
-    todoistToken = Cookies.get("todoistToken");
+const todoistAPI = 'https://todoist.com/api/v8/sync',
+    todoistToken = Cookies.get('todoistToken');
 
 async function getAPI(path) {
     try {
         return await $.ajax({
-            type: "GET",
-            url: "https://api.todoist.com/rest/v1/" + path,
-            dataType: "json",
+            type: 'GET',
+            url: 'https://api.todoist.com/rest/v1/' + path,
+            dataType: 'json',
             beforeSend: function(request) {
                 if (todoistToken) {
                     request.setRequestHeader(
-                        "Authorization",
-                        "Bearer " + todoistToken
+                        'Authorization',
+                        'Bearer ' + todoistToken
                     );
                 }
             }
         });
     } catch (e) {
         console.error(e);
-        $("#task").append(
-            "An error occurred. See the console for more information."
+        $('#task').append(
+            'An error occurred. See the console for more information.'
         );
     }
 }
 
 function getURLParameter(name) {
     // modified from https://davidwalsh.name/query-string-javascript
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
 
-    let regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
         results = regex.exec(location.search);
     return results === null
-        ? ""
-        : decodeURIComponent(results[1].replace(/\+/g, " "));
+        ? ''
+        : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
 async function getAuth(code) {
-    let commands = {
-        client_id: "711cd8b82f8e433f83f4972c4cae127f",
-        client_secret: "ab65c865eef846e89ae64452746a8524",
+    const commands = {
+        client_id: '711cd8b82f8e433f83f4972c4cae127f',
+        client_secret: 'ab65c865eef846e89ae64452746a8524',
         code,
-        redirect_uri: "https://ist.never-ends.net/2"
+        redirect_uri: 'https://ist.never-ends.net/2'
     };
 
-    return await $.post("https://todoist.com/oauth/access_token", commands);
+    return $.post('https://todoist.com/oauth/access_token', commands);
 }
 
 function uuidv4() {
@@ -67,7 +68,7 @@ function uuidv4() {
 }
 
 async function postAPI(commands) {
-    return await $.post(todoistAPI, {
+    return $.post(todoistAPI, {
         token: todoistToken,
         commands
     }).done(function(data, response) {
@@ -76,22 +77,22 @@ async function postAPI(commands) {
 }
 
 async function asyncCall(commands, toggle = 1) {
-    $("body, .roundbutton").css("cssText", "cursor: progress !important");
+    $('body, .roundbutton').css('cssText', 'cursor: progress !important');
     if (toggle === 1) {
-        $("#spinner, #task").toggle();
+        $('#spinner, #task').toggle();
     }
-    let result = await postAPI(JSON.stringify(commands));
+    await postAPI(JSON.stringify(commands));
     location.reload();
 }
 
 function postNewTaskTime(tasksToDefer) {
-    let randUUID = "",
-        commands = [];
+    let randUUID = '';
+    const commands = [];
 
     tasksToDefer.forEach(function(task) {
         randUUID = uuidv4();
         commands.push({
-            type: "item_update",
+            type: 'item_update',
             uuid: randUUID,
             args: {
                 id: task.id,

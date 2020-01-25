@@ -1,15 +1,16 @@
+/* global sessionStorage, $, _, showdown, moment */
+import { getDynalistContent } from './ist.fn.dyn.js';
 export {
     getHighestPriorityTask,
     getTaskHTML,
     getTaskCommentsHTML,
     getTaskRepeatMoment
 };
-import { getDynalistContent } from "./ist.fn.dyn.js";
 
 function getHighestPriorityTask(dueTasks, projects) {
-    let task = {},
-        projectRoutine = projects.find(({ order }) => order === 1),
-        projectChosenID = Number(sessionStorage.getItem("project.id")) || 0;
+    let task = {};
+    const projectRoutine = projects.find(({ order }) => order === 1),
+        projectChosenID = Number(sessionStorage.getItem('project.id')) || 0;
 
     $.each([projectRoutine.id, projectChosenID], function(i, projectID) {
         task = getHighestPriorityTaskByProject(dueTasks, projectID);
@@ -40,52 +41,52 @@ function getHighestPriorityTaskByProject(dueTasks, projectID) {
 }
 
 function getTaskButtonHTML(taskID, taskClasses, emoji, href) {
-    return $("<a>")
+    return $('<a>')
         .addClass(`roundbutton ${taskClasses}`)
         .html(emoji)
-        .attr("href", href)
-        .attr("taskID", taskID);
+        .attr('href', href)
+        .attr('taskID', taskID);
 }
 
 function getTaskHTML(task, projects, comments) {
-    let taskID = task.id,
+    const taskID = task.id,
         converter = new showdown.Converter(),
         project = projects.find(({ id }) => id === Number(task.project_id)),
         taskName = converter.makeHtml(task.content),
-        taskHTML = $("<div></div>"),
+        taskHTML = $('<div></div>'),
         priorityEmojis = {
-            1: "&#x26AB;", // black
-            2: "&#x1F535;", // blue
-            3: "&#x1F34A;", // tangerine
-            4: "&#x1F534;" // red
+            1: '&#x26AB;', // black
+            2: '&#x1F535;', // blue
+            3: '&#x1F34A;', // tangerine
+            4: '&#x1F534;' // red
         },
-        priorityHTML = $("<a>")
-            .addClass("priorityButton")
+        priorityHTML = $('<a>')
+            .addClass('priorityButton')
             .html(priorityEmojis[task.priority]),
         buttonsHTML = [
-            getTaskButtonHTML(taskID, "doneButton", "&#9989;", ""),
-            getTaskButtonHTML(taskID, "deferButton", "&#9200;", ""),
+            getTaskButtonHTML(taskID, 'doneButton', '&#9989;', ''),
+            getTaskButtonHTML(taskID, 'deferButton', '&#9200;', ''),
             getTaskButtonHTML(
                 taskID,
-                "taskLink grey",
-                "&#128279;",
+                'taskLink grey',
+                '&#128279;',
                 // "todoist://task?id=" + taskID
-                "https://todoist.com/app#task%2F" + taskID
+                'https://todoist.com/app#task%2F' + taskID
             ),
             getTaskButtonHTML(
                 taskID,
-                "taskLinkMobile grey",
-                "&#128279;",
-                "todoist://task?id=" + taskID
+                'taskLinkMobile grey',
+                '&#128279;',
+                'todoist://task?id=' + taskID
             )
         ],
-        buttonsContainer = $("<div></div>").append(priorityHTML, buttonsHTML),
+        buttonsContainer = $('<div></div>').append(priorityHTML, buttonsHTML),
         commentsHTML = getTaskCommentsHTML(comments);
 
     if (project.order !== 1) {
         taskHTML.append(
-            $("<div></div>")
-                .addClass("projectName")
+            $('<div></div>')
+                .addClass('projectName')
                 .html(
                     "<strong id='backToProjects'>&#11013;</strong> " +
                         project.name
@@ -94,8 +95,8 @@ function getTaskHTML(task, projects, comments) {
     }
 
     taskHTML.append(
-        $("<div></div>")
-            .addClass("mainTask")
+        $('<div></div>')
+            .addClass('mainTask')
             .html(taskName)
             .append(buttonsContainer, commentsHTML)
     );
@@ -104,34 +105,33 @@ function getTaskHTML(task, projects, comments) {
 }
 
 function getTaskCommentsHTML(comments) {
-    if (comments.length == 0) {
+    if (comments.length === 0) {
         return false;
     }
 
-    let commentsHTML = $("<div></div>").addClass("taskComments");
+    const commentsHTML = $('<div></div>').addClass('taskComments');
 
     $.each(comments, function(i, comment) {
-        let commentContent = comment.content,
+        const commentContent = comment.content,
             converter = new showdown.Converter({
-                openLinksInNewWindow: "true"
+                openLinksInNewWindow: 'true'
             }),
             commentContentHTML = converter.makeHtml(commentContent),
-            commentElement = $("<div></div>")
-                .addClass("taskComment")
-                .html(commentContentHTML);
-
-        let regex = new RegExp("^https:\\/\\/dynalist.io\\/d\\/"),
+            commentElement = $('<div></div>')
+                .addClass('taskComment')
+                .html(commentContentHTML),
+            regex = new RegExp('^https:\\/\\/dynalist.io\\/d\\/'),
             results = regex.exec(commentContent);
 
         if (results != null) {
-            let newSpinner = $("#spinner")
+            const newSpinner = $('#spinner')
                 .clone()
-                .attr("id", "spinnerDynalist")
+                .attr('id', 'spinnerDynalist')
                 .show();
 
             newSpinner.appendTo(commentsHTML);
 
-            let dynalistContent = getDynalistContent(
+            const dynalistContent = getDynalistContent(
                 commentContent,
                 comment.task_id
             );
@@ -141,7 +141,7 @@ function getTaskCommentsHTML(comments) {
         }
 
         if (i < _.size(comments) - 1) {
-            commentsHTML.append("<hr />");
+            commentsHTML.append('<hr />');
         }
     });
 
@@ -149,9 +149,9 @@ function getTaskCommentsHTML(comments) {
 }
 
 function getTaskRepeatMoment(task) {
-    let taskNewTime = task.due.string.split(" ");
+    let taskNewTime = task.due.string.split(' ');
     taskNewTime = taskNewTime.slice(-2);
-    let taskNewMoment = moment(taskNewTime, ["hh:mma", "hha", "ha"]);
+    const taskNewMoment = moment(taskNewTime, ['hh:mma', 'hha', 'ha']);
 
     if (!/[AM|PM]$/i.test(task.due.string)) {
         taskNewMoment.hour(5);
