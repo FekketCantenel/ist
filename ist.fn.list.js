@@ -1,7 +1,6 @@
 /* global $, moment, _ */
 import { postNewTaskTime } from './ist.fn.api.js';
 import { getTaskRepeatMoment } from './ist.fn.task.js';
-import { spinOut } from './ist.fn.event.js';
 export { getAllTasks, getDueTasks, getSuggestTasksHTML };
 
 function getAllTasks(todoistRawTasks) {
@@ -55,7 +54,6 @@ function deferOverdueTasks(tasks) {
         }
     });
     postNewTaskTime(tasksToDefer);
-    spinOut();
 }
 
 function getDueTasks(allTasks) {
