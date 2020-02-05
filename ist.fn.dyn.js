@@ -22,9 +22,9 @@ function getDynalistContent(commentContent, taskID) {
 
         return dynalistAuthHTML;
     } else {
-        const dynalistFileID = commentContent.slice(
-                commentContent.lastIndexOf('/') + 1
-            ),
+        const [dynalistFileID, dynalistSubItem] = commentContent
+                .slice(commentContent.lastIndexOf('/') + 1)
+                .split('#z='),
             readCommands = { file_id: dynalistFileID };
 
         postDynalistAPI('read', readCommands, function(output) {
@@ -84,7 +84,10 @@ function getDynalistContent(commentContent, taskID) {
                         return true;
                     }
                 }),
-                dynalistNodesOrdered = treeDynalist(dynalistNodesOpen, 'root'),
+                dynalistNodesOrdered = treeDynalist(
+                    dynalistNodesOpen,
+                    dynalistSubItem || 'root'
+                ),
                 dynalistHTML = getDynalistHTML(
                     dynalistNodesOrdered,
                     taskID,
@@ -112,9 +115,9 @@ function postDynalistAPI(endpoint, commands, callback) {
     });
 }
 
-function treeDynalist(nodesOpen) {
+function treeDynalist(nodesOpen, parent) {
     const nodesRoot = _.find(nodesOpen, function(value) {
-            return value.id === 'root';
+            return value.id === parent;
         }).children,
         nodesTree = treeGetChildren(nodesRoot, nodesOpen);
 
@@ -170,7 +173,6 @@ function getDynalistHTML(tree, taskID, dynalistFileID) {
 }
 
 function treeHTMLGetChildren(children, dynalistFileID) {
-    // console.log(dynalistFileID);
     const treeHTMLInner = $('<ul></ul>');
 
     $.each(children, function(i, node) {
