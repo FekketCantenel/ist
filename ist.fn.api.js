@@ -51,7 +51,7 @@ async function getAuth(code) {
         client_id: '711cd8b82f8e433f83f4972c4cae127f',
         client_secret: 'ab65c865eef846e89ae64452746a8524',
         code,
-        redirect_uri: 'https://ist.never-ends.net/2'
+        redirect_uri: 'https://ist.never-ends.net/'
     };
 
     return $.post('https://todoist.com/oauth/access_token', commands);
