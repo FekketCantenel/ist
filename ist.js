@@ -68,7 +68,8 @@ $(document).ready(function() {
                     mainTask = getTaskHTML(
                         highestPriorityTask,
                         projects,
-                        todoistRawComments
+                        todoistRawComments,
+                        dueTasks
                     );
 
                 $('#task').append(mainTask);

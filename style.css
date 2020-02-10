@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "liberation";
-    src: url("lib/LiberationSans-Regular-webfont.woff") format("woff");
+    font-family: 'liberation';
+    src: url('lib/LiberationSans-Regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -36,11 +36,19 @@ body {
     margin: 1em 2em;
 }
 
+#dueTasksInProject {
+    font-size: 0.4em;
+    color: grey;
+    font-style: italic;
+    text-align: right;
+    padding-right: 24%;
+}
+
 .taskComments {
     border: 1px solid white;
     width: 50%;
     margin: auto;
-    margin-top: 1.5em !important;
+    margin-top: 0.5em !important;
     text-align: justify;
     padding: 0.5em;
     padding-bottom: 0.25em;
@@ -162,7 +170,7 @@ button b {
 }
 
 .suggest:first-child:after {
-    content: "";
+    content: '';
     position: absolute;
     top: calc(-1 * var(--borderWidth));
     left: calc(-1 * var(--borderWidth));

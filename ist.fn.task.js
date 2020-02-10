@@ -1,4 +1,5 @@
 /* global sessionStorage, $, _, showdown, moment */
+/* eslint camelcase:0 */
 import { getDynalistContent } from './ist.fn.dyn.js';
 export {
     getHighestPriorityTask,
@@ -48,10 +49,22 @@ function getTaskButtonHTML(taskID, taskClasses, emoji, href) {
         .attr('taskID', taskID);
 }
 
-function getTaskHTML(task, projects, comments) {
+function getTaskHTML(task, projects, comments, dueTasks) {
     const taskID = task.id,
         converter = new showdown.Converter(),
         project = projects.find(({ id }) => id === Number(task.project_id)),
+        dueTasksInProject = dueTasks.filter(
+            ({ project_id }) => project_id === project.id
+        ).length,
+        dueTasksText = $('<p></p>')
+            .attr('id', 'dueTasksInProject')
+            .html(
+                `${
+                    dueTasksInProject > 1
+                        ? `${dueTasksInProject} tasks`
+                        : 'last task'
+                } remaining in project`
+            ),
         taskName = converter.makeHtml(task.content),
         taskHTML = $('<div></div>'),
         priorityEmojis = {
@@ -98,7 +111,7 @@ function getTaskHTML(task, projects, comments) {
         $('<div></div>')
             .addClass('mainTask')
             .html(taskName)
-            .append(buttonsContainer, commentsHTML)
+            .append(buttonsContainer, dueTasksText, commentsHTML)
     );
 
     return taskHTML;
