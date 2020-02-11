@@ -63,15 +63,7 @@ function getDynalistContent(commentContent, taskID) {
 
             $.each(dynalistMenuButtonsArray, function(i, button) {
                 const buttonHTML = $(
-                    "<button class='dynalistMenuButton' dynalistview='" +
-                        button.name +
-                        "' title='" +
-                        button.tooltip +
-                        "'>" +
-                        button.symbol +
-                        ' <span>' +
-                        button.name +
-                        '</span></button>'
+                    `<button class='dynalistMenuButton' dynalistview='${button.name}' title='${button.tooltip}'>${button.symbol}<span>${button.name}</span></button>`
                 );
                 dynalistMenu.append(buttonHTML);
             });
@@ -104,7 +96,7 @@ function getDynalistContent(commentContent, taskID) {
 function postDynalistAPI(endpoint, commands, callback) {
     $.ajax({
         type: 'POST',
-        url: 'https://dynalist.io/api/v1/doc/' + endpoint,
+        url: `https://dynalist.io/api/v1/doc/${endpoint}`,
         data: JSON.stringify({
             token: Cookies.get('dynalistToken'),
             ...commands
@@ -147,11 +139,9 @@ function treeGetChildren(ids, nodesOpen) {
 
 function getDynalistHTML(tree, taskID, dynalistFileID) {
     const treeHTML = $('<div></div>').addClass('taskComment'),
-        dynalistView = localStorage.getItem('dynalistview.' + taskID);
+        dynalistView = localStorage.getItem(`dynalistview.${taskID}`);
 
-    $('button[dynalistview=' + (dynalistView || 'read') + ']').addClass(
-        'important'
-    );
+    $(`button[dynalistview='${dynalistView || 'read'}']`).addClass('important');
 
     switch (dynalistView) {
         default:
@@ -207,7 +197,7 @@ function treeHTMLGetChecklist(tree, view, dynalistFileID) {
     treeHTMLChildren.addClass('nobullets');
     treeHTMLChildren
         .children()
-        .prepend($("<button class='done" + view + "'>done</button>"));
+        .prepend($(`<button class='done${view}'>done</button>`));
 
     treeHTMLChildren
         .children()
@@ -249,7 +239,7 @@ function dynalistSetEvents(link, taskID) {
             window.open(link, '_blank');
         } else {
             localStorage.setItem(
-                'dynalistview.' + taskID,
+                `dynalistview.${taskID}`,
                 $(this).attr('dynalistview')
             );
             spinOut();
@@ -322,11 +312,9 @@ function dynalistSetAuthEvents() {
     $('#dynalistAuthSubmit').submit(function(event) {
         event.preventDefault();
 
-        const authURL =
-            '?state=dynalist&code=' +
-            $('input[name=dynalistSecret]')
-                .val()
-                .replace(/[^a-z0-9áéíóúñü .,_-]/gim);
+        const authURL = `?state=dynalist&code=${$('input[name=dynalistSecret]')
+            .val()
+            .replace(/[^a-z0-9áéíóúñü .,_-]/gim)}`;
 
         window.location.replace(authURL);
     });

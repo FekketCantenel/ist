@@ -16,13 +16,13 @@ async function getAPI(path) {
     try {
         return await $.ajax({
             type: 'GET',
-            url: 'https://api.todoist.com/rest/v1/' + path,
+            url: `https://api.todoist.com/rest/v1/${path}`,
             dataType: 'json',
             beforeSend: function(request) {
                 if (todoistToken) {
                     request.setRequestHeader(
                         'Authorization',
-                        'Bearer ' + todoistToken
+                        `Bearer ${todoistToken}`
                     );
                 }
             }
@@ -39,7 +39,7 @@ function getURLParameter(name) {
     // modified from https://davidwalsh.name/query-string-javascript
     name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
 
-    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
+    const regex = new RegExp(`[\\?&]${name}=([^&#]*)`),
         results = regex.exec(location.search);
     return results === null
         ? ''

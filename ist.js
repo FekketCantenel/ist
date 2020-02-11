@@ -62,7 +62,7 @@ $(document).ready(function() {
 
             if (highestPriorityTask) {
                 const todoistRawComments = await getAPI(
-                        'comments?task_id=' + highestPriorityTask.id
+                        `comments?task_id=${highestPriorityTask.id}`
                     ),
                     mainTask = getTaskHTML(
                         highestPriorityTask,

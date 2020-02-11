@@ -84,7 +84,7 @@ function getSuggestTasksHTML(allTasks, dueTasks, projects) {
         project.count = countedTasks[project.id] || 0;
 
         if (project.count > 0) {
-            const badgeHTML = $('<a>' + project.count + '</a>')
+            const badgeHTML = $(`<a>${project.count}</a>`)
                     .addClass('badge')
                     .data('badge', project.count),
                 suggestTaskButton = $('<button></button>')
@@ -92,12 +92,8 @@ function getSuggestTasksHTML(allTasks, dueTasks, projects) {
                     .attr('project.id', project.id)
                     .html(project.name),
                 projectURL =
-                    "<a class='projectLink' target='_blank' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23" +
-                    project.name +
-                    "'>&#128279;</a>" +
-                    "<a class='projectLinkMobile' target='_blank' href='todoist://project?id=" +
-                    project.id +
-                    "'>&#128279;</a>";
+                    `<a class='projectLink' target='_blank' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23 ${project.name}'>&#128279;</a>` +
+                    `<a class='projectLinkMobile' target='_blank' href='todoist://project?id=${project.id}'>&#128279;</a>`;
 
             suggestTaskButton.append(badgeHTML);
 

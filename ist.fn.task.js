@@ -83,13 +83,13 @@ function getTaskHTML(task, projects, comments, dueTasks) {
                 taskID,
                 'taskLink grey',
                 '&#128279;',
-                'https://todoist.com/app#task%2F' + taskID
+                `https://todoist.com/app#task%2F${taskID}`
             ),
             getTaskButtonHTML(
                 taskID,
                 'taskLinkMobile grey',
                 '&#128279;',
-                'todoist://task?id=' + taskID
+                `todoist://task?id=${taskID}`
             )
         ],
         buttonsContainer = $('<div></div>').append(priorityHTML, buttonsHTML),
@@ -100,8 +100,7 @@ function getTaskHTML(task, projects, comments, dueTasks) {
             $('<div></div>')
                 .addClass('projectName')
                 .html(
-                    "<strong id='backToProjects'>&#11013;</strong> " +
-                        project.name
+                    `<strong id='backToProjects'>&#11013;</strong> ${project.name}`
                 )
         );
     }
