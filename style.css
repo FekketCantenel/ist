@@ -299,6 +299,11 @@ button b {
         margin-top: 0;
     }
 
+    #dueTasksInProject {
+        margin-top: 1em;
+        padding-bottom: 0em;
+    }
+
     .taskComments {
         width: 90% !important;
         margin-top: 1em !important;
