@@ -47,7 +47,6 @@ $(document).ready(function() {
 
             const todoistRawTasks = await getAPI('tasks');
 
-            // create master task objects
             const allTasks = getAllTasks(todoistRawTasks),
                 dueTasks = getDueTasks(allTasks);
 

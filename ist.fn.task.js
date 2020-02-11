@@ -83,7 +83,6 @@ function getTaskHTML(task, projects, comments, dueTasks) {
                 taskID,
                 'taskLink grey',
                 '&#128279;',
-                // "todoist://task?id=" + taskID
                 'https://todoist.com/app#task%2F' + taskID
             ),
             getTaskButtonHTML(

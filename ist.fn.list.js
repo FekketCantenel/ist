@@ -13,7 +13,6 @@ function getAllTasks(todoistRawTasks) {
         task.due.all_day = task.due.datetime ? 0 : 1;
         task.due.moment = moment(task.due.datetime || task.due.date).local();
 
-        // check if task is overdue
         if (task.due.moment.isBefore(moment(), 'day')) {
             overdue = 1;
         }
