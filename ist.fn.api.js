@@ -1,4 +1,5 @@
 /* global Cookies, $, location, crypto */
+import ENV from './env.js';
 export {
     getAPI,
     getURLParameter,
@@ -48,8 +49,8 @@ function getURLParameter(name) {
 
 async function getAuth(code) {
     const commands = {
-        client_id: '711cd8b82f8e433f83f4972c4cae127f',
-        client_secret: 'ab65c865eef846e89ae64452746a8524',
+        client_id: ENV.CLIENTID,
+        client_secret: ENV.CLIENTSC,
         code,
         redirect_uri: 'https://ist.never-ends.net/'
     };

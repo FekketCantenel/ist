@@ -1,4 +1,5 @@
 /* global sessionStorage, $, Cookies, showdown */
+import ENV from './env.js';
 import { getAPI, getAuth, getURLParameter } from './ist.fn.api.js';
 import {
     getAllTasks,
@@ -30,7 +31,7 @@ $(document).ready(function() {
 
                     $('#task').append(
                         readmeHTML,
-                        '<a href="https://todoist.com/oauth/authorize?client_id=711cd8b82f8e433f83f4972c4cae127f&state=todoist&scope=data:read_write"><button>when ready, log in with Todoist</button></a>'
+                        `<a href="https://todoist.com/oauth/authorize?client_id=${ENV.CLIENTID}&state=todoist&scope=data:read_write"><button>when ready, log in with Todoist</button></a>`
                     );
                 });
                 $('#spinner').hide();
