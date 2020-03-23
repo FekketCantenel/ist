@@ -1,7 +1,7 @@
 /* global $, _, tingle, moment, location, sessionStorage */
 import { asyncCall, uuidv4, postNewTaskTime } from './ist.fn.api.js';
 import { getTaskRepeatMoment } from './ist.fn.task.js';
-export { setEvents, spinOut };
+export { setEvents, spinOut, vibrate };
 
 function setEvents(dueTasks, fullTasks) {
     $('.doneButton').click(function(event) {
@@ -20,6 +20,7 @@ function setEvents(dueTasks, fullTasks) {
     });
 
     $('.deferButton').click(function(event) {
+        vibrate();
         event.preventDefault();
         const taskID = Number($(this).attr('taskID')),
             task = _.findWhere(dueTasks, {
@@ -73,6 +74,8 @@ function setEvents(dueTasks, fullTasks) {
                 deferAmount[0],
                 'tingle-btn tingle-btn--primary',
                 function() {
+                    vibrate();
+
                     const newTime = moment().add(deferAmount[1], 'ms');
                     let taskNewDate = '';
 
@@ -111,6 +114,13 @@ function setEvents(dueTasks, fullTasks) {
 }
 
 function spinOut() {
+    vibrate();
     $('#spinner, #task').toggle();
     location.reload();
+}
+
+function vibrate() {
+    if ('vibrate' in navigator) {
+        navigator.vibrate(50);
+    }
 }

@@ -1,5 +1,5 @@
 /* global Cookies, $, _, localStorage, showdown */
-import { spinOut } from './ist.fn.event.js';
+import { spinOut, vibrate } from './ist.fn.event.js';
 export { getDynalistContent, dynalistSetAuthEvents };
 
 function getDynalistContent(commentContent, taskID) {
@@ -234,6 +234,10 @@ function treeHTMLGetProject(tree, dynalistFileID) {
 }
 
 function dynalistSetEvents(link, taskID) {
+    $('.taskComment * button').click(() => {
+        vibrate();
+    });
+
     $('.dynalistMenuButton').on('click auxclick', function() {
         if ($(this).attr('dynalistview') === 'view') {
             window.open(link, '_blank');
