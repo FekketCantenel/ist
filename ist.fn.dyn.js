@@ -76,14 +76,16 @@ function getDynalistContent(commentContent, taskID) {
                         return true;
                     }
                 }),
+                parentID = dynalistSubItem || 'root',
                 dynalistNodesOrdered = treeDynalist(
                     dynalistNodesOpen,
-                    dynalistSubItem || 'root'
+                    parentID
                 ),
                 dynalistHTML = getDynalistHTML(
                     dynalistNodesOrdered,
                     taskID,
-                    dynalistFileID
+                    dynalistFileID,
+                    parentID
                 );
 
             $('.taskComments').append(dynalistHTML);
@@ -107,11 +109,11 @@ function postDynalistAPI(endpoint, commands, callback) {
     });
 }
 
-function treeDynalist(nodesOpen, parent) {
+function treeDynalist(nodesOpen, parentID) {
     const nodesRoot = _.find(nodesOpen, function(value) {
-            return value.id === parent;
+            return value.id === parentID;
         }).children,
-        nodesTree = treeGetChildren(nodesRoot, nodesOpen);
+        nodesTree = treeGetChildren(nodesRoot, nodesOpen, parentID);
 
     return nodesTree;
 }
@@ -137,7 +139,7 @@ function treeGetChildren(ids, nodesOpen) {
     return nodesNew;
 }
 
-function getDynalistHTML(tree, taskID, dynalistFileID) {
+function getDynalistHTML(tree, taskID, dynalistFileID, parentID) {
     const treeHTML = $('<div></div>').addClass('taskComment'),
         dynalistView = localStorage.getItem(`dynalistview.${taskID}`);
 
@@ -146,23 +148,28 @@ function getDynalistHTML(tree, taskID, dynalistFileID) {
     switch (dynalistView) {
         default:
         case 'read':
-            treeHTML.append(treeHTMLGetChildren(tree, dynalistFileID));
+            treeHTML.append(treeHTMLGetChildren(tree, 'root', dynalistFileID));
             break;
         case 'checklist':
         case 'rotating':
             treeHTML.append(
-                treeHTMLGetChecklist(tree, dynalistView, dynalistFileID)
+                treeHTMLGetChecklist(
+                    tree,
+                    dynalistView,
+                    dynalistFileID,
+                    parentID
+                )
             );
             break;
         case 'project':
-            treeHTML.append(treeHTMLGetProject(tree, dynalistFileID));
+            treeHTML.append(treeHTMLGetProject(tree, dynalistFileID, parentID));
             break;
     }
 
     return treeHTML;
 }
 
-function treeHTMLGetChildren(children, dynalistFileID) {
+function treeHTMLGetChildren(children, parentID, dynalistFileID) {
     const treeHTMLInner = $('<ul></ul>');
 
     $.each(children, function(i, node) {
@@ -174,12 +181,14 @@ function treeHTMLGetChildren(children, dynalistFileID) {
                 .replace(/(<p[^>]+?>|<p>|<\/p>)/gim, ''),
             nodeHTML = $('<li></li>')
                 .attr('dynalistid', node.id)
+                .attr('dynalistparentid', parentID)
                 .attr('dynalistfileid', dynalistFileID)
                 .html(nodeContentHTML);
 
         if (node.childrenNodes) {
             const nodeChildrenHTML = treeHTMLGetChildren(
                 node.childrenNodes,
+                node.id,
                 dynalistFileID
             );
             nodeHTML.append(nodeChildrenHTML);
@@ -191,8 +200,12 @@ function treeHTMLGetChildren(children, dynalistFileID) {
     return treeHTMLInner;
 }
 
-function treeHTMLGetChecklist(tree, view, dynalistFileID) {
-    const treeHTMLChildren = treeHTMLGetChildren(tree, dynalistFileID);
+function treeHTMLGetChecklist(tree, view, dynalistFileID, parentID) {
+    const treeHTMLChildren = treeHTMLGetChildren(
+        tree,
+        parentID,
+        dynalistFileID
+    );
 
     treeHTMLChildren.addClass('nobullets');
     treeHTMLChildren
@@ -206,8 +219,12 @@ function treeHTMLGetChecklist(tree, view, dynalistFileID) {
     return treeHTMLChildren;
 }
 
-function treeHTMLGetProject(tree, dynalistFileID) {
-    const treeHTMLChildren = treeHTMLGetChildren(tree, dynalistFileID);
+function treeHTMLGetProject(tree, dynalistFileID, parentID) {
+    const treeHTMLChildren = treeHTMLGetChildren(
+        tree,
+        parentID,
+        dynalistFileID
+    );
     let taskFound = 0;
 
     $.each($(treeHTMLChildren[0]).find('li'), function(i, node) {
@@ -279,7 +296,9 @@ function dynalistSetEvents(link, taskID) {
                     node_id: $(this)
                         .parent()
                         .attr('dynalistid'),
-                    parent_id: 'root',
+                    parent_id: $(this)
+                        .parent()
+                        .attr('dynalistparentid'),
                     index: -1
                 }
             ]
