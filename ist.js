@@ -1,6 +1,6 @@
-/* global sessionStorage, $, Cookies, showdown */
+/* global sessionStorage, $, Cookies, showdown, _, moment */
 import ENV from './env.js';
-import { getAPI, getAuth, getURLParameter } from './ist.fn.api.js';
+import { getAPI, syncAPI, getAuth, getURLParameter } from './ist.fn.api.js';
 import {
     getAllTasks,
     getDueTasks,
@@ -76,10 +76,24 @@ $(document).ready(function() {
                 dynalistSetAuthEvents();
             } else {
                 sessionStorage.removeItem('project.id');
+
+                const todoistRawActivity = await syncAPI('activity/get', {
+                    object_type: 'item',
+                    event_type: 'completed',
+                    limit: 100
+                });
+
+                const activity = _.filter(todoistRawActivity.events, event => {
+                    return moment(event.event_date)
+                        .local()
+                        .isSame(new Date(), 'day');
+                });
+
                 const suggestTasks = getSuggestTasksHTML(
                     allTasks,
                     dueTasks,
-                    projects
+                    projects,
+                    activity
                 );
 
                 if (suggestTasks[0].childElementCount > 0) {

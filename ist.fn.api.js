@@ -2,6 +2,7 @@
 import ENV from './env.js';
 export {
     getAPI,
+    syncAPI,
     getURLParameter,
     getAuth,
     uuidv4,
@@ -34,6 +35,16 @@ async function getAPI(path) {
             'An error occurred. See the console for more information.'
         );
     }
+}
+
+async function syncAPI(path, commands) {
+    return $.get(
+        `https://api.todoist.com/sync/v8/${path}?token=${todoistToken}&uuid=${uuidv4()}&${$.param(
+            commands
+        )}`
+    ).done(function(data, response) {
+        return response;
+    });
 }
 
 function getURLParameter(name) {
