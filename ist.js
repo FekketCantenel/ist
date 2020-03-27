@@ -1,4 +1,4 @@
-/* global sessionStorage, $, Cookies, showdown, _, moment */
+/* global sessionStorage, $, Cookies, showdown, moment */
 import ENV from './env.js';
 import { getAPI, syncAPI, getAuth, getURLParameter } from './ist.fn.api.js';
 import {
@@ -77,20 +77,15 @@ $(document).ready(function() {
             } else {
                 sessionStorage.removeItem('project.id');
 
-                const todoistRawActivity = await syncAPI('activity/get', {
-                    object_type: 'item',
-                    event_type: 'completed',
-                    limit: 100
-                });
+                const { days_items: todoistRawActivity } = await syncAPI(
+                    'completed/get_stats'
+                );
 
-                const activity = _.filter(todoistRawActivity.events, event => {
-                    return moment(event.event_date)
-                        .local()
-                        .isSame(new Date(), 'day');
-                });
+                const activity = todoistRawActivity.find(({ date }) =>
+                    moment(date).isSame(new Date(), 'day')
+                ).items;
 
                 const suggestTasks = getSuggestTasksHTML(
-                    allTasks,
                     dueTasks,
                     projects,
                     activity
