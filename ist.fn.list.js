@@ -87,6 +87,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
                 `<div>${project.name} (${projectActivity.completed})</div>`
             );
             activityColumn.css('background-color', COLORS[project.color]);
+            activityColumn.css('flex-grow', projectActivity.completed);
             activityDisplay.append(activityColumn);
         }
 

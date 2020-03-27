@@ -217,7 +217,9 @@ button b {
 }
 
 #activityDisplay > div {
-    flex-grow: 1;
+    flex-basis: 1em;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .projectLink,
