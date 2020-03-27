@@ -209,6 +209,17 @@ button b {
     color: white !important;
 }
 
+#activityDisplay {
+    font-size: 0.25em;
+    width: 22em;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+#activityDisplay > div {
+    flex-grow: 1;
+}
+
 .projectLink,
 .projectLinkMobile {
     text-decoration: none;

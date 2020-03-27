@@ -1,4 +1,6 @@
 /* global $, moment, _ */
+
+import COLORS from './colors.js';
 import { postNewTaskTime } from './ist.fn.api.js';
 import { getTaskRepeatMoment } from './ist.fn.task.js';
 export { getAllTasks, getDueTasks, getSuggestTasksHTML };
@@ -72,11 +74,22 @@ function getDueTasks(allTasks) {
     return dueTasks;
 }
 
-function getSuggestTasksHTML(allTasks, dueTasks, projects) {
+function getSuggestTasksHTML(dueTasks, projects, activity) {
     const suggestTasks = $('<div></div>').addClass('suggestTasks'),
-        countedTasks = _.countBy(dueTasks, 'project_id');
+        countedTasks = _.countBy(dueTasks, 'project_id'),
+        activityDisplay = $('<div id="activityDisplay"></div>');
 
-    $.each(projects, function(i, project) {
+    $.each(projects, (i, project) => {
+        const projectActivity = activity.find(({ id }) => id === project.id);
+
+        if (projectActivity) {
+            const activityColumn = $(
+                `<div>${project.name} (${projectActivity.completed})</div>`
+            );
+            activityColumn.css('background-color', COLORS[project.color]);
+            activityDisplay.append(activityColumn);
+        }
+
         if (project.name.slice(project.name.length - 1) === '_') {
             return true;
         }
@@ -100,6 +113,8 @@ function getSuggestTasksHTML(allTasks, dueTasks, projects) {
             suggestTasks.append(suggestTaskButton, projectURL, $('<br />'));
         }
     });
+
+    suggestTasks.append(activityDisplay);
 
     return suggestTasks;
 }
