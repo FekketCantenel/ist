@@ -210,16 +210,33 @@ button b {
 }
 
 #activityDisplay {
-    font-size: 0.25em;
-    width: 22em;
+    height: 2em;
+    font-size: 0.22em;
+    width: 25em;
     display: inline-flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+#activityDisplay > div:first-child {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+#activityDisplay > div:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
 #activityDisplay > div {
     flex-basis: 1em;
     overflow: hidden;
     white-space: nowrap;
+}
+
+#activityDisplay * p {
+    color: white;
+    padding: 0.15em 0.25em;
+    margin: 0;
 }
 
 .projectLink,

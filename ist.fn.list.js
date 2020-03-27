@@ -83,11 +83,17 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         const projectActivity = activity.find(({ id }) => id === project.id);
 
         if (projectActivity) {
-            const activityColumn = $(
-                `<div>${project.name} (${projectActivity.completed})</div>`
-            );
+            const activityColumn = $('<div></div>'),
+                activityColumnText = $(
+                    `<p>${project.name} (${projectActivity.completed})</p>`
+                );
+            activityColumn.append(activityColumnText);
             activityColumn.css('background-color', COLORS[project.color]);
             activityColumn.css('flex-grow', projectActivity.completed);
+            activityColumn.attr(
+                'title',
+                `${project.name} (${projectActivity.completed})`
+            );
             activityDisplay.append(activityColumn);
         }
 
