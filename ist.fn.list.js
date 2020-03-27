@@ -7,7 +7,7 @@ export { getAllTasks, getDueTasks, getSuggestTasksHTML };
 
 function getAllTasks(todoistRawTasks) {
     let overdue = 0;
-    $.each(todoistRawTasks, function(i, task) {
+    $.each(todoistRawTasks, (i, task) => {
         if (task.due == null) {
             return true;
         }
@@ -32,7 +32,7 @@ function getAllTasks(todoistRawTasks) {
 function deferOverdueTasks(tasks) {
     const tasksToDefer = [];
 
-    $.each(tasks, function(i, task) {
+    $.each(tasks, (i, task) => {
         if (task.due.moment.isBefore(moment(), 'day')) {
             let taskNewMoment = moment(),
                 taskNewDateString = '';

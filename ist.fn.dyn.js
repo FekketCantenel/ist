@@ -61,7 +61,7 @@ function getDynalistContent(commentContent, taskID) {
                 ],
                 dynalistMenu = $("<div id='dynalistmenu'></div>");
 
-            $.each(dynalistMenuButtonsArray, function(i, button) {
+            $.each(dynalistMenuButtonsArray, (i, button) => {
                 const buttonHTML = $(
                     `<button class='dynalistMenuButton' dynalistview='${button.name}' title='${button.tooltip}'>${button.symbol}<span>${button.name}</span></button>`
                 );
@@ -120,7 +120,7 @@ function treeDynalist(nodesOpen, parentID) {
 
 function treeGetChildren(ids, nodesOpen) {
     const nodesNew = [];
-    $.each(ids, function(i, id) {
+    $.each(ids, (i, id) => {
         const nodeNew = _.find(nodesOpen, function(value) {
             return value.id === id;
         });
@@ -172,7 +172,7 @@ function getDynalistHTML(tree, taskID, dynalistFileID, parentID) {
 function treeHTMLGetChildren(children, parentID, dynalistFileID) {
     const treeHTMLInner = $('<ul></ul>');
 
-    $.each(children, function(i, node) {
+    $.each(children, (i, node) => {
         const converter = new showdown.Converter({
                 openLinksInNewWindow: 'true'
             }),
@@ -227,7 +227,7 @@ function treeHTMLGetProject(tree, dynalistFileID, parentID) {
     );
     let taskFound = 0;
 
-    $.each($(treeHTMLChildren[0]).find('li'), function(i, node) {
+    $.each($(treeHTMLChildren[0]).find('li'), (i, node) => {
         node = $(node);
 
         if (taskFound === 1) {

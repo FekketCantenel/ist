@@ -13,7 +13,7 @@ function getHighestPriorityTask(dueTasks, projects) {
     const projectRoutine = projects.find(({ order }) => order === 1),
         projectChosenID = Number(sessionStorage.getItem('project.id')) || 0;
 
-    $.each([projectRoutine.id, projectChosenID], function(i, projectID) {
+    $.each([projectRoutine.id, projectChosenID], (i, projectID) => {
         task = getHighestPriorityTaskByProject(dueTasks, projectID);
 
         if (_.size(task) > 0) {
@@ -27,7 +27,7 @@ function getHighestPriorityTask(dueTasks, projects) {
 function getHighestPriorityTaskByProject(dueTasks, projectID) {
     let task = {};
 
-    $.each([4, 3, 2, 1], function(i, priority) {
+    $.each([4, 3, 2, 1], (i, priority) => {
         task = _.findWhere(dueTasks, {
             priority,
             project_id: projectID
@@ -122,7 +122,7 @@ function getTaskCommentsHTML(comments) {
 
     const commentsHTML = $('<div></div>').addClass('taskComments');
 
-    $.each(comments, function(i, comment) {
+    $.each(comments, (i, comment) => {
         const commentContent = comment.content,
             converter = new showdown.Converter({
                 openLinksInNewWindow: 'true'

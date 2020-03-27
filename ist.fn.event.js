@@ -69,7 +69,7 @@ function setEvents(dueTasks, fullTasks) {
             deferArray =
                 task.due.all_day === 0 ? deferArrayTimes : deferArrayDays;
 
-        $.each(deferArray, function(n, deferAmount) {
+        $.each(deferArray, (i, deferAmount) => {
             modal.addFooterBtn(
                 deferAmount[0],
                 'tingle-btn tingle-btn--primary',
