@@ -20,7 +20,7 @@ async function getAPI(path) {
             type: 'GET',
             url: `https://api.todoist.com/rest/v1/${path}`,
             dataType: 'json',
-            beforeSend: function(request) {
+            beforeSend: function (request) {
                 if (todoistToken) {
                     request.setRequestHeader(
                         'Authorization',
@@ -42,7 +42,7 @@ async function syncAPI(path, commands) {
         `https://api.todoist.com/sync/v8/${path}?token=${todoistToken}&uuid=${uuidv4()}&${$.param(
             commands
         )}`
-    ).done(function(data, response) {
+    ).done(function (data, response) {
         return response;
     });
 }
@@ -71,7 +71,7 @@ async function getAuth(code) {
 
 function uuidv4() {
     // copied from https://stackoverflow.com/a/2117523
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
         (
             c ^
             (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
@@ -83,7 +83,7 @@ async function postAPI(commands) {
     return $.post(todoistAPI, {
         token: todoistToken,
         commands
-    }).done(function(data, response) {
+    }).done(function (data, response) {
         return response;
     });
 }
@@ -101,7 +101,7 @@ function postNewTaskTime(tasksToDefer) {
     let randUUID = '';
     const commands = [];
 
-    tasksToDefer.forEach(function(task) {
+    tasksToDefer.forEach(function (task) {
         randUUID = uuidv4();
         commands.push({
             type: 'item_update',

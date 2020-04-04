@@ -58,14 +58,14 @@ function deferOverdueTasks(tasks) {
 }
 
 function getDueTasks(allTasks) {
-    const dueTasks = _.filter(allTasks, function(task) {
+    const dueTasks = _.filter(allTasks, (task) => {
         if (task.due == null) {
             return false;
         }
         return task.due.moment.isBefore(moment(), 'second');
     });
 
-    dueTasks.sort(function(a, b) {
+    dueTasks.sort((a, b) => {
         const c = new Date(a.due.datetime || a.due.date),
             d = new Date(b.due.datetime || b.due.date);
         return c - d;

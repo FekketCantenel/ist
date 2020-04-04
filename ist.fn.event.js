@@ -62,7 +62,7 @@ function setEvents(dueTasks, allTasks) {
             modal.addFooterBtn(
                 deferAmount[0],
                 'tingle-btn tingle-btn--primary',
-                function () {
+                () => {
                     vibrate();
 
                     const newTime = moment().add(deferAmount[1], 'ms');
@@ -158,7 +158,7 @@ function tasksPriorityCountHTML(tasksPriorityCount) {
         (key) => {
             tasksPriorityCountString += `${PRIORITIES[key]} ${
                 tasksPriorityCount[key] || 0
-            } `;
+            } &nbsp;&nbsp;`;
         }
     );
 
