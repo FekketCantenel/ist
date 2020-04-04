@@ -307,8 +307,9 @@ button b {
 }
 
 .tingle-modal-box__footer > button {
-    width: 14em;
-    margin-top: 1em;
+    width: 19.5em;
+    margin-top: 1.5em;
+    font-size: 0.75em;
 }
 
 @media only screen and (max-width: 600px) {

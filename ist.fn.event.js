@@ -1,10 +1,11 @@
 /* global $, _, tingle, moment, location, sessionStorage */
+import PRIORITIES from './priorities.js';
 import { asyncCall, uuidv4, postNewTaskTime } from './ist.fn.api.js';
 import { getTaskRepeatMoment } from './ist.fn.task.js';
 export { setEvents, spinOut, vibrate };
 
-function setEvents(dueTasks, fullTasks) {
-    $('.doneButton').click(function(event) {
+function setEvents(dueTasks, allTasks) {
+    $('.doneButton').click(function (event) {
         event.preventDefault();
         const taskID = Number($(this).attr('taskID')),
             randUUID = uuidv4(),
@@ -19,7 +20,7 @@ function setEvents(dueTasks, fullTasks) {
         asyncCall(commands);
     });
 
-    $('.deferButton').click(function(event) {
+    $('.deferButton').click(function (event) {
         vibrate();
         event.preventDefault();
         const taskID = Number($(this).attr('taskID')),
@@ -52,28 +53,16 @@ function setEvents(dueTasks, fullTasks) {
                 ['+24 hours', 86400000],
                 ['+48 hours', 172800000]
             ],
-            deferArrayDays = [
-                ['+1 day', 86400000],
-                ['+2 days', 172800000],
-                ['+3 days', 259200000],
-                ['+4 days', 345600000],
-                ['+5 days', 432000000],
-                ['+6 days', 518400000],
-                ['+7 days', 604800000],
-                ['+8 days', 691200000],
-                ['+9 days', 777600000],
-                ['+10 days', 864000000],
-                ['+11 days', 950400000],
-                ['+12 days', 1036800000]
-            ],
             deferArray =
-                task.due.all_day === 0 ? deferArrayTimes : deferArrayDays;
+                task.due.all_day === 0
+                    ? deferArrayTimes
+                    : getDeferArrayDays(allTasks, task.project_id);
 
         $.each(deferArray, (i, deferAmount) => {
             modal.addFooterBtn(
                 deferAmount[0],
                 'tingle-btn tingle-btn--primary',
-                function() {
+                function () {
                     vibrate();
 
                     const newTime = moment().add(deferAmount[1], 'ms');
@@ -102,12 +91,12 @@ function setEvents(dueTasks, fullTasks) {
         modal.open();
     });
 
-    $('.suggest').click(function() {
+    $('.suggest').click(function () {
         sessionStorage.setItem('project.id', $(this).attr('project.id'));
         spinOut();
     });
 
-    $('#backToProjects').click(function() {
+    $('#backToProjects').click(function () {
         sessionStorage.removeItem('project.id');
         spinOut();
     });
@@ -121,6 +110,57 @@ function spinOut() {
 
 function vibrate() {
     if ('vibrate' in navigator) {
-        navigator.vibrate(50);
+        navigator.vibrate(75);
     }
+}
+
+function getDeferArrayDays(allTasks, projectID) {
+    const dateTasks = _.groupBy(
+            _.filter(allTasks, (task) => {
+                return task.project_id === projectID;
+            }),
+            (task) => {
+                return task.due.date;
+            }
+        ),
+        deferArrayDays = [];
+
+    _.each(
+        Array.from(Array(12)).map((e, i) => i + 1),
+        (key) => {
+            const dateMoment = moment().add(key, 'days'),
+                tasksPriorityCount = _.countBy(
+                    dateTasks[dateMoment.format('YYYY-MM-DD')],
+                    (task) => {
+                        return task.priority;
+                    }
+                );
+
+            deferArrayDays.push([
+                `+${key} day${key > 1 ? 's' : ''} (${dateMoment.format(
+                    'ddd MMM D'
+                )})<br />${tasksPriorityCountHTML(tasksPriorityCount)}`,
+                Number(86400000 * key)
+            ]);
+        }
+    );
+
+    return deferArrayDays;
+}
+
+function tasksPriorityCountHTML(tasksPriorityCount) {
+    let tasksPriorityCountString = '';
+
+    _.each(
+        Array.from(Array(4))
+            .map((e, i) => i + 1)
+            .reverse(),
+        (key) => {
+            tasksPriorityCountString += `${PRIORITIES[key]} ${
+                tasksPriorityCount[key] || 0
+            } `;
+        }
+    );
+
+    return tasksPriorityCountString;
 }
