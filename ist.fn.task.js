@@ -1,5 +1,6 @@
 /* global sessionStorage, $, _, showdown, moment */
 /* eslint camelcase:0 */
+import PRIORITIES from './priorities.js';
 import { getDynalistContent } from './ist.fn.dyn.js';
 export {
     getHighestPriorityTask,
@@ -67,15 +68,9 @@ function getTaskHTML(task, projects, comments, dueTasks) {
             ),
         taskName = converter.makeHtml(task.content),
         taskHTML = $('<div></div>'),
-        priorityEmojis = {
-            1: '&#x26AB;', // black
-            2: '&#x1F535;', // blue
-            3: '&#x1F34A;', // tangerine
-            4: '&#x1F534;' // red
-        },
         priorityHTML = $('<a>')
             .addClass('priorityButton')
-            .html(priorityEmojis[task.priority]),
+            .html(PRIORITIES[task.priority]),
         buttonsHTML = [
             getTaskButtonHTML(taskID, 'doneButton', '&#9989;', ''),
             getTaskButtonHTML(taskID, 'deferButton', '&#9200;', ''),
