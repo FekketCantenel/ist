@@ -127,7 +127,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
     const activityColumnDummyWidth = Math.ceil(
             Math.ceil(flexWidth / 7) * 7 - flexWidth
         ),
-        activityColumnDummy = $('<div></div>').css(
+        activityColumnDummy = $(`<div>${activityColumnDummyWidth}</div>`).css(
             'flex-grow',
             activityColumnDummyWidth
         );
