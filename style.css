@@ -216,17 +216,17 @@ button b {
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
-    outline: 1px white dashed;
-    outline-offset: -3px;
+    outline: 1px #8c8c8c dashed;
+    color: #8c8c8c;
+    outline-offset: -2.5px;
+    margin-left: 0.25em;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
 #activityDisplay > div:first-child {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
-}
-#activityDisplay > div:last-child {
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
 }
 
 #activityDisplay > div {
