@@ -220,8 +220,6 @@ button b {
     color: #8c8c8c;
     outline-offset: -2.5px;
     margin-left: 0.25em;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
 }
 
 #activityDisplay > div:first-child {
