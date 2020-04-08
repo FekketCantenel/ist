@@ -216,6 +216,8 @@ button b {
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
+    outline: 1px white dashed;
+    outline-offset: -3px;
 }
 
 #activityDisplay > div:first-child {
@@ -231,6 +233,7 @@ button b {
     flex-basis: 1em;
     overflow: hidden;
     white-space: nowrap;
+    z-index: 1;
 }
 
 #activityDisplay * p {

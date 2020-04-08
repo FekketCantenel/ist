@@ -78,6 +78,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
     const suggestTasks = $('<div></div>').addClass('suggestTasks'),
         countedTasks = _.countBy(dueTasks, 'project_id'),
         activityDisplay = $('<div id="activityDisplay"></div>');
+    let flexWidth = 0.1;
 
     $.each(projects, (i, project) => {
         const projectActivity = activity.find(({ id }) => id === project.id);
@@ -95,6 +96,8 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
                 `${project.name} (${projectActivity.completed})`
             );
             activityDisplay.append(activityColumn);
+
+            flexWidth += projectActivity.completed;
         }
 
         if (project.name.slice(project.name.length - 1) === '_') {
@@ -120,6 +123,16 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
             suggestTasks.append(suggestTaskButton, projectURL, $('<br />'));
         }
     });
+
+    const activityColumnDummyWidth = Math.ceil(
+            Math.ceil(flexWidth / 7) * 7 - flexWidth
+        ),
+        activityColumnDummy = $('<div></div>').css(
+            'flex-grow',
+            activityColumnDummyWidth
+        );
+
+    activityDisplay.append(activityColumnDummy);
 
     suggestTasks.append(activityDisplay);
 
