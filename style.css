@@ -17,6 +17,10 @@ body {
     border: 0;
 }
 
+.dim {
+    opacity: 0.5;
+}
+
 #task,
 #spinner,
 #spinnerDynalist {

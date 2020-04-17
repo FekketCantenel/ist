@@ -56,7 +56,7 @@ function setEvents(dueTasks, allTasks) {
             deferArray =
                 task.due.all_day === 0
                     ? deferArrayTimes
-                    : getDeferArrayDays(allTasks, task.project_id);
+                    : getDeferArrayDays(allTasks, task);
 
         $.each(deferArray, (i, deferAmount) => {
             modal.addFooterBtn(
@@ -114,13 +114,13 @@ function vibrate() {
     }
 }
 
-function getDeferArrayDays(allTasks, projectID) {
+function getDeferArrayDays(allTasks, task) {
     const dateTasks = _.groupBy(
-            _.filter(allTasks, (task) => {
-                return task.project_id === projectID;
+            _.filter(allTasks, (thisTask) => {
+                return thisTask.project_id === task.project_id;
             }),
-            (task) => {
-                return task.due.date;
+            (thisTask) => {
+                return thisTask.due.date;
             }
         ),
         deferArrayDays = [];
@@ -131,15 +131,18 @@ function getDeferArrayDays(allTasks, projectID) {
             const dateMoment = moment().add(key, 'days'),
                 tasksPriorityCount = _.countBy(
                     dateTasks[dateMoment.format('YYYY-MM-DD')],
-                    (task) => {
-                        return task.priority;
+                    (thisTask) => {
+                        return thisTask.priority;
                     }
                 );
 
             deferArrayDays.push([
                 `+${key} day${key > 1 ? 's' : ''} (${dateMoment.format(
                     'ddd MMM D'
-                )})<br />${tasksPriorityCountHTML(tasksPriorityCount)}`,
+                )})<br />${tasksPriorityCountHTML(
+                    tasksPriorityCount,
+                    task.priority
+                )}`,
                 Number(86400000 * key)
             ]);
         }
@@ -148,7 +151,7 @@ function getDeferArrayDays(allTasks, projectID) {
     return deferArrayDays;
 }
 
-function tasksPriorityCountHTML(tasksPriorityCount) {
+function tasksPriorityCountHTML(tasksPriorityCount, priority) {
     let tasksPriorityCountString = '';
 
     _.each(
@@ -156,9 +159,11 @@ function tasksPriorityCountHTML(tasksPriorityCount) {
             .map((e, i) => i + 1)
             .reverse(),
         (key) => {
-            tasksPriorityCountString += `${PRIORITIES[key]} ${
+            tasksPriorityCountString += `<span${
+                key !== priority ? " class='dim'" : ''
+            }>${PRIORITIES[key]} ${
                 tasksPriorityCount[key] || 0
-            } &nbsp;&nbsp;`;
+            }</span> &nbsp;&nbsp;`;
         }
     );
 
