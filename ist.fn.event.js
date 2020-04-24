@@ -159,9 +159,9 @@ function tasksPriorityCountHTML(tasksPriorityCount, priority) {
             .map((e, i) => i + 1)
             .reverse(),
         (key) => {
-            tasksPriorityCountString += `<span${
+            tasksPriorityCountString += `<span ${
                 key !== priority ? " class='dim'" : ''
-            }>${PRIORITIES[key]} ${
+            }><span style='color: ${PRIORITIES[key]}'>&#x${2775 + key}</span> ${
                 tasksPriorityCount[key] || 0
             }</span> &nbsp;&nbsp;`;
         }

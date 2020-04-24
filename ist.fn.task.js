@@ -68,9 +68,9 @@ function getTaskHTML(task, projects, comments, dueTasks) {
             ),
         taskName = converter.makeHtml(task.content),
         taskHTML = $('<div></div>'),
-        priorityHTML = $('<a>')
-            .addClass('priorityButton')
-            .html(PRIORITIES[task.priority]),
+        taskPrioritySymbol = $(`<span>&#x${2775 + task.priority}</span>`)
+            .css('color', `${PRIORITIES[task.priority]}`)
+            .addClass('priorityButton'),
         buttonsHTML = [
             getTaskButtonHTML(taskID, 'doneButton', '&#9989;', ''),
             getTaskButtonHTML(taskID, 'deferButton', '&#9200;', ''),
@@ -87,7 +87,10 @@ function getTaskHTML(task, projects, comments, dueTasks) {
                 `todoist://task?id=${taskID}`
             )
         ],
-        buttonsContainer = $('<div></div>').append(priorityHTML, buttonsHTML),
+        buttonsContainer = $('<div></div>').append(
+            taskPrioritySymbol,
+            buttonsHTML
+        ),
         commentsHTML = getTaskCommentsHTML(comments);
 
     if (project.order !== 1) {

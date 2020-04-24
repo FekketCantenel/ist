@@ -1,6 +1,6 @@
 export default {
-    1: '&#x26AB;', // black
-    2: '&#x1F535;', // blue
-    3: '&#x1F7E0;', // tangerine
-    4: '&#x1F534;' // red
+    1: '#282828', // black
+    2: '#5297ff', // blue
+    3: '#ff9a14', // tangerine
+    4: '#ff7066' // red
 };
