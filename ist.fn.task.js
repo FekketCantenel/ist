@@ -147,10 +147,10 @@ function getTaskCommentsHTML(comments) {
             commentsHTML.append(dynalistContent);
         } else {
             commentsHTML.append(commentElement);
-        }
 
-        if (i < _.size(comments) - 1) {
-            commentsHTML.append('<hr />');
+            if (i < _.size(comments) - 1) {
+                commentsHTML.append('<hr />');
+            }
         }
     });
 
