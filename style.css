@@ -135,6 +135,8 @@ ul:not(.nobullets) > li {
 .mainTask > p {
     font-size: 1.25em;
     margin-block: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
     padding: 0% 10%;
 }
 
@@ -295,6 +297,7 @@ button b {
 .roundbutton {
     font-size: 0.75em;
     background: #e44332;
+    color: white !important;
     text-align: center;
     line-height: 1.4em;
     border-radius: 50%;
