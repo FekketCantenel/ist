@@ -33,6 +33,10 @@ function deferOverdueTasks(tasks) {
     const tasksToDefer = [];
 
     $.each(tasks, (i, task) => {
+        if (task.due == null) {
+            return true;
+        }
+
         if (task.due.moment.isBefore(moment(), 'day')) {
             let taskNewMoment = moment(),
                 taskNewDateString = '';
