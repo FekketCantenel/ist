@@ -97,9 +97,8 @@ function getTaskHTML(task, projects, comments, dueTasks) {
         taskHTML.append(
             $('<div></div>')
                 .addClass('projectName')
-                .html(
-                    `<strong id='backToProjects'>&#11013;</strong> ${project.name}`
-                )
+                .html($('<span id="backToProjects">&#11013; </span>'))
+                .append(`<span>${project.name}</span>`)
         );
     }
 
