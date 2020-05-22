@@ -32,7 +32,11 @@ async function getAPI(path) {
     } catch (e) {
         console.error(e);
         $('#task').append(
-            'An error occurred. See the console for more information.'
+            'Error while getting data from Todoist.<br />Reload to try again.'
+        );
+        $('#spinner').toggle();
+        throw new Error(
+            'Error while getting data from Todoist. Stopping script.'
         );
     }
 }
