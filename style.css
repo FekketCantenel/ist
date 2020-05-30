@@ -233,6 +233,11 @@ button b {
     border-bottom-left-radius: 3px;
 }
 
+#activityDisplay > div:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
 #activityDisplay > div {
     flex-basis: 1em;
     overflow: hidden;

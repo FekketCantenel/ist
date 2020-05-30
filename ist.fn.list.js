@@ -128,19 +128,21 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         }
     });
 
-    const activityColumnDummyWidth = Math.ceil(
-            Math.ceil(flexWidth / 7) * 7 - flexWidth
-        ),
-        activityColumnString = `+${activityColumnDummyWidth} to ${
-            activityColumnDummyWidth + Math.floor(flexWidth)
-        }`,
-        activityColumnDummy = $(`<div>${activityColumnString}</div>`).css(
-            'flex-grow',
-            activityColumnDummyWidth
-        );
-    activityColumnDummy.attr('title', activityColumnString);
+    if (flexWidth < 21) {
+        const activityColumnDummyWidth = Math.ceil(
+                Math.ceil(flexWidth / 7) * 7 - flexWidth
+            ),
+            activityColumnString = `+${activityColumnDummyWidth} to ${
+                activityColumnDummyWidth + Math.floor(flexWidth)
+            }`,
+            activityColumnDummy = $(`<div>${activityColumnString}</div>`).css(
+                'flex-grow',
+                activityColumnDummyWidth
+            );
+        activityColumnDummy.attr('title', activityColumnString);
 
-    activityDisplay.append(activityColumnDummy);
+        activityDisplay.append(activityColumnDummy);
+    }
 
     suggestTasks.append(activityDisplay);
 
