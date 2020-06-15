@@ -30,25 +30,40 @@ async function getAPI(path) {
             }
         });
     } catch (e) {
-        console.error(e);
-        $('#task').append(
-            'Error while getting data from Todoist.<br />Reload to try again.'
-        );
-        $('#spinner').toggle();
-        throw new Error(
-            'Error while getting data from Todoist. Stopping script.'
-        );
+        try {
+            return await getAPI(path);
+        } catch (e2) {
+            console.error(e2);
+            const errorText =
+                'Error while getting data from Todoist.<br />Reload to try again.';
+            $('#task').append(errorText);
+            $('#spinner').toggle();
+            throw new Error(errorText);
+        }
     }
 }
 
 async function syncAPI(path, commands) {
-    return $.get(
-        `https://api.todoist.com/sync/v8/${path}?token=${todoistToken}&uuid=${uuidv4()}&${$.param(
-            commands
-        )}`
-    ).done(function (data, response) {
-        return response;
-    });
+    try {
+        return $.get(
+            `https://api.todoist.com/sync/v8/${path}?token=${todoistToken}&uuid=${uuidv4()}&${$.param(
+                commands
+            )}`
+        ).done(function (data, response) {
+            return response;
+        });
+    } catch (e) {
+        try {
+            return await syncAPI(path, commands);
+        } catch (e2) {
+            console.error(e2);
+            const errorText =
+                'Error while sending data to Todoist.<br />Reload to try again.';
+            $('#task').append(errorText);
+            // $('#spinner').toggle();
+            throw new Error(errorText);
+        }
+    }
 }
 
 function getURLParameter(name) {
