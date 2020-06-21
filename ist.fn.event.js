@@ -92,7 +92,7 @@ function setEvents(dueTasks, allTasks) {
     });
 
     $('.suggest').click(function () {
-        sessionStorage.setItem('project.id', $(this).attr('project.id'));
+        sessionStorage.setItem('project.id', $(this).attr('projectid'));
         spinOut();
     });
 

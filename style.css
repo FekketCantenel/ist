@@ -167,7 +167,7 @@ button b {
 }
 
 /* https://codepen.io/mike-schultz/pen/NgQvGO */
-.suggest:first-child {
+.chosen {
     --borderWidth: 0.15em;
     background: #1d1f20 !important;
     border: none;
@@ -175,7 +175,7 @@ button b {
     border-radius: var(--borderWidth);
 }
 
-.suggest:first-child:after {
+.chosen:after {
     content: '';
     position: absolute;
     top: calc(-1 * var(--borderWidth));
@@ -211,7 +211,7 @@ button b {
     }
 }
 
-.suggest:first-child > .badge {
+.chosen > .badge {
     color: white !important;
 }
 

@@ -116,7 +116,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
                     .data('badge', project.count),
                 suggestTaskButton = $('<button></button>')
                     .addClass('suggest')
-                    .attr('project.id', project.id)
+                    .attr('projectid', project.id)
                     .html(project.name),
                 projectURL =
                     `<a class='projectLink' target='_blank' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23 ${project.name}'>&#128279;</a>` +
@@ -146,5 +146,28 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
     suggestTasks.append(activityDisplay);
 
+    const chosenProjectID = getHighestPriorityProjectID(dueTasks, projects);
+
+    suggestTasks
+        .children(`button[projectid="${chosenProjectID}"]`)
+        .first()
+        .addClass('chosen');
+
     return suggestTasks;
+}
+
+function getHighestPriorityProjectID(dueTasks, projects) {
+    let priorityTask = {};
+
+    $.each([4, 3, 2, 1], (i, priority) => {
+        priorityTask = _.findWhere(dueTasks, {
+            priority
+        });
+
+        if (priorityTask.project_id) {
+            return false;
+        }
+    });
+
+    return priorityTask.project_id;
 }
