@@ -1,4 +1,5 @@
 /* global $, moment, _ */
+/* eslint camelcase:0 */
 
 import COLORS from './colors.js';
 import { postNewTaskTime } from './ist.fn.api.js';
@@ -157,17 +158,37 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 }
 
 function getHighestPriorityProjectID(dueTasks, projects) {
-    let priorityTask = {};
+    let priorityProjectID = 0;
 
-    $.each([4, 3, 2, 1], (i, priority) => {
-        priorityTask = _.findWhere(dueTasks, {
-            priority
-        });
+    $.each([4, 3, 2, 1, 0], (i, currentPriority) => {
+        const priorityTasks = dueTasks.filter(
+            ({ priority }) => currentPriority === priority
+        );
 
-        if (priorityTask.project_id) {
+        if (Array.isArray(priorityTasks) && priorityTasks.length) {
+            $.each(projects, (i, project) => {
+                const projectPriorityTasks = priorityTasks.filter(
+                    ({ project_id }) => project_id === project.id
+                );
+
+                if (
+                    Array.isArray(projectPriorityTasks) &&
+                    projectPriorityTasks.length
+                ) {
+                    priorityProjectID = project.id;
+                    return false;
+                }
+                if (priorityProjectID > 0) {
+                    return false;
+                }
+            });
+        } else {
+            return false;
+        }
+        if (priorityProjectID > 0) {
             return false;
         }
     });
 
-    return priorityTask.project_id;
+    return priorityProjectID;
 }
