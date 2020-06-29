@@ -183,8 +183,9 @@ function getHighestPriorityProjectID(dueTasks, projects) {
                 }
             });
         } else {
-            return false;
+            return true;
         }
+
         if (priorityProjectID > 0) {
             return false;
         }
