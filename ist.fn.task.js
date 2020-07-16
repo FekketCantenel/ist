@@ -64,7 +64,7 @@ function getTaskHTML(task, projects, comments, dueTasks) {
                     dueTasksInProject > 1
                         ? `${dueTasksInProject} tasks`
                         : 'last task'
-                } remaining in project`
+                } remaining in context`
             ),
         taskName = converter.makeHtml(task.content),
         taskHTML = $('<div></div>'),
