@@ -298,6 +298,10 @@ button b {
     font-size: 0.5em;
 }
 
+.taskLinkButton > a {
+    margin-left: 0.15em;
+}
+
 .roundbutton {
     font-size: 0.75em;
     background: #e44332;
