@@ -128,7 +128,6 @@ ul:not(.nobullets) > li {
 }
 
 #backToProjects {
-    color: rgb(54, 253, 54);
     cursor: pointer;
 }
 
@@ -310,6 +309,9 @@ button b {
     padding: 0.15em 0.3em;
     margin-left: 0.25em;
 }
+.roundbutton > svg {
+    vertical-align: middle;
+}
 
 .tingle-modal-box {
     width: 64em !important;
@@ -349,6 +351,10 @@ button b {
         padding-bottom: 0em;
     }
 
+    .roundbutton > svg {
+        margin-top: 0em;
+    }
+
     .taskComments {
         width: 90% !important;
         margin-top: 1em !important;
@@ -364,10 +370,12 @@ button b {
         display: inline !important;
     }
 
+    #dynalistmenu {
+        font-size: 0.8em;
+    }
     .dynalistMenuButton {
         margin: 0.25em;
     }
-
     .dynalistMenuButton > span {
         display: block;
         font-size: 0.85em;
