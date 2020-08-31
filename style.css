@@ -315,6 +315,7 @@ button b {
 }
 .roundbutton > svg {
     vertical-align: middle;
+    stroke-width: 2;
 }
 
 .tingle-modal-box {
