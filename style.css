@@ -137,6 +137,7 @@ ul:not(.nobullets) > li {
     margin-block-start: 0;
     margin-block-end: 0;
     padding: 0% 10%;
+    text-underline-offset: 0.15em;
 }
 
 button {
@@ -304,7 +305,6 @@ button b {
 
 .roundbutton {
     font-size: 0.75em;
-    background: #e44332;
     color: white !important;
     text-align: center;
     line-height: 1.4em;
@@ -316,6 +316,13 @@ button b {
 .roundbutton > svg {
     vertical-align: middle;
     stroke-width: 2;
+}
+
+.doneButton {
+    background: rgb(54, 253, 54);
+}
+.deferButton {
+    background: #e44332;
 }
 
 .tingle-modal-box {
