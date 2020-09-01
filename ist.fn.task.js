@@ -101,7 +101,7 @@ function getTaskHTML(task, projects, comments, dueTasks) {
                 .addClass('projectName')
                 .html(
                     $(
-                        '<span id="backToProjects"><svg width="60" height="48" viewBox="3 -2 18 21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="rgb(54, 253, 54)" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 20 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="m11.621 6.379v4.242h-4.242" transform="matrix(.70710678 .70710678 .70710678 -.70710678 -3.227683 7.792317)"/><path d="m8.5 4.5v8" transform="matrix(0 1 -1 0 17 0)"/></g></svg></span>'
+                        '<span id="backToProjects"><svg width="60" height="48" viewBox="3 0 18 21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="#b8b8b8" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 20 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="m11.621 6.379v4.242h-4.242" transform="matrix(.70710678 .70710678 .70710678 -.70710678 -3.227683 7.792317)"/><path d="m8.5 4.5v8" transform="matrix(0 1 -1 0 17 0)"/></g></svg></span>'
                     )
                 )
                 .append(`<span>${project.name}</span>`)

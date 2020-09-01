@@ -129,6 +129,7 @@ ul:not(.nobullets) > li {
 
 #backToProjects {
     cursor: pointer;
+    margin-left: -0.25em;
 }
 
 .mainTask > p {
@@ -319,7 +320,7 @@ button b {
 }
 
 .doneButton {
-    background: rgb(54, 253, 54);
+    background: #299438;
 }
 .deferButton {
     background: #e44332;
