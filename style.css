@@ -141,6 +141,10 @@ ul:not(.nobullets) > li {
     text-underline-offset: 0.15em;
 }
 
+.taskButtons {
+    margin-top: 0.13em;
+}
+
 button {
     background-color: #e44332 !important;
     border-radius: 3px !important;
@@ -301,7 +305,7 @@ button b {
 }
 
 .taskLinkButton > a {
-    margin-left: 0.15em;
+    margin-left: 0.1em;
 }
 
 .roundbutton {
