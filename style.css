@@ -73,18 +73,23 @@ body {
     border-radius: 0 !important;
 }
 
+#dynalistmenu > button:hover {
+    background-color: #a73124;
+    border-color: #a73124;
+}
+
 #dynalistmenu > button:first-of-type {
-    border-top-left-radius: 0.5em !important;
-    border-bottom-left-radius: 0.5em !important;
+    border-top-left-radius: 0.25em !important;
+    border-bottom-left-radius: 0.25em !important;
 }
 
 #dynalistmenu > button:last-of-type {
-    border-top-right-radius: 0.5em !important;
-    border-bottom-right-radius: 0.5em !important;
+    border-top-right-radius: 0.25em !important;
+    border-bottom-right-radius: 0.25em !important;
 }
 
 .dynalistMenuButton > span {
-    padding: 0em 0.4em;
+    padding: 0em 0.6em;
 }
 
 .dynalistLink {
@@ -170,7 +175,7 @@ ul:not(.nobullets) > li {
 }
 
 button {
-    background-color: #e44332 !important;
+    background-color: #e44332;
     border-radius: 3px !important;
     border: 2px solid #e44332;
     color: #fff;
@@ -193,6 +198,7 @@ button b {
 .suggest {
     width: 11em;
     position: relative;
+    letter-spacing: 0.1em;
 }
 
 /* https://codepen.io/mike-schultz/pen/NgQvGO */
@@ -306,6 +312,7 @@ button b {
     border-radius: 50%;
     top: -1em;
     right: -1em;
+    text-decoration: none;
 }
 .badge[data-badge]:after {
     content: attr(data-badge);
