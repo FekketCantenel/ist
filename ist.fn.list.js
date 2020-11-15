@@ -167,6 +167,9 @@ function getHighestPriorityProjectID(dueTasks, projects) {
 
         if (Array.isArray(priorityTasks) && priorityTasks.length) {
             $.each(projects, (i, project) => {
+                if (project.name.slice(project.name.length - 1) === '_') {
+                    return false;
+                }
                 const projectPriorityTasks = priorityTasks.filter(
                     ({ project_id }) => project_id === project.id
                 );
