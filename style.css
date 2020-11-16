@@ -109,7 +109,7 @@ body {
 
 .nobullets {
     list-style-type: none;
-    padding-left: 0;
+    margin-left: -0.5em !important;
 }
 
 .nobullets > li {
@@ -117,9 +117,9 @@ body {
     margin-left: 2.25em;
 }
 
-.nobullets > li > ul {
+li.nobullets > ul {
     padding-left: 0;
-    margin-left: -1.45em;
+    margin-left: 1.5em;
 }
 
 ul:not(.nobullets) {
@@ -141,7 +141,6 @@ ul:not(.nobullets) > li {
 .taskComment > ul {
     margin-top: 0.25em;
     margin-bottom: 0.25em;
-    padding-left: 0;
 }
 
 .projectParent {
