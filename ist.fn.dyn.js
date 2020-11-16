@@ -86,8 +86,17 @@ function getDynalistContent(commentContent, taskID) {
                     taskID,
                     dynalistFileID,
                     parentID
-                );
+                ),
+                parentNoteRaw = dynalistNodesOpen.find(
+                    (task) => task.id === parentID
+                ).note,
+                converter = new showdown.Converter({
+                    openLinksInNewWindow: 'true'
+                }),
+                parentNote = converter.makeHtml(parentNoteRaw),
+                parentNoteBox = $(`<div id='parentnote'>${parentNote}</div>`);
 
+            $('.taskComments').append(parentNoteBox);
             $('.taskComments').append(dynalistHTML);
 
             dynalistSetEvents(commentContent, taskID);

@@ -64,6 +64,16 @@ body {
     margin-left: 1em;
 }
 
+#parentnote {
+    font-size: 0.65em;
+    border: 1px grey solid;
+    margin-top: 0.5em;
+}
+#parentnote > p {
+    margin: 0;
+    padding: 0.3em;
+}
+
 #dynalistmenu {
     text-align: center !important;
 }
@@ -131,6 +141,7 @@ ul:not(.nobullets) > li {
 .taskComment > ul {
     margin-top: 0.25em;
     margin-bottom: 0.25em;
+    padding-left: 0;
 }
 
 .projectParent {
