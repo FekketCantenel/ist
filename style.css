@@ -143,6 +143,10 @@ ul:not(.nobullets) > li {
     margin-bottom: 0.25em;
 }
 
+.taskComment * img {
+    max-width: 95%;
+}
+
 .projectParent {
     font-style: italic;
     margin-left: 0em;
