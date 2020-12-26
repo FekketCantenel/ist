@@ -216,15 +216,16 @@ function treeHTMLGetChildren(children, parentID, dynalistFileID) {
 
 function treeHTMLGetChecklist(tree, view, dynalistFileID, parentID) {
     const treeHTMLChildren = treeHTMLGetChildren(
-        tree,
-        parentID,
-        dynalistFileID
-    );
+            tree,
+            parentID,
+            dynalistFileID
+        ),
+        treeHTMLChildrenCount = treeHTMLChildren.children().length;
 
     treeHTMLChildren.addClass('nobullets');
-    treeHTMLChildren
-        .children()
-        .prepend($(`<button class='done${view}'>done</button>`));
+    treeHTMLChildren.children().prepend(function (index) {
+        return `<button class='done${view}'>done<br /><small>${index + 1}/${treeHTMLChildrenCount}</small></button>`;
+    });
 
     treeHTMLChildren.children().not(':first').hide();
     return treeHTMLChildren;

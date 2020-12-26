@@ -198,6 +198,7 @@ button {
     font-size: 0.5em;
     cursor: pointer;
     margin: 15px;
+    line-height: 0.9em;
 }
 
 button.important {
@@ -207,6 +208,10 @@ button.important {
 
 button b {
     font-size: 3em;
+}
+
+button > small {
+    font-size: 0.75em;
 }
 
 .suggest {
