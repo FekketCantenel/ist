@@ -107,6 +107,22 @@ body {
     cursor: pointer;
 }
 
+.taskComment * table {
+    border: 5px double white;
+    width: 119%;
+    margin-left: -3.18em;
+    margin-bottom: 0.5em;
+}
+.taskComment * thead {
+    border-bottom: 5px solid white;
+}
+.taskComment * th,
+.taskComment * td {
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
+    padding-left: 0.25em;
+}
+
 .nobullets {
     list-style-type: none;
     margin-left: -0.5em !important;

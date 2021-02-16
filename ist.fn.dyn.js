@@ -2,6 +2,8 @@
 import { spinOut, vibrate } from './ist.fn.event.js';
 export { getDynalistContent, dynalistSetAuthEvents };
 
+showdown.setOption('tables', 'true');
+
 function getDynalistContent(commentContent, taskID) {
     if (Cookies.get('dynalistToken') === undefined) {
         const dynalistAuthHTML = $('<small></small>').append(
@@ -103,6 +105,7 @@ function getDynalistContent(commentContent, taskID) {
                 $('.taskComments').append(parentNoteBox);
             }
             $('.taskComments').append(dynalistHTML);
+            $('li:has(table)').css('list-style-type', 'none');
 
             dynalistSetEvents(commentContent, taskID);
         });
