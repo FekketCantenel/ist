@@ -41,6 +41,10 @@ body {
     font-family: liberation;
     font-size: 2em;
 }
+#spinner > p.status {
+    color: #e44332 !important;
+    font-size: 0.35em !important;
+}
 
 #task a {
     color: #e44332;

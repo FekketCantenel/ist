@@ -10,7 +10,7 @@ import { getHighestPriorityTask, getTaskHTML } from './ist.fn.task.js';
 import { setEvents } from './ist.fn.event.js';
 import { dynalistSetAuthEvents } from './ist.fn.dyn.js';
 
-$(document).ready(function() {
+$(document).ready(function () {
     async function asyncCall() {
         const authCode = getURLParameter('code'),
             authState = getURLParameter('state');
@@ -25,7 +25,7 @@ $(document).ready(function() {
                 });
                 window.location.replace('/');
             } else {
-                $.get('README.md', function(readme) {
+                $.get('README.md', function (readme) {
                     const converter = new showdown.Converter(),
                         readmeHTML = converter.makeHtml(readme);
 
@@ -46,15 +46,18 @@ $(document).ready(function() {
                 window.location.replace('/');
             }
 
+            $('.status').text('getting tasks...');
             const todoistRawTasks = await getAPI('tasks');
 
             const allTasks = getAllTasks(todoistRawTasks),
                 dueTasks = getDueTasks(allTasks);
 
             if (allTasks === 'overdue') {
+                $('.status').text('rescheduling overdue...');
                 throw new Error('rescheduling overdue tasks');
             }
 
+            $('.status').text('getting projects...');
             const projects = await getAPI('projects'),
                 highestPriorityTask = getHighestPriorityTask(
                     dueTasks,
@@ -62,6 +65,7 @@ $(document).ready(function() {
                 );
 
             if (highestPriorityTask) {
+                $('.status').text('getting task comments...');
                 const todoistRawComments = await getAPI(
                         `comments?task_id=${highestPriorityTask.id}`
                     ),
@@ -73,10 +77,13 @@ $(document).ready(function() {
                     );
 
                 $('#task').append(mainTask);
+
+                $('.status').text('');
                 dynalistSetAuthEvents();
             } else {
                 sessionStorage.removeItem('project.id');
 
+                $('.status').text('getting and building stats...');
                 const { days_items: todoistRawActivity } = await syncAPI(
                     'completed/get_stats'
                 );
@@ -85,6 +92,7 @@ $(document).ready(function() {
                     moment(date).isSame(new Date(), 'day')
                 ).items;
 
+                $('.status').text('building project list...');
                 const suggestTasks = getSuggestTasksHTML(
                     dueTasks,
                     projects,
@@ -93,8 +101,6 @@ $(document).ready(function() {
 
                 if (suggestTasks[0].childElementCount > 0) {
                     $('#task').append(suggestTasks);
-                } else {
-                    $('#task').append('You have no due tasks!');
                 }
             }
 
