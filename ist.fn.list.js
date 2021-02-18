@@ -22,7 +22,6 @@ function getAllTasks(todoistRawTasks) {
     });
 
     if (overdue === 1) {
-        $('#task').append('rescheduling overdue tasks, please wait...');
         deferOverdueTasks(todoistRawTasks);
         return 'overdue';
     } else {

@@ -53,11 +53,11 @@ $(document).ready(function () {
                 dueTasks = getDueTasks(allTasks);
 
             if (allTasks === 'overdue') {
-                $('.status').text('rescheduling overdue...');
-                throw new Error('rescheduling overdue tasks');
+                $('.status').text('rescheduling overdue tasks...');
+            } else {
+                $('.status').text('getting projects...');
             }
 
-            $('.status').text('getting projects...');
             const projects = await getAPI('projects'),
                 highestPriorityTask = getHighestPriorityTask(
                     dueTasks,
@@ -80,7 +80,7 @@ $(document).ready(function () {
 
                 $('.status').text('');
                 dynalistSetAuthEvents();
-            } else {
+            } else if (allTasks !== 'overdue') {
                 sessionStorage.removeItem('project.id');
 
                 $('.status').text('getting and building stats...');
