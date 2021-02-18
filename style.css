@@ -41,6 +41,11 @@ body {
     font-family: liberation;
     font-size: 2em;
 }
+#spinner > img {
+    object-fit: none;
+    object-position: center -0.5em;
+    height: 3em;
+}
 #spinner > p.status {
     color: #e44332 !important;
     font-size: 0.35em !important;
