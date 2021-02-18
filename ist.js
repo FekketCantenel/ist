@@ -105,6 +105,7 @@ $(document).ready(function () {
             }
 
             $('#spinner').hide();
+            $('.status').text('');
 
             setEvents(dueTasks, allTasks);
         }
