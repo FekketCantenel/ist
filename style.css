@@ -5,6 +5,10 @@
     font-style: normal;
 }
 
+/* ===============
+        GLOBAL
+   =============== */
+
 body {
     background-color: #1f1f1f;
     font-size: 1.5em; /* change this to zoom page */
@@ -20,6 +24,13 @@ body {
 .dim {
     opacity: 0.5;
 }
+.grey {
+    filter: brightness(50%);
+}
+
+/* ===============
+    TASK LAYOUT
+   =============== */
 
 #task,
 #spinner,
@@ -40,13 +51,105 @@ body {
     margin: 1em 2em;
 }
 
+.projectName {
+    font-size: 1.5em;
+}
+
+.projectName:nth-child(3) {
+    margin-top: 1em;
+    font-size: 0.75em;
+}
+
+#backToProjects {
+    cursor: pointer;
+    margin-left: -0.25em;
+}
+
+.mainTask > p {
+    font-size: 1.25em;
+    margin-block: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding: 0% 10%;
+    text-underline-offset: 0.15em;
+}
+
 #dueTasksInProject {
+    /* "X tasks remaining in context" */
     font-size: 0.4em;
     color: grey;
     font-style: italic;
     text-align: right;
     padding-right: 24%;
 }
+
+/* ===============
+        BUTTONS
+   =============== */
+
+.taskButtons {
+    margin-top: 0.13em;
+}
+
+button {
+    background-color: #e44332;
+    border-radius: 3px !important;
+    border: 2px solid #e44332;
+    color: #fff;
+    padding: 0.55em;
+    font-weight: bold;
+    font-size: 0.5em;
+    cursor: pointer;
+    margin: 15px;
+    line-height: 0.9em;
+}
+
+button.important {
+    background-color: #4073d6 !important;
+    border: 2px solid #4073d6 !important;
+}
+
+button b {
+    font-size: 3em;
+}
+
+button > small {
+    font-size: 0.75em;
+}
+
+.priorityButton {
+    font-size: 0.5em;
+}
+
+.taskLinkButton > a {
+    margin-left: 0.1em;
+}
+
+.roundbutton {
+    font-size: 0.75em;
+    color: white !important;
+    text-align: center;
+    line-height: 1.4em;
+    border-radius: 50%;
+    text-decoration: none;
+    padding: 0.15em 0.3em;
+    margin-left: 0.25em;
+}
+.roundbutton > svg {
+    vertical-align: middle;
+    stroke-width: 2;
+}
+
+.doneButton {
+    background: #299438;
+}
+.deferButton {
+    background: #e44332;
+}
+
+/* ===============
+        COMMENTS
+   =============== */
 
 .taskComments {
     border: 1px solid white;
@@ -59,19 +162,45 @@ body {
     font-size: 0.75em;
 }
 
+.nobullets {
+    list-style-type: none;
+    margin-left: -0.5em !important;
+}
+
+.nobullets > li {
+    text-indent: 0;
+    margin-left: 2.25em;
+}
+
+li.nobullets > ul {
+    padding-left: 0;
+    margin-left: 1.5em;
+}
+
+ul:not(.nobullets) {
+    margin-left: 0;
+}
+
+ul:not(.nobullets) > li {
+    text-indent: 0;
+}
+
+.taskComment > ul {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+.taskComment * img {
+    max-width: 95%;
+}
+
+/* ===============
+        DYNALIST
+   =============== */
+
 #dynalistAuthSubmit {
     display: inline;
     margin-left: 1em;
-}
-
-#parentnote {
-    font-size: 0.65em;
-    border: 1px grey solid;
-    margin-top: 0.5em;
-}
-#parentnote > p {
-    margin: 0;
-    padding: 0.3em;
 }
 
 #dynalistmenu {
@@ -123,27 +252,14 @@ body {
     padding-left: 0.25em;
 }
 
-.nobullets {
-    list-style-type: none;
-    margin-left: -0.5em !important;
+#parentnote {
+    font-size: 0.65em;
+    border: 1px grey solid;
+    margin-top: 0.5em;
 }
-
-.nobullets > li {
-    text-indent: 0;
-    margin-left: 2.25em;
-}
-
-li.nobullets > ul {
-    padding-left: 0;
-    margin-left: 1.5em;
-}
-
-ul:not(.nobullets) {
-    margin-left: 0;
-}
-
-ul:not(.nobullets) > li {
-    text-indent: 0;
+#parentnote > p {
+    margin: 0;
+    padding: 0.3em;
 }
 
 .donechecklist,
@@ -153,15 +269,6 @@ ul:not(.nobullets) > li {
     margin-top: 0em;
     margin-left: -4.5em;
     padding: 0.3em 0.65em;
-}
-
-.taskComment > ul {
-    margin-top: 0.25em;
-    margin-bottom: 0.25em;
-}
-
-.taskComment * img {
-    max-width: 95%;
 }
 
 .projectParent {
@@ -174,62 +281,9 @@ ul:not(.nobullets) > li {
     margin-left: 1em;
 }
 
-.tingle-modal-box__content {
-    display: none;
-}
-
-.projectName {
-    font-size: 1.5em;
-}
-
-.projectName:nth-child(3) {
-    margin-top: 1em;
-    font-size: 0.75em;
-}
-
-#backToProjects {
-    cursor: pointer;
-    margin-left: -0.25em;
-}
-
-.mainTask > p {
-    font-size: 1.25em;
-    margin-block: 0;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding: 0% 10%;
-    text-underline-offset: 0.15em;
-}
-
-.taskButtons {
-    margin-top: 0.13em;
-}
-
-button {
-    background-color: #e44332;
-    border-radius: 3px !important;
-    border: 2px solid #e44332;
-    color: #fff;
-    padding: 0.55em;
-    font-weight: bold;
-    font-size: 0.5em;
-    cursor: pointer;
-    margin: 15px;
-    line-height: 0.9em;
-}
-
-button.important {
-    background-color: #4073d6 !important;
-    border: 2px solid #4073d6 !important;
-}
-
-button b {
-    font-size: 3em;
-}
-
-button > small {
-    font-size: 0.75em;
-}
+/* ===============
+    PROJECT LIST
+   =============== */
 
 .suggest {
     width: 11em;
@@ -363,38 +417,13 @@ button > small {
     border-radius: 50%;
     margin-left: 0.25em;
 }
-.grey {
-    filter: brightness(50%);
-}
 
-.priorityButton {
-    font-size: 0.5em;
-}
+/* ===============
+    DEFER DIALOG
+   =============== */
 
-.taskLinkButton > a {
-    margin-left: 0.1em;
-}
-
-.roundbutton {
-    font-size: 0.75em;
-    color: white !important;
-    text-align: center;
-    line-height: 1.4em;
-    border-radius: 50%;
-    text-decoration: none;
-    padding: 0.15em 0.3em;
-    margin-left: 0.25em;
-}
-.roundbutton > svg {
-    vertical-align: middle;
-    stroke-width: 2;
-}
-
-.doneButton {
-    background: #299438;
-}
-.deferButton {
-    background: #e44332;
+.tingle-modal-box__content {
+    display: none;
 }
 
 .tingle-modal-box {
@@ -410,6 +439,10 @@ button > small {
     margin-top: 1.5em;
     font-size: 0.75em;
 }
+
+/* ===============
+        MOBILE
+   =============== */
 
 @media only screen and (max-width: 600px) {
     body {
