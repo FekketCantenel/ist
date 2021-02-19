@@ -10,7 +10,11 @@ import { getHighestPriorityTask, getTaskHTML } from './ist.fn.task.js';
 import { setEvents } from './ist.fn.event.js';
 import { dynalistSetAuthEvents } from './ist.fn.dyn.js';
 
-$(document).ready(function () {
+showdown.setOption('openLinksInNewWindow', 'true');
+showdown.setOption('strikethrough', 'true');
+showdown.setOption('tables', 'true');
+
+$(function () {
     async function asyncCall() {
         const authCode = getURLParameter('code'),
             authState = getURLParameter('state');
@@ -28,7 +32,6 @@ $(document).ready(function () {
                 $.get('README.md', function (readme) {
                     const converter = new showdown.Converter(),
                         readmeHTML = converter.makeHtml(readme);
-
                     $('#task').append(
                         readmeHTML,
                         `<a href="https://todoist.com/oauth/authorize?client_id=${ENV.CLIENTID}&state=todoist&scope=data:read_write"><button>when ready, log in with Todoist</button></a>`

@@ -2,8 +2,6 @@
 import { spinOut, vibrate } from './ist.fn.event.js';
 export { getDynalistContent, dynalistSetAuthEvents };
 
-showdown.setOption('tables', 'true');
-
 function getDynalistContent(commentContent, taskID) {
     if (Cookies.get('dynalistToken') === undefined) {
         const dynalistAuthHTML = $('<small></small>').append(
@@ -94,9 +92,7 @@ function getDynalistContent(commentContent, taskID) {
                 ).note;
 
             if (parentNoteRaw) {
-                const converter = new showdown.Converter({
-                        openLinksInNewWindow: 'true'
-                    }),
+                const converter = new showdown.Converter(),
                     parentNote = converter.makeHtml(parentNoteRaw),
                     parentNoteBox = $(
                         `<div id='parentnote'>${parentNote}</div>`
@@ -190,9 +186,7 @@ function treeHTMLGetChildren(children, parentID, dynalistFileID) {
     const treeHTMLInner = $('<ul></ul>');
 
     $.each(children, (i, node) => {
-        const converter = new showdown.Converter({
-                openLinksInNewWindow: 'true'
-            }),
+        const converter = new showdown.Converter(),
             nodeContentHTML = converter
                 .makeHtml(node.content)
                 .replace(/(<p[^>]+?>|<p>|<\/p>)/gim, ''),
