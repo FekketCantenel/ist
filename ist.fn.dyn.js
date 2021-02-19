@@ -260,10 +260,6 @@ function treeHTMLGetProject(tree, dynalistFileID, parentID) {
 }
 
 function dynalistSetEvents(link, taskID) {
-    $('.taskComment * button').click(() => {
-        vibrate();
-    });
-
     $('.dynalistMenuButton, .dynalistLink').on('click auxclick', function () {
         if ($(this).attr('dynalistview') === 'view') {
             window.open(link, '_blank');
@@ -276,7 +272,7 @@ function dynalistSetEvents(link, taskID) {
         }
     });
 
-    $('.donechecklist').click(function () {
+    $('.donechecklist').on('click auxclick', function () {
         const dynalistNext = $(this).parent().next('li');
 
         if (dynalistNext.length > 0) {
@@ -290,7 +286,7 @@ function dynalistSetEvents(link, taskID) {
         $(this).parent().hide();
     });
 
-    $('.donerotating').click(function () {
+    $('.donerotating').on('click auxclick', function () {
         const writeCommands = {
             file_id: $(this).parent().attr('dynalistfileid'),
             changes: [
@@ -308,7 +304,7 @@ function dynalistSetEvents(link, taskID) {
         });
     });
 
-    $('.doneproject').click(function () {
+    $('.doneproject').on('click auxclick', function () {
         const writeCommands = {
             file_id: $(this).parent().attr('dynalistfileid'),
             changes: [
@@ -327,7 +323,7 @@ function dynalistSetEvents(link, taskID) {
 }
 
 function dynalistSetAuthEvents() {
-    $('#dynalistAuthSubmit').submit(function (event) {
+    $('#dynalistAuthSubmit').on('submit', function (event) {
         event.preventDefault();
 
         const authURL = `?state=dynalist&code=${$('input[name=dynalistSecret]')

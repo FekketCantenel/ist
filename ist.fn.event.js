@@ -5,7 +5,7 @@ import { getTaskRepeatMoment } from './ist.fn.task.js';
 export { setEvents, spinOut, vibrate };
 
 function setEvents(dueTasks, allTasks) {
-    $('.doneButton').click(function (event) {
+    $('.doneButton').on('click auxclick', function (event) {
         event.preventDefault();
         const taskID = Number($(this).attr('taskID')),
             randUUID = uuidv4(),
@@ -20,7 +20,7 @@ function setEvents(dueTasks, allTasks) {
         asyncCall(commands);
     });
 
-    $('.deferButton').click(function (event) {
+    $('.deferButton').on('click auxclick', function (event) {
         vibrate();
         event.preventDefault();
         const taskID = Number($(this).attr('taskID')),
@@ -91,12 +91,12 @@ function setEvents(dueTasks, allTasks) {
         modal.open();
     });
 
-    $('.suggest').click(function () {
+    $('.suggest').on('click auxclick', function () {
         sessionStorage.setItem('project.id', $(this).attr('projectid'));
         spinOut();
     });
 
-    $('#backToProjects').click(function () {
+    $('#backToProjects').on('click auxclick', function () {
         sessionStorage.removeItem('project.id');
         spinOut();
     });
