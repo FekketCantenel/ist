@@ -506,4 +506,8 @@ ul:not(.nobullets) > li {
         display: block;
         font-size: 0.85em;
     }
+
+    #spinner > img {
+        height: 4em;
+    }
 }
