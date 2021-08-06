@@ -1,11 +1,5 @@
 {
     "name": "ist",
     "version": "0.1.0",
-    "main": "index.html",
-    "dependencies": {
-        "open-cli": "^6.0.1"
-    },
-    "scripts": {
-        "start": "open-cli index.html"
-    }
+    "main": "index.php"
 }
