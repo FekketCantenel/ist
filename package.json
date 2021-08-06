@@ -1,4 +1,11 @@
 {
     "name": "ist",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "main": "index.html",
+    "scripts": {
+        "start": "open index.html"
+    },
+    "devDependencies": {
+        "open": "^7.3.0"
+    }
 }
