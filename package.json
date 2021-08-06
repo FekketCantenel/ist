@@ -1,14 +1,4 @@
 {
     "name": "ist",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        // "jquery": ">=3.5.0",
-        // "moment": "2.24.0",
-        // "showdown": ">=1.9.1",
-        // "tingle": "0.15.2",
-        // "underscore-esm": "1.13.1",
-        // "js-cookie": "3.0.0",
-        // "bootstrap": ">=5.0"
-    }
+    "version": "0.1.0"
 }
