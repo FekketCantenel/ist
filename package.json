@@ -2,7 +2,7 @@
     "name": "ist",
     "version": "0.1.0",
     "main": "index.html",
-    "devDependencies": {
+    "dependencies": {
         "open-cli": "^6.0.1"
     },
     "scripts": {
