@@ -3,9 +3,9 @@
     "version": "0.1.0",
     "main": "index.html",
     "scripts": {
-        "start": "open index.html"
+        "start": "open-cli index.html"
     },
     "devDependencies": {
-        "open": "^7.3.0"
+        "open-cli": "^6.0.1"
     }
 }
