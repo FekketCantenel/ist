@@ -1,7 +1,4 @@
 /* global sessionStorage, $, Cookies, showdown, moment */
-// if (!process.env.CLIENTID) {
-//     import ENV from './env.js';
-// }
 import { getAPI, syncAPI, getAuth, getURLParameter } from './ist.fn.api.js';
 import {
     getAllTasks,
@@ -11,6 +8,7 @@ import {
 import { getHighestPriorityTask, getTaskHTML } from './ist.fn.task.js';
 import { setEvents } from './ist.fn.event.js';
 import { dynalistSetAuthEvents } from './ist.fn.dyn.js';
+// import ENV from './env.js';
 
 showdown.setOption('openLinksInNewWindow', 'true');
 showdown.setOption('strikethrough', 'true');
