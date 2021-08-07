@@ -27,7 +27,7 @@ $(function () {
                 Cookies.set('todoistToken', authToken, {
                     expires: 182
                 });
-                window.location.replace('/');
+                window.location.replace('/ist/');
             } else {
                 $.get('README.md', function (readme) {
                     const converter = new showdown.Converter(),
@@ -46,7 +46,7 @@ $(function () {
                 Cookies.set('dynalistToken', authCode, {
                     expires: 182
                 });
-                window.location.replace('/');
+                window.location.replace('/ist/');
             }
 
             $('.status').text('getting tasks...');
