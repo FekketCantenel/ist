@@ -1,5 +1,4 @@
 /* global Cookies, $, location, crypto */
-import ENV from './env.js';
 export {
     getAPI,
     syncAPI,
@@ -10,6 +9,7 @@ export {
     asyncCall,
     postNewTaskTime
 };
+// import ENV from './env.js';
 
 const todoistAPI = 'https://todoist.com/api/v8/sync',
     todoistToken = Cookies.get('todoistToken');
