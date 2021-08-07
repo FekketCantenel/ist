@@ -1,5 +1,7 @@
 /* global sessionStorage, $, Cookies, showdown, moment */
-import ENV from './env.js';
+if (!process.env.CLIENTID) {
+    import ENV from './env.js';
+}
 import { getAPI, syncAPI, getAuth, getURLParameter } from './ist.fn.api.js';
 import {
     getAllTasks,
