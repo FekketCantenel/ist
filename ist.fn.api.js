@@ -1,4 +1,5 @@
 /* global Cookies, $, location, crypto */
+import ENV from './env.js';
 export {
     getAPI,
     syncAPI,
@@ -9,7 +10,6 @@ export {
     asyncCall,
     postNewTaskTime
 };
-// import ENV from './env.js';
 
 const todoistAPI = 'https://todoist.com/api/v8/sync',
     todoistToken = Cookies.get('todoistToken');
@@ -79,8 +79,8 @@ function getURLParameter(name) {
 
 async function getAuth(code) {
     const commands = {
-        client_id: env.CLIENTID,
-        client_secret: env.CLIENTSC,
+        client_id: ENV.CLIENTID,
+        client_secret: ENV.CLIENTSC,
         code,
         redirect_uri: 'https://ist.never-ends.net/'
     };

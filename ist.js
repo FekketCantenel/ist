@@ -1,4 +1,5 @@
 /* global sessionStorage, $, Cookies, showdown, moment */
+import ENV from './env.js';
 import { getAPI, syncAPI, getAuth, getURLParameter } from './ist.fn.api.js';
 import {
     getAllTasks,
@@ -8,7 +9,6 @@ import {
 import { getHighestPriorityTask, getTaskHTML } from './ist.fn.task.js';
 import { setEvents } from './ist.fn.event.js';
 import { dynalistSetAuthEvents } from './ist.fn.dyn.js';
-// import ENV from './env.js';
 
 showdown.setOption('openLinksInNewWindow', 'true');
 showdown.setOption('strikethrough', 'true');
@@ -34,7 +34,7 @@ $(function () {
                         readmeHTML = converter.makeHtml(readme);
                     $('#task').append(
                         readmeHTML,
-                        `<a href="https://todoist.com/oauth/authorize?client_id=${env.CLIENTID}&state=todoist&scope=data:read_write"><button>when ready, log in with Todoist</button></a>`
+                        `<a href="https://todoist.com/oauth/authorize?client_id=${ENV.CLIENTID}&state=todoist&scope=data:read_write"><button>when ready, log in with Todoist</button></a>`
                     );
                 });
                 $('#spinner').hide();
