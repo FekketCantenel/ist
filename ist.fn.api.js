@@ -79,8 +79,8 @@ function getURLParameter(name) {
 
 async function getAuth(code) {
     const commands = {
-        client_id: process.env.CLIENTID,
-        client_secret: process.env.CLIENTSC,
+        client_id: secrets.CLIENTID,
+        client_secret: secrets.CLIENTSC,
         code,
         redirect_uri: 'https://ist.never-ends.net/'
     };
