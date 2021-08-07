@@ -82,7 +82,7 @@ async function getAuth(code) {
         client_id: ENV.CLIENTID,
         client_secret: ENV.CLIENTSC,
         code,
-        redirect_uri: 'https://ist.never-ends.net/'
+        redirect_uri: 'https://fekketcantenel.github.io/ist/'
     };
 
     return $.post('https://todoist.com/oauth/access_token', commands);
