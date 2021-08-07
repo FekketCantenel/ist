@@ -34,7 +34,7 @@ $(function () {
                         readmeHTML = converter.makeHtml(readme);
                     $('#task').append(
                         readmeHTML,
-                        `<a href="https://todoist.com/oauth/authorize?client_id=${secrets.CLIENTID}&state=todoist&scope=data:read_write"><button>when ready, log in with Todoist</button></a>`
+                        `<a href="https://todoist.com/oauth/authorize?client_id=${env.CLIENTID}&state=todoist&scope=data:read_write"><button>when ready, log in with Todoist</button></a>`
                     );
                 });
                 $('#spinner').hide();
