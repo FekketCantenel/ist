@@ -1,4 +1,4 @@
-/* global sessionStorage, $, Cookies, showdown, moment */
+/* global sessionStorage, $, _, Cookies, showdown, moment */
 import ENV from './env.js';
 import { getAPI, syncAPI, getAuth, getURLParameter } from './ist.fn.api.js';
 import {
@@ -91,9 +91,12 @@ $(function () {
                     'completed/get_stats'
                 );
 
-                const activity = todoistRawActivity.find(({ date }) =>
-                    moment(date).isSame(new Date(), 'day')
-                ).items;
+                let activity = _.find(todoistRawActivity, (dayStats) => {
+                    return moment(dayStats.date).isSame(new Date(), 'day');
+                }).items;
+                if (!activity) {
+                    activity = [];
+                }
 
                 $('.status').text('building project list...');
                 const suggestTasks = getSuggestTasksHTML(
