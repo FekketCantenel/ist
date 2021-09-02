@@ -1,5 +1,5 @@
 /* global Cookies, $, _, localStorage, showdown */
-import { spinOut, vibrate } from './ist.fn.event.js';
+import { spinOut } from './ist.fn.event.js';
 export { getDynalistContent, dynalistSetAuthEvents };
 
 function getDynalistContent(commentContent, taskID) {
