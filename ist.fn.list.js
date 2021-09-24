@@ -118,10 +118,11 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
                 'priority'
             );
 
+            console.log(project.countByPriority);
             const badgeHTML = $(`<a>${project.count}</a>`)
                     .addClass('badge')
                     .data('badge', project.count),
-                dots = project.countByPriority.join(' '),
+                dots = project.countByPriority,
                 suggestTaskDots = $('<div></div>')
                     .addClass('suggestDots')
                     .html(dots),
