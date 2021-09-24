@@ -306,6 +306,9 @@ ul:not(.nobullets) > li {
     bottom: -0.1em;
     font-size: 0.35em;
 }
+.suggestDots span {
+    padding-right: 0.25em;
+}
 
 /* https://codepen.io/mike-schultz/pen/NgQvGO */
 .chosen {
