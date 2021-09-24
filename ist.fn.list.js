@@ -128,7 +128,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
                     'priority: ' + priority + ', num of tasks: ' + numTasks
                 );
 
-                suggestTaskDots.append(
+                suggestTaskDots.prepend(
                     $(`<span>${'&#x25cf;'.repeat(numTasks)}</span>`).css(
                         'color',
                         `${PRIORITIES[priority]}`
@@ -154,7 +154,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         }
     });
 
-    console.log('version blankdots 7');
+    console.log('version blankdots 8');
 
     if (flexWidth < 21) {
         const activityColumnDummyWidth = Math.ceil(
