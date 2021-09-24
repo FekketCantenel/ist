@@ -121,23 +121,25 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
             console.log(project.countByPriority);
 
-            console.log('version blankdots3');
-            let dots = '';
+            console.log('version blankdots4');
+
+            const suggestTaskDots = $('<div></div>').addClass('suggestDots');
+
             _.each(project.countByPriority, (numTasks) => {
                 const priority = project.countByPriority[numTasks],
                     priorityDots = '&#x25cf;'.repeat(numTasks);
-                dots += $(`<span>${priorityDots}</span>`).css(
-                    'color',
-                    `${PRIORITIES[priority]}`
+                console.log(priorityDots);
+                suggestTaskDots.append(
+                    $(`<span>${priorityDots}</span>`).css(
+                        'color',
+                        `${PRIORITIES[priority]}`
+                    )
                 );
             });
 
             const badgeHTML = $(`<a>${project.count}</a>`)
                     .addClass('badge')
                     .data('badge', project.count),
-                suggestTaskDots = $('<div></div>')
-                    .addClass('suggestDots')
-                    .html(dots),
                 suggestTaskButton = $('<button></button>')
                     .addClass('suggest')
                     .attr('projectid', project.id)
