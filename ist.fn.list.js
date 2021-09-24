@@ -85,6 +85,8 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         activityDisplay = $('<div id="activityDisplay"></div>');
     let flexWidth = 0.1;
 
+    console.log('version blankdots 6');
+
     $.each(projects, (i, project) => {
         const projectActivity = activity.find(({ id }) => id === project.id);
 
@@ -121,13 +123,12 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
             console.log(project.countByPriority);
 
-            console.log('version blankdots 5');
-
             const suggestTaskDots = $('<div></div>').addClass('suggestDots');
 
             _.each(project.countByPriority, (numTasks) => {
+                console.log(numTasks);
                 const priority = project.countByPriority[numTasks];
-                console.log(priority);
+                console.log('priority: ' + priority);
 
                 suggestTaskDots.append(
                     $(`<span>${'&#x25cf;'.repeat(numTasks)}</span>`).css(
