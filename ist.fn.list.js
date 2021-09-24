@@ -121,13 +121,15 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
             console.log(project.countByPriority);
 
-            console.log('version blankdots2');
+            console.log('version blankdots3');
             let dots = '';
             _.each(project.countByPriority, (numTasks) => {
-                const priority = project.countByPriority[numTasks];
-                dots += '&#x25cf;'
-                    .repeat(numTasks)
-                    .css('color', `${PRIORITIES[priority]}`);
+                const priority = project.countByPriority[numTasks],
+                    priorityDots = '&#x25cf;'.repeat(numTasks);
+                dots += $(`<span>${priorityDots}</span>`).css(
+                    'color',
+                    `${PRIORITIES[priority]}`
+                );
             });
 
             const badgeHTML = $(`<a>${project.count}</a>`)
