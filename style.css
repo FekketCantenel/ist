@@ -302,7 +302,7 @@ ul:not(.nobullets) > li {
 }
 .suggestDots {
     position: absolute;
-    right: 0.25em;
+    left: 0.5em;
     bottom: -0.1em;
     font-size: 0.35em;
 }
