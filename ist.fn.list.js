@@ -111,13 +111,25 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         project.count = countedTasks[project.id] || 0;
 
         if (project.count > 0) {
+            project.countByPriority = _.countBy(
+                _.where(dueTasks, {
+                    project_id: project.id
+                }),
+                'priority'
+            );
+
             const badgeHTML = $(`<a>${project.count}</a>`)
                     .addClass('badge')
                     .data('badge', project.count),
+                dots = project.countByPriority.join(' '),
+                suggestTaskDots = $('<div></div>')
+                    .addClass('suggestDots')
+                    .html(dots),
                 suggestTaskButton = $('<button></button>')
                     .addClass('suggest')
                     .attr('projectid', project.id)
-                    .html(project.name),
+                    .html(project.name)
+                    .append(suggestTaskDots),
                 projectURL =
                     `<a class='projectLink' target='_blank' href='https://todoist.com/app#agenda%2F(overdue | today) %26 %23 ${project.name}'>&#128279;</a>` +
                     `<a class='projectLinkMobile' target='_blank' href='todoist://project?id=${project.id}'>&#128279;</a>`;
