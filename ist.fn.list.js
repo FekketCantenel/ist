@@ -2,6 +2,7 @@
 /* eslint camelcase:0 */
 
 import COLORS from './colors.js';
+import PRIORITIES from './priorities.js';
 import { postNewTaskTime } from './ist.fn.api.js';
 import { getTaskRepeatMoment } from './ist.fn.task.js';
 export { getAllTasks, getDueTasks, getSuggestTasksHTML };
@@ -120,10 +121,13 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
             console.log(project.countByPriority);
 
-            console.log('version blankdots');
+            console.log('version blankdots2');
             let dots = '';
             _.each(project.countByPriority, (numTasks) => {
-                dots += '&#x25cf;'.repeat(numTasks);
+                const priority = project.countByPriority[numTasks];
+                dots += '&#x25cf;'
+                    .repeat(numTasks)
+                    .css('color', `${PRIORITIES[priority]}`);
             });
 
             const badgeHTML = $(`<a>${project.count}</a>`)
