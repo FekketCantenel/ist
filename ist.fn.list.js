@@ -120,12 +120,11 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
             console.log(project.countByPriority);
 
+            console.log('version blankdots');
             let dots = '';
-            _.each(project.countByPriority, (priority) => {
-                dots += priority;
+            _.each(project.countByPriority, (numTasks) => {
+                dots += '&#x25cf;'.repeat(numTasks);
             });
-
-            console.log(dots);
 
             const badgeHTML = $(`<a>${project.count}</a>`)
                     .addClass('badge')
