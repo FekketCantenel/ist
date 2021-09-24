@@ -85,8 +85,6 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         activityDisplay = $('<div id="activityDisplay"></div>');
     let flexWidth = 0.1;
 
-    console.log('version blankdots 6');
-
     $.each(projects, (i, project) => {
         const projectActivity = activity.find(({ id }) => id === project.id);
 
@@ -125,10 +123,10 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
             const suggestTaskDots = $('<div></div>').addClass('suggestDots');
 
-            _.each(project.countByPriority, (numTasks) => {
-                console.log(numTasks);
-                const priority = project.countByPriority[numTasks];
-                console.log('priority: ' + priority);
+            _.each(project.countByPriority, (numTasks, priority) => {
+                console.log(
+                    'priority: ' + priority + ', num of tasks: ' + numTasks
+                );
 
                 suggestTaskDots.append(
                     $(`<span>${'&#x25cf;'.repeat(numTasks)}</span>`).css(
@@ -155,6 +153,8 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
             suggestTasks.append(suggestTaskButton, projectURL, $('<br />'));
         }
     });
+
+    console.log('version blankdots 7');
 
     if (flexWidth < 21) {
         const activityColumnDummyWidth = Math.ceil(
