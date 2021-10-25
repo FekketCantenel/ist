@@ -103,7 +103,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
             );
             activityColumn.attr('color', project.color);
 
-            activityArray.append(activityColumn);
+            activityArray.push(activityColumn);
 
             flexWidth += projectActivity.completed;
         }
