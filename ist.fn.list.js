@@ -150,13 +150,6 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         }
     });
 
-    console.log(activityDisplay.children());
-    activityDisplay.children().sort(function (a, b) {
-        console.log($(a).attr('color'));
-        return $(a).attr('color') - $(b).attr('color');
-    });
-    console.log(activityDisplay);
-
     if (flexWidth < 21) {
         const activityColumnDummyWidth = Math.ceil(
                 Math.ceil(flexWidth / 7) * 7 - flexWidth
@@ -172,6 +165,14 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
         activityDisplay.append(activityColumnDummy);
     }
+
+    console.log(activityDisplay.children());
+    activityDisplay.children().sort(function (a, b) {
+        const contentA = parseInt($(a).attr('color')),
+            contentB = parseInt($(b).attr('color'));
+        return contentA < contentB ? -1 : contentA > contentB ? 1 : 0;
+    });
+    console.log(activityDisplay.children());
 
     suggestTasks.append(activityDisplay);
 
