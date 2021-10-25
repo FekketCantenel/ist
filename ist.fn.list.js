@@ -82,7 +82,8 @@ function getDueTasks(allTasks) {
 function getSuggestTasksHTML(dueTasks, projects, activity) {
     const suggestTasks = $('<div></div>').addClass('suggestTasks'),
         countedTasks = _.countBy(dueTasks, 'project_id'),
-        activityDisplay = $('<div id="activityDisplay"></div>');
+        activityDisplay = $('<div id="activityDisplay"></div>'),
+        activityArray = [];
     let flexWidth = 0.1;
 
     $.each(projects, (i, project) => {
@@ -102,7 +103,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
             );
             activityColumn.attr('color', project.color);
 
-            activityDisplay.append(activityColumn);
+            activityArray.append(activityColumn);
 
             flexWidth += projectActivity.completed;
         }
@@ -150,6 +151,12 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         }
     });
 
+    console.log('v1');
+    console.log(activityArray);
+    _.sortBy(activityArray, 'color');
+    console.log(activityArray);
+    activityDisplay.append(activityArray);
+
     if (flexWidth < 21) {
         const activityColumnDummyWidth = Math.ceil(
                 Math.ceil(flexWidth / 7) * 7 - flexWidth
@@ -165,11 +172,6 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
         activityDisplay.append(activityColumnDummy);
     }
-
-    console.log('v1');
-    console.log(activityDisplay.children());
-    _.sortBy(activityDisplay.children(), 'color');
-    console.log(activityDisplay.children());
 
     suggestTasks.append(activityDisplay);
 
