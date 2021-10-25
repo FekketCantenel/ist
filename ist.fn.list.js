@@ -151,9 +151,9 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         }
     });
 
-    console.log('v1');
+    console.log('v1.1');
     console.log(activityArray);
-    _.sortBy(activityArray, 'color');
+    activityArray.sort((a, b) => a.color.localeCompare(b.color));
     console.log(activityArray);
     activityDisplay.append(activityArray);
 
