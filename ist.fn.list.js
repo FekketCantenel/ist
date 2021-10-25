@@ -151,7 +151,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
     });
 
     console.log(activityDisplay);
-    activityDisplay.sort(function (a, b) {
+    activityDisplay.children().sort(function (a, b) {
         return $(a).attr('color') - $(b).attr('color');
     });
     console.log(activityDisplay);
