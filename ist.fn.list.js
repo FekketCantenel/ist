@@ -102,12 +102,6 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
             );
             activityColumn.attr('color', project.color);
 
-            console.log(activityColumn);
-            activityColumn.sort(function (a, b) {
-                return $(a).attr('color') - $(b).attr('color');
-            });
-            console.log(activityColumn);
-
             activityDisplay.append(activityColumn);
 
             flexWidth += projectActivity.completed;
@@ -155,6 +149,12 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
             suggestTasks.append(suggestTaskButton, projectURL, $('<br />'));
         }
     });
+
+    console.log(activityDisplay);
+    activityDisplay.sort(function (a, b) {
+        return $(a).attr('color') - $(b).attr('color');
+    });
+    console.log(activityDisplay);
 
     if (flexWidth < 21) {
         const activityColumnDummyWidth = Math.ceil(
