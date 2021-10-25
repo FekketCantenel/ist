@@ -168,9 +168,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
     console.log(activityDisplay.children());
     activityDisplay.children().sort(function (a, b) {
-        const contentA = parseInt($(a).attr('color')),
-            contentB = parseInt($(b).attr('color'));
-        return contentA < contentB ? -1 : contentA > contentB ? 1 : 0;
+        return +a.attr('color') - +b.attr('color');
     });
     console.log(activityDisplay.children());
 
