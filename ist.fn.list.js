@@ -166,10 +166,9 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         activityDisplay.append(activityColumnDummy);
     }
 
+    console.log('v1');
     console.log(activityDisplay.children());
-    activityDisplay.children().sort(function (a, b) {
-        return +a.attr('color') - +b.attr('color');
-    });
+    _.sortBy(activityDisplay.children(), 'color');
     console.log(activityDisplay.children());
 
     suggestTasks.append(activityDisplay);
