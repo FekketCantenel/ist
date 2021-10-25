@@ -151,12 +151,9 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
         }
     });
 
-    console.log('v1.2');
-    console.log(activityArray);
     activityArray.sort((a, b) =>
         $(a).attr('color').localeCompare($(b).attr('color'))
     );
-    console.log(activityArray);
     activityDisplay.append(activityArray);
 
     if (flexWidth < 21) {
