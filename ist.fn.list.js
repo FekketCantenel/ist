@@ -100,6 +100,10 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
                 'title',
                 `${project.name} (${projectActivity.completed})`
             );
+            activityColumn.attr('color', `${project.color}`);
+            activityColumn.sort(function (a, b) {
+                return $(a).attr('color') - $(b).attr('color');
+            });
             activityDisplay.append(activityColumn);
 
             flexWidth += projectActivity.completed;
