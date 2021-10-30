@@ -66,10 +66,6 @@ $(function () {
                     dueTasks,
                     projects
                 );
-            console.log('projects object');
-            console.log(projects);
-            console.log('highestPriorityTask');
-            console.log(highestPriorityTask);
 
             if (highestPriorityTask) {
                 $('.status').text('getting task comments...');
