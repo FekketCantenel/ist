@@ -11,7 +11,9 @@ export {
 
 function getHighestPriorityTask(dueTasks, projects) {
     let task = {};
-    const projectRoutine = projects.find(({ order }) => order === 1),
+    const projectRoutine = projects.reduce((prev, curr) =>
+            prev.order < curr.order ? prev : curr
+        ),
         projectChosenID = Number(sessionStorage.getItem('project.id')) || 0;
 
     $.each([projectRoutine.id, projectChosenID], (i, projectID) => {
