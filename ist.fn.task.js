@@ -12,9 +12,9 @@ export {
 function getHighestPriorityTask(dueTasks, projects) {
     let task = {};
     const projectRoutine = projects.reduce((prev, curr) =>
-        prev.order < curr.order ? prev : curr
-    ),
-    projectChosenID = Number(sessionStorage.getItem('project.id')) || 0;
+            prev.order < curr.order ? prev : curr
+        ),
+        projectChosenID = Number(sessionStorage.getItem('project.id')) || 0;
 
     $.each([projectRoutine.id, projectChosenID], (i, projectID) => {
         task = getHighestPriorityTaskByProject(dueTasks, projectID);
@@ -97,7 +97,7 @@ function getTaskHTML(task, projects, comments, dueTasks) {
 
     const projectFirst = projects.reduce((prev, curr) =>
         prev.order < curr.order ? prev : curr
-    ),
+    );
 
     if (project.order !== projectFirst.order) {
         taskHTML.append(
