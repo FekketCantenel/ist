@@ -482,6 +482,14 @@ ul:not(.nobullets) > li {
         padding: 0;
     }
 
+    .projectName {
+        font-size: 12vw;
+    }
+    #backToProjects > svg {
+        position: relative;
+        top: .1em;
+    }
+
     #dueTasksInProject {
         margin-top: 1em;
         padding-bottom: 0em;
