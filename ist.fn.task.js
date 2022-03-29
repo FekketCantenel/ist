@@ -12,7 +12,7 @@ export {
 function getHighestPriorityTask(dueTasks, projects) {
     let task = {};
     const projectRoutine = projects.reduce((prev, curr) =>
-            prev.order < curr.order ? prev : curr
+            (prev.order || 100) < (curr.order || 100) ? prev : curr
         ),
         projectChosenID = Number(sessionStorage.getItem('project.id')) || 0;
 
@@ -96,7 +96,7 @@ function getTaskHTML(task, projects, comments, dueTasks) {
         commentsHTML = getTaskCommentsHTML(comments);
 
     const projectFirst = projects.reduce((prev, curr) =>
-        prev.order < curr.order ? prev : curr
+        (prev.order || 100) < (curr.order || 100) ? prev : curr
     );
 
     if (project.order !== projectFirst.order) {
