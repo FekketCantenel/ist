@@ -44,20 +44,19 @@ function getHighestPriorityTaskByProject(dueTasks, projectID) {
     return task;
 }
 
-function getTaskButtonHTML(taskID, taskClasses, emoji, href) {
+function getTaskButtonHTML(taskID, taskClasses, emoji, href, nextTime = '') {
     const taskButtonHTML = $('<a>')
         .addClass(`roundbutton ${taskClasses}`)
         .html(emoji)
         .attr('href', href)
         .attr('taskID', taskID);
     if (taskClasses === 'doneButton') {
-        taskButtonHTML.attr('title', 'will next appear ');
+        taskButtonHTML.attr('title', 'repeats ' + nextTime);
     }
     return taskButtonHTML;
 }
 
 function getTaskHTML(task, projects, comments, dueTasks) {
-    console.log(task.due.string);
     const taskID = task.id,
         converter = new showdown.Converter(),
         project = projects.find(({ id }) => id === Number(task.project_id)),
@@ -86,7 +85,8 @@ function getTaskHTML(task, projects, comments, dueTasks) {
                 taskID,
                 'doneButton',
                 '<svg viewBox="4 4 14 14" width="36" height="36" xmlns="http://www.w3.org/2000/svg"><path d="m.5 5.5 3 3 8.028-8" fill="none" stroke="#1f1f1f" stroke-linecap="round" stroke-linejoin="round" transform="translate(5 6)"/></svg>',
-                ''
+                '',
+                task.due.string
             ),
             getTaskButtonHTML(
                 taskID,
