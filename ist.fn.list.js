@@ -177,17 +177,15 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
 
     const chosenProjectID = getHighestPriorityProjectID(dueTasks, projects);
 
-    console.log(chosenProjectID);
-
-    // if (autoMode === true && chosenProjectID) {
-    //     sessionStorage.setItem('project.id', chosenProjectID);
-    //     spinOut();
-    // } else {
-    //     suggestTasks
-    //         .children(`button[projectid="${chosenProjectID}"]`)
-    //         .first()
-    //         .addClass('chosen');
-    // }
+    if (autoMode === true && chosenProjectID) {
+        sessionStorage.setItem('project.id', chosenProjectID);
+        spinOut();
+    } else {
+        suggestTasks
+            .children(`button[projectid="${chosenProjectID}"]`)
+            .first()
+            .addClass('chosen');
+    }
 
     return suggestTasks;
 }
