@@ -17,10 +17,10 @@ showdown.setOption('tables', 'true');
 $(function () {
     async function asyncCall() {
         const authCode = getURLParameter('code'),
-            authState = getURLParameter('state'),
-            autoMode = getURLParameter('?auto');
+            authState = getURLParameter('state');
 
-        if (autoMode) {
+        if (location.search === '?auto') {
+            const autoMode = true;
             $('body').addClass('automode');
         }
 
