@@ -17,7 +17,12 @@ showdown.setOption('tables', 'true');
 $(function () {
     async function asyncCall() {
         const authCode = getURLParameter('code'),
-            authState = getURLParameter('state');
+            authState = getURLParameter('state'),
+            autoMode = getURLParameter('auto');
+
+        if (autoMode) {
+            $('body').addClass('automode');
+        }
 
         if (Cookies.get('todoistToken') === undefined) {
             if (authCode && authState === 'todoist') {

@@ -156,6 +156,10 @@ button > small {
     background: #e44332;
 }
 
+body.automode * .deferButton {
+    display: none;
+}
+
 /* ===============
         COMMENTS
    =============== */
