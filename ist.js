@@ -1,4 +1,4 @@
-/* global sessionStorage, $, _, Cookies, showdown, moment */
+/* global sessionStorage, $, _, Cookies, showdown, moment, location */
 import ENV from './env.js';
 import { getAPI, syncAPI, getAuth, getURLParameter } from './ist.fn.api.js';
 import {
@@ -20,7 +20,7 @@ $(function () {
             authState = getURLParameter('state');
 
         if (location.search === '?auto') {
-            const autoMode = true;
+            // const autoMode = true;
             $('body').addClass('automode');
         }
 
