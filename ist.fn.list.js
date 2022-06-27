@@ -1,10 +1,11 @@
-/* global $, moment, _ */
+/* global $, moment, _, sessionStorage */
 /* eslint camelcase:0 */
 
 import COLORS from './colors.js';
 import PRIORITIES from './priorities.js';
 import { postNewTaskTime } from './ist.fn.api.js';
 import { getTaskRepeatMoment } from './ist.fn.task.js';
+import { spinOut } from './ist.fn.event.js';
 export { getAllTasks, getDueTasks, getSuggestTasksHTML };
 
 function getAllTasks(todoistRawTasks) {
@@ -79,7 +80,7 @@ function getDueTasks(allTasks) {
     return dueTasks;
 }
 
-function getSuggestTasksHTML(dueTasks, projects, activity) {
+function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
     const suggestTasks = $('<div></div>').addClass('suggestTasks'),
         countedTasks = _.countBy(dueTasks, 'project_id'),
         activityDisplay = $('<div id="activityDisplay"></div>'),
@@ -176,10 +177,17 @@ function getSuggestTasksHTML(dueTasks, projects, activity) {
 
     const chosenProjectID = getHighestPriorityProjectID(dueTasks, projects);
 
-    suggestTasks
-        .children(`button[projectid="${chosenProjectID}"]`)
-        .first()
-        .addClass('chosen');
+    console.log(chosenProjectID);
+
+    // if (autoMode === true && chosenProjectID) {
+    //     sessionStorage.setItem('project.id', chosenProjectID);
+    //     spinOut();
+    // } else {
+    //     suggestTasks
+    //         .children(`button[projectid="${chosenProjectID}"]`)
+    //         .first()
+    //         .addClass('chosen');
+    // }
 
     return suggestTasks;
 }

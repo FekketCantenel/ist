@@ -18,9 +18,10 @@ $(function () {
     async function asyncCall() {
         const authCode = getURLParameter('code'),
             authState = getURLParameter('state');
+        let autoMode = false;
 
         if (location.search === '?auto') {
-            // const autoMode = true;
+            autoMode = true;
             $('body').addClass('automode');
         }
 
@@ -107,7 +108,8 @@ $(function () {
                 const suggestTasks = getSuggestTasksHTML(
                     dueTasks,
                     projects,
-                    activity
+                    activity,
+                    autoMode
                 );
 
                 if (suggestTasks[0].childElementCount > 0) {
