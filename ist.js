@@ -18,7 +18,7 @@ $(function () {
     async function asyncCall() {
         const authCode = getURLParameter('code'),
             authState = getURLParameter('state'),
-            autoMode = getURLParameter('auto');
+            autoMode = getURLParameter('?auto');
 
         if (autoMode) {
             $('body').addClass('automode');
