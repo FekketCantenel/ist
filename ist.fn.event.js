@@ -60,7 +60,9 @@ function setEvents(dueTasks, allTasks) {
         $.each(deferArray, (i, deferAmount) => {
             modal.addFooterBtn(
                 deferAmount[0],
-                'tingle-btn tingle-btn--primary',
+                `tingle-btn tingle-btn--primary ${
+                    task.due.all_day === 0 ? 'tingle-btn--column' : ''
+                }`,
                 () => {
                     vibrate();
 

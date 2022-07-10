@@ -465,9 +465,12 @@ ul:not(.nobullets) > li {
     font-size: 0.75em;
 }
 
-.tingle-modal-box__footer .tingle-btn:not(:first-child) {
-    flex: 40%;
+.tingle-btn {
     padding: 1rem 0.75rem !important;
+}
+
+.tingle-btn--column:not(:first-child) {
+    flex: 40%;
 }
 
 /* ===============
