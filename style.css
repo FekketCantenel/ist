@@ -467,6 +467,7 @@ ul:not(.nobullets) > li {
 
 .tingle-modal-box__footer .tingle-btn:not(:first-child) {
     flex: 40%;
+    padding: 1rem 0.75rem !important;
 }
 
 /* ===============
