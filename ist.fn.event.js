@@ -55,14 +55,14 @@ function setEvents(dueTasks, allTasks) {
             deferArray =
                 task.due.all_day === 0
                     ? deferArrayTimes
-                    : getDeferArrayDays(allTasks, task);
+                    : getDeferArrayDays(allTasks, task),
+            deferButtonClass =
+                task.due.all_day === 0 ? ' tingle-btn--column' : '';
 
         $.each(deferArray, (i, deferAmount) => {
             modal.addFooterBtn(
                 deferAmount[0],
-                `tingle-btn tingle-btn--primary ${
-                    task.due.all_day === 0 ? 'tingle-btn--column' : ''
-                }`,
+                `tingle-btn tingle-btn--primary${deferButtonClass}`,
                 () => {
                     vibrate();
 
