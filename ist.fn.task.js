@@ -14,7 +14,7 @@ function getHighestPriorityTask(dueTasks, projects) {
     const projectRoutine = projects.reduce((prev, curr) =>
             (prev.order || 100) < (curr.order || 100) ? prev : curr
         ),
-        projectChosenID = Number(sessionStorage.getItem('project.id')) || 0;
+        projectChosenID = sessionStorage.getItem('project.id') || 0;
 
     $.each([projectRoutine.id, projectChosenID], (i, projectID) => {
         task = getHighestPriorityTaskByProject(dueTasks, projectID);
@@ -59,7 +59,7 @@ function getTaskButtonHTML(taskID, taskClasses, emoji, href, nextTime = '') {
 function getTaskHTML(task, projects, comments, dueTasks) {
     const taskID = task.id,
         converter = new showdown.Converter(),
-        project = projects.find(({ id }) => id === Number(task.project_id)),
+        project = projects.find(({ id }) => id === task.project_id),
         dueTasksInProject = dueTasks.filter(
             ({ project_id }) => project_id === project.id
         ).length,
