@@ -11,14 +11,14 @@ export {
     postNewTaskTime
 };
 
-const todoistAPI = 'https://todoist.com/api/v8/sync',
+const todoistAPI = 'https://todoist.com/api/v9/sync',
     todoistToken = Cookies.get('todoistToken');
 
 async function getAPI(path) {
     try {
         return await $.ajax({
             type: 'GET',
-            url: `https://api.todoist.com/rest/v1/${path}`,
+            url: `https://api.todoist.com/rest/v2/${path}`,
             dataType: 'json',
             beforeSend: function (request) {
                 if (todoistToken) {
@@ -46,7 +46,7 @@ async function getAPI(path) {
 async function syncAPI(path, commands) {
     try {
         return $.get(
-            `https://api.todoist.com/sync/v8/${path}?token=${todoistToken}&uuid=${uuidv4()}&${$.param(
+            `https://api.todoist.com/sync/v9/${path}?token=${todoistToken}&uuid=${uuidv4()}&${$.param(
                 commands
             )}`
         ).done(function (data, response) {
