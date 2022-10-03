@@ -7,7 +7,7 @@ export { setEvents, spinOut, vibrate };
 function setEvents(dueTasks, allTasks) {
     $('.doneButton').on('click auxclick', function (event) {
         event.preventDefault();
-        const taskID = Number($(this).attr('taskID')),
+        const taskID = $(this).attr('taskID'),
             randUUID = uuidv4(),
             commands = [
                 {
@@ -23,7 +23,7 @@ function setEvents(dueTasks, allTasks) {
     $('.deferButton').on('click auxclick', function (event) {
         vibrate();
         event.preventDefault();
-        const taskID = Number($(this).attr('taskID')),
+        const taskID = $(this).attr('taskID'),
             task = _.findWhere(dueTasks, {
                 id: taskID
             }),
