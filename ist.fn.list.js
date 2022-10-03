@@ -1,7 +1,6 @@
 /* global $, moment, _, sessionStorage */
 /* eslint camelcase:0 */
 
-import COLORS from './colors.js';
 import PRIORITIES from './priorities.js';
 import { postNewTaskTime } from './ist.fn.api.js';
 import { getTaskRepeatMoment } from './ist.fn.task.js';
@@ -96,7 +95,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
                     `<p>${project.name} (${projectActivity.completed})</p>`
                 );
             activityColumn.append(activityColumnText);
-            activityColumn.css('background-color', COLORS[project.color]);
+            activityColumn.css('background-color', project.color);
             activityColumn.css('flex-grow', projectActivity.completed);
             activityColumn.attr(
                 'title',
