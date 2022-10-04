@@ -92,6 +92,10 @@ body {
     padding-right: 24%;
 }
 
+body.automode * #dueTasksInProject {
+    display: none;
+}
+
 /* ===============
         BUTTONS
    =============== */
@@ -156,9 +160,9 @@ button > small {
     background: #e44332;
 }
 
-body.automode * .deferButton {
+/* body.automode * .deferButton {
     display: none;
-}
+} */
 
 /* ===============
         COMMENTS
