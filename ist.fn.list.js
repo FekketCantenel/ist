@@ -153,7 +153,6 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
     });
 
     const colorsArray = Object.keys(COLORS);
-    console.log(colorsArray); // ///////////////////
     activityArray.sort(
         (a, b) =>
             colorsArray.indexOf($(a).attr('color')) -
