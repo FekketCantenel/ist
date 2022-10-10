@@ -102,7 +102,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
                 'title',
                 `${project.name} (${projectActivity.completed})`
             );
-            activityColumn.attr('color', project.color);
+            activityColumn.attr('color', COLORS[project.color]);
 
             activityArray.push(activityColumn);
 
