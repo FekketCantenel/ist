@@ -7,7 +7,7 @@ export default {
     olive_green: '#afb83b',
     lime_green: '#7ecc49',
     green: '#299438',
-    mint-green: '#6accbc',
+    mint_green: '#6accbc',
     teal: '#158fad',
     sky_blue: '#14aaf5',
     light_blue: '#96c3eb',
