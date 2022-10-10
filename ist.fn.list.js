@@ -102,7 +102,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
                 'title',
                 `${project.name} (${projectActivity.completed})`
             );
-            activityColumn.attr('color', COLORS[project.color]);
+            activityColumn.attr('color', project.color);
 
             activityArray.push(activityColumn);
 
@@ -153,7 +153,9 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
     });
 
     activityArray.sort((a, b) =>
-        $(a).attr('color').localeCompare($(b).attr('color'))
+        COLORS.indexOf($(a).attr('color')).localeCompare(
+            COLORS.indexOf($(b).attr('color'))
+        )
     );
     activityDisplay.append(activityArray);
 
