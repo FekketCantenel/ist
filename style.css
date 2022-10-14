@@ -501,6 +501,8 @@ ul:not(.nobullets) > li {
 
     .tingle-modal-box__footer > button {
         margin-top: 0.25em !important;
+    }
+    .tingle-btn--row {
         flex-basis: 100%;
     }
     .tingle-modal-box {

@@ -59,7 +59,9 @@ function setEvents(dueTasks, allTasks) {
                     ? deferArrayTimes
                     : getDeferArrayDays(allTasks, task),
             deferButtonClass =
-                task.due.all_day === 0 ? ' tingle-btn--column' : '';
+                task.due.all_day === 0
+                    ? ' tingle-btn--column'
+                    : 'tingle-btn--row';
 
         $.each(deferArray, (i, deferAmount) => {
             modal.addFooterBtn(
