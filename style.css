@@ -453,14 +453,11 @@ ul:not(.nobullets) > li {
     display: none;
 }
 
-.tingle-modal-box {
-    width: 64em !important;
-}
-
 .tingle-modal-box__footer {
     background-color: #353535 !important;
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 .tingle-modal-box__footer > button {
@@ -473,9 +470,18 @@ ul:not(.nobullets) > li {
     padding: 1rem 0.75rem !important;
 }
 
-.tingle-btn--column:not(:first-child) {
-    flex: 40%;
+.tingle-btn--column:first-child {
+    flex-grow: 4;
 }
+
+.tingle-btn--column:not(:first-child) {
+    flex-grow: 2;
+}
+
+.tingle-btn--column:nth-child(n+2):nth-child(-n+4) {
+    flex-grow: 1;
+}
+
 
 /* ===============
         MOBILE

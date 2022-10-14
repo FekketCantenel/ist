@@ -37,6 +37,8 @@ function setEvents(dueTasks, allTasks) {
             taskUntilTomorrow = taskNewMoment.diff(nowMoment),
             deferArrayTimes = [
                 [`tomorrow ${taskNewTime}`, taskUntilTomorrow],
+                ['+3 minutes', 180000],
+                ['+10 minutes', 600000],
                 ['+15 minutes', 900000],
                 ['+30 minutes', 1800000],
                 ['+45 minutes', 2700000],
