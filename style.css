@@ -460,14 +460,21 @@ ul:not(.nobullets) > li {
     justify-content: space-evenly;
 }
 
+.tingle-modal-box__footer::after {
+    display: none;
+}
+
 .tingle-modal-box__footer > button {
     margin-top: 1.5em;
     font-size: 0.75em;
-    flex-basis: 40%;
 }
 
 .tingle-btn {
     padding: 1rem 0.75rem !important;
+}
+
+.tingle-btn--column {
+    flex-basis: 40%;
 }
 
 .tingle-btn--column:first-child {
@@ -494,6 +501,7 @@ ul:not(.nobullets) > li {
 
     .tingle-modal-box__footer > button {
         margin-top: 0.25em !important;
+        flex-basis: 100%;
     }
     .tingle-modal-box {
         width: 100% !important;
