@@ -478,6 +478,10 @@ ul:not(.nobullets) > li {
     flex-basis: 40%;
 }
 
+.tingle-btn--row {
+    flex-basis: 95%;
+}
+
 .tingle-btn--column:first-child {
     flex-basis: 100%;
 }
