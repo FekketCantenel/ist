@@ -486,7 +486,7 @@ ul:not(.nobullets) > li {
     flex-grow: 2;
 }
 
-.tingle-btn--column:nth-child(n+10):nth-child(-n+13) {
+.tingle-btn--column:nth-child(n+10):nth-child(-n+17) {
     flex-basis: 15%;
 }
 
