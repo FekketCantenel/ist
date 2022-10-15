@@ -486,15 +486,20 @@ ul:not(.nobullets) > li {
     flex-grow: 2;
 }
 
-.tingle-btn--column:nth-child(n+10):nth-child(-n+17) {
+.tingle-btn--column:nth-child(n + 10):nth-child(-n + 17) {
     flex-basis: 20%;
     padding: 0.75rem 0.5rem !important;
 }
 
-
 /* ===============
         MOBILE
    =============== */
+
+@media only screen and (max-width: 375px) {
+    .tingle-btn--column:nth-child(n + 10):nth-child(-n + 17) {
+        flex-basis: 15%;
+    }
+}
 
 @media only screen and (max-width: 650px) {
     body {
@@ -522,7 +527,7 @@ ul:not(.nobullets) > li {
     }
     #backToProjects > svg {
         position: relative;
-        top: .1em;
+        top: 0.1em;
     }
 
     #dueTasksInProject {
