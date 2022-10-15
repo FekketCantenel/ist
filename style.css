@@ -495,7 +495,7 @@ ul:not(.nobullets) > li {
         MOBILE
    =============== */
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 400px) {
     .tingle-btn--column:nth-child(n + 10):nth-child(-n + 17) {
         flex-basis: 15%;
     }
