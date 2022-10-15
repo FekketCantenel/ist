@@ -471,7 +471,7 @@ ul:not(.nobullets) > li {
 }
 
 .tingle-btn {
-    padding: 1rem 0.75rem !important;
+    padding: 0.85rem 0.75rem !important;
 }
 
 .tingle-btn--column {
@@ -487,7 +487,8 @@ ul:not(.nobullets) > li {
 }
 
 .tingle-btn--column:nth-child(n+10):nth-child(-n+17) {
-    flex-basis: 15%;
+    flex-basis: 20%;
+    padding: 0.75rem 0.5rem !important;
 }
 
 
@@ -495,9 +496,9 @@ ul:not(.nobullets) > li {
         MOBILE
    =============== */
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 650px) {
     body {
-        font-size: 1.25em; /* change this to zoom page */
+        font-size: 1.25em; /* changing this zooms page */
     }
 
     .tingle-modal-box__footer > button {
