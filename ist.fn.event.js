@@ -20,6 +20,12 @@ function setEvents(dueTasks, allTasks) {
         asyncCall(commands);
     });
 
+    $(document).on('keydown', function (event) {
+        if (event.key === 'd') {
+            $('.deferButton').click();
+        }
+    });
+
     $('.deferButton').on('click auxclick', function (event) {
         vibrate();
         event.preventDefault();
