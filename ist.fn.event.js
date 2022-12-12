@@ -2,7 +2,7 @@
 import PRIORITIES from './priorities.js';
 import { asyncCall, uuidv4, postNewTaskTime } from './ist.fn.api.js';
 import { getTaskRepeatMoment } from './ist.fn.task.js';
-export { setEvents, spinOut, vibrate };
+export { setEvents, spinOut };
 
 function setEvents(dueTasks, allTasks) {
     $('.doneButton').on('click auxclick', function (event) {
@@ -27,7 +27,6 @@ function setEvents(dueTasks, allTasks) {
     });
 
     $('.deferButton').on('click auxclick', function (event) {
-        vibrate();
         event.preventDefault();
         const taskID = $(this).attr('taskID'),
             task = _.findWhere(dueTasks, {
@@ -74,8 +73,6 @@ function setEvents(dueTasks, allTasks) {
                 deferAmount[0],
                 `tingle-btn tingle-btn--primary${deferButtonClass}`,
                 () => {
-                    vibrate();
-
                     const newTime = moment().add(deferAmount[1], 'ms');
                     let taskNewDate = '';
 
@@ -114,15 +111,8 @@ function setEvents(dueTasks, allTasks) {
 }
 
 function spinOut() {
-    vibrate();
     $('#spinner, #task').toggle();
     location.reload();
-}
-
-function vibrate() {
-    if ('vibrate' in navigator) {
-        navigator.vibrate(75);
-    }
 }
 
 function getDeferArrayDays(allTasks, task) {
