@@ -45,7 +45,7 @@ async function getAPI(path) {
 
 async function syncAPI(path, commands) {
     try {
-        return $.get(`https://api.todoist.com/sync/v9/${path}`, {
+        return $.get(`${todoistAPI}/${path}`, {
             headers: {
                 Authorization: `Bearer ${todoistToken}`,
                 uuid: `${uuidv4()}`,
@@ -101,8 +101,9 @@ function uuidv4() {
 }
 
 async function postAPI(commands) {
+    console.log(commands);
     return $.post(todoistAPI, {
-        token: todoistToken,
+        Authorization: `Bearer ${todoistToken}`,
         commands
     }).done(function (data, response) {
         return response;
