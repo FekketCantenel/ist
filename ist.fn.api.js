@@ -50,9 +50,7 @@ async function syncAPI(path, commands) {
             headers: {
                 Authorization: `Bearer ${todoistToken}`
             },
-            data: {
-                commands
-            }
+            data: { commands }
         }).done(function (data, response) {
             return response;
         });
@@ -103,7 +101,6 @@ function uuidv4() {
 }
 
 async function postAPI(commands) {
-    console.log(commands);
     return $.post({
         url: todoistAPI,
         headers: {
