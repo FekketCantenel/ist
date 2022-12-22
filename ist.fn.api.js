@@ -46,7 +46,7 @@ async function getAPI(path) {
 async function syncAPI(path, commands) {
     try {
         return $.get({
-            url: `${todoistAPI}/${path}`,
+            url: `https://api.todoist.com/sync/v9/${path}`,
             headers: {
                 Authorization: `Bearer ${todoistToken}`
             },
