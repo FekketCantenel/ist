@@ -45,11 +45,13 @@ async function getAPI(path) {
 
 async function syncAPI(path, commands) {
     try {
-        return $.get(
-            `https://api.todoist.com/sync/v9/${path}?token=${todoistToken}&uuid=${uuidv4()}&${$.param(
+        return $.get(`https://api.todoist.com/sync/v9/${path}`, {
+            headers: {
+                Authorization: `Bearer ${todoistToken}`,
+                uuid: `${uuidv4()}`,
                 commands
-            )}`
-        ).done(function (data, response) {
+            }
+        }).done(function (data, response) {
             return response;
         });
     } catch (e) {
