@@ -48,8 +48,9 @@ async function syncAPI(path, commands) {
         return $.get({
             url: `${todoistAPI}/${path}`,
             headers: {
-                Authorization: `Bearer ${todoistToken}`,
-                uuid: `${uuidv4()}`,
+                Authorization: `Bearer ${todoistToken}`
+            },
+            data: {
                 commands
             }
         }).done(function (data, response) {
