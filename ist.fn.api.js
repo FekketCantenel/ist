@@ -103,8 +103,10 @@ function uuidv4() {
 async function postAPI(commands) {
     console.log(commands);
     return $.post(todoistAPI, {
-        Authorization: `Bearer ${todoistToken}`,
-        commands
+        headers: {
+            Authorization: `Bearer ${todoistToken}`
+        },
+        data: { commands }
     }).done(function (data, response) {
         return response;
     });
