@@ -531,7 +531,9 @@ ul:not(.nobullets) > li {
     }
     #backToProjects > svg {
         position: relative;
-        top: 0.1em;
+        top: 1vw;
+        width: 13vw;
+        height: auto;
     }
 
     #dueTasksInProject {
@@ -571,5 +573,40 @@ ul:not(.nobullets) > li {
 
     #spinner > img {
         height: 4em;
+    }
+}
+
+@media only screen and (max-width: 250px) {
+    .projectName > span {
+        font-size: 14vw;
+    }
+    .mainTask > p:first-child {
+        font-size: 13vw;
+    }
+
+    #dueTasksInProject {
+        text-align: center;
+        padding-right: 0%;
+        font-size: 6vw;
+    }
+
+    .nobullets {
+        margin-left: -22vw !important;
+    }
+
+    .nobullets > li {
+        margin-left: 28vw;
+        font-size: 12vw;
+    }
+
+    .donechecklist,
+    .donerotating,
+    .doneproject {
+        margin-left: -24vw;
+    }
+
+    .taskComment * button {
+        padding: 0.3em 0.25em;
+        font-size: 6vw;
     }
 }
