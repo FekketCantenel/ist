@@ -97,11 +97,11 @@ $(function () {
                     'completed/get_stats'
                 );
 
-                let todayActivity = _.find(todoistRawActivity, (dayStats) => {
+                const todayActivity = _.find(todoistRawActivity, (dayStats) => {
                     return moment(dayStats.date).isSame(new Date(), 'day');
                 });
 
-                let activity = todayActivity ? todayActivity.items : [];
+                const activity = todayActivity ? todayActivity.items : [];
 
                 $('.status').text('building project list...');
                 const suggestTasks = getSuggestTasksHTML(
