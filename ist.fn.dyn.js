@@ -77,6 +77,9 @@ function getDynalistContent(commentContent, taskID) {
                     }
                 }),
                 parentID = dynalistSubItem || 'root',
+                parentNode = dynalistNodesOpen.find(
+                    (task) => task.id === parentID
+                ),
                 dynalistNodesOrdered = treeDynalist(
                     dynalistNodesOpen,
                     parentID
@@ -85,15 +88,17 @@ function getDynalistContent(commentContent, taskID) {
                     dynalistNodesOrdered,
                     taskID,
                     dynalistFileID,
-                    parentID
-                ),
-                parentNoteRaw = dynalistNodesOpen.find(
-                    (task) => task.id === parentID
-                ).note;
+                    parentNode
+                );
 
-            if (parentNoteRaw) {
+            if (
+                parentNode.note &&
+                ['checklist', 'rotating', 'project'].indexOf(
+                    parentNode.note
+                ) === -1
+            ) {
                 const converter = new showdown.Converter(),
-                    parentNote = converter.makeHtml(parentNoteRaw),
+                    parentNote = converter.makeHtml(parentNode.note),
                     parentNoteBox = $(
                         `<div id='parentnote'>${parentNote}</div>`
                     );
@@ -152,9 +157,16 @@ function treeGetChildren(ids, nodesOpen) {
     return nodesNew;
 }
 
-function getDynalistHTML(tree, taskID, dynalistFileID, parentID) {
-    const treeHTML = $('<div></div>').addClass('taskComment'),
-        dynalistView = localStorage.getItem(`dynalistview.${taskID}`);
+function getDynalistHTML(tree, taskID, dynalistFileID, parentNode) {
+    const treeHTML = $('<div></div>').addClass('taskComment');
+    let dynalistView = localStorage.getItem(`dynalistview.${taskID}`);
+
+    if (
+        !dynalistView &&
+        ['checklist', 'rotating', 'project'].indexOf(parentNode.note) !== -1
+    ) {
+        dynalistView = parentNode.note;
+    }
 
     $(`button[dynalistview='${dynalistView || 'read'}']`).addClass('important');
 
@@ -170,12 +182,14 @@ function getDynalistHTML(tree, taskID, dynalistFileID, parentID) {
                     tree,
                     dynalistView,
                     dynalistFileID,
-                    parentID
+                    parentNode.id
                 )
             );
             break;
         case 'project':
-            treeHTML.append(treeHTMLGetProject(tree, dynalistFileID, parentID));
+            treeHTML.append(
+                treeHTMLGetProject(tree, dynalistFileID, parentNode.id)
+            );
             break;
     }
 
