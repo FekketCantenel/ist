@@ -170,10 +170,17 @@ function getDynalistHTML(tree, taskID, dynalistFileID, parentNode) {
 
     $(`button[dynalistview='${dynalistView || 'read'}']`).addClass('important');
 
+    let treeHTMLRender;
+
     switch (dynalistView) {
         default:
         case 'read':
-            treeHTML.append(treeHTMLGetChildren(tree, 'root', dynalistFileID));
+            treeHTMLRender = treeHTMLGetChildren(tree, 'root', dynalistFileID);
+            treeHTMLRender
+                .addClass('bulletleft')
+                .find('ul')
+                .addClass('bulletleft');
+            treeHTML.append(treeHTMLRender);
             break;
         case 'checklist':
         case 'rotating':
@@ -270,6 +277,7 @@ function treeHTMLGetProject(tree, dynalistFileID, parentID) {
         }
     });
 
+    treeHTMLChildren.addClass('bulletleft');
     return treeHTMLChildren;
 }
 

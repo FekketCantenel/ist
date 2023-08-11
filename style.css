@@ -142,11 +142,14 @@ button > small {
     font-size: 0.75em;
     color: white !important;
     text-align: center;
-    line-height: 1.4em;
+    line-height: 1.25em;
     border-radius: 50%;
     text-decoration: none;
-    padding: 0.15em 0.3em;
+    padding: 0.15em 0.2em;
     margin-left: 0.25em;
+    width: 1.25em;
+    height: 1.25em;
+    display: inline-block;
 }
 .roundbutton > svg {
     vertical-align: middle;
@@ -195,7 +198,11 @@ li.nobullets > ul {
 }
 
 ul:not(.nobullets) {
-    margin-left: 0;
+    margin-left: -6vw;
+}
+
+ul.bulletleft {
+    margin-left: 0 !important;
 }
 
 ul:not(.nobullets) > li {
@@ -569,6 +576,10 @@ ul:not(.nobullets) > li {
     .dynalistMenuButton > span {
         display: block;
         font-size: 0.85em;
+    }
+
+    ul:not(.nobullets) {
+        margin-left: -14vw;
     }
 
     #spinner > img {
