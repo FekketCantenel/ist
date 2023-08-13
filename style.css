@@ -197,11 +197,12 @@ li.nobullets > ul {
     margin-left: 1.5em;
 }
 
-ul:not(.nobullets) {
+button + ul:not(.nobullets) {
     margin-left: -6vw;
 }
 
-ul.bulletleft {
+ul.bulletleft,
+.taskComments > .taskComment > ul:not(.nobullets) {
     margin-left: 0 !important;
 }
 
@@ -578,7 +579,7 @@ ul:not(.nobullets) > li {
         font-size: 0.85em;
     }
 
-    ul:not(.nobullets) {
+    button + ul:not(.nobullets) {
         margin-left: -14vw;
     }
 
