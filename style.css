@@ -88,8 +88,7 @@ body {
     font-size: 0.4em;
     color: grey;
     font-style: italic;
-    text-align: right;
-    padding-right: 24%;
+    text-align: center;
 }
 
 body.automode * #dueTasksInProject {
@@ -556,6 +555,10 @@ ul:not(.nobullets) > li {
     .taskComments {
         width: 90% !important;
         margin-top: 1em !important;
+    }
+
+    .taskComment > .nobullets {
+        margin-left: -1.25em !important;
     }
 
     .projectLink,
