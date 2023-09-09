@@ -123,6 +123,10 @@ function postDynalistAPI(endpoint, commands, callback) {
         }),
         success: function (data) {
             callback(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error('API call failed:', textStatus, errorThrown);
+            Cookies.remove('dynalistToken');
         }
     });
 }
