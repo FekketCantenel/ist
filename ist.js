@@ -47,7 +47,7 @@ $(function () {
                 return false;
             }
         } else {
-            if (authCode && authState === 'dynalist' && !Cookies.get('dynalistToken')) {
+            if (authCode && authState === 'dynalist' && Cookies.get('dynalistToken') === undefined) {
                 $('#task').append('logging into Dynalist, please wait...');
                 Cookies.set('dynalistToken', authCode, {
                     expires: 182
