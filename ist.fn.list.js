@@ -125,7 +125,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
 
             const suggestTaskDots = $('<div></div>').addClass('suggestDots');
 
-            for (let priority = 4; priority >= 1; priority--) {
+            for (let priority = 1; priority <= 4; priority++) {
                 const numTasks = project.countByPriority[priority] || 0;
 
                 const spanElement = $(`<span>${'&#x25cf;'.repeat(numTasks)}</span>`).css(
