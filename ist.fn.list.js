@@ -125,14 +125,16 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
 
             const suggestTaskDots = $('<div></div>').addClass('suggestDots');
 
-            _.each(project.countByPriority, (numTasks, priority) => {
-                suggestTaskDots.prepend(
-                    $(`<span>${'&#x25cf;'.repeat(numTasks)}</span>`).css(
-                        'color',
-                        `${PRIORITIES[priority]}`
-                    ).attr('data-priority', priority)
-                );
-            });
+            for (let priority = 4; priority >= 1; priority--) {
+                const numTasks = project.countByPriority[priority] || 0;
+
+                const spanElement = $(`<span>${'&#x25cf;'.repeat(numTasks)}</span>`).css(
+                    'color',
+                    `${PRIORITIES[priority]}`
+                ).attr('data-priority', priority);
+
+                suggestTaskDots.prepend(spanElement);
+            }
 
             const badgeHTML = $(`<a>${project.count}</a>`)
                 .addClass('badge')
