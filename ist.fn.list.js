@@ -130,13 +130,13 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
                     $(`<span>${'&#x25cf;'.repeat(numTasks)}</span>`).css(
                         'color',
                         `${PRIORITIES[priority]}`
-                    )
+                    ).data('priority', priority)
                 );
             });
 
             const badgeHTML = $(`<a>${project.count}</a>`)
-                    .addClass('badge')
-                    .data('badge', project.count),
+                .addClass('badge')
+                .data('badge', project.count),
                 suggestTaskButton = $('<button></button>')
                     .addClass('suggest')
                     .attr('projectid', project.id)
@@ -162,11 +162,10 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
 
     if (flexWidth < 21) {
         const activityColumnDummyWidth = Math.ceil(
-                Math.ceil(flexWidth / 7) * 7 - flexWidth
-            ),
-            activityColumnString = `+${activityColumnDummyWidth} to ${
-                activityColumnDummyWidth + Math.floor(flexWidth)
-            }`,
+            Math.ceil(flexWidth / 7) * 7 - flexWidth
+        ),
+            activityColumnString = `+${activityColumnDummyWidth} to ${activityColumnDummyWidth + Math.floor(flexWidth)
+                }`,
             activityColumnDummy = $(`<div>${activityColumnString}</div>`).css(
                 'flex-grow',
                 activityColumnDummyWidth
