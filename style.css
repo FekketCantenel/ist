@@ -314,11 +314,12 @@ ul:not(.nobullets) > li {
     position: relative;
     letter-spacing: 0.1em;
     background-color: transparent;
+    font-family: liberation;
 }
 .suggestDots {
     position: absolute;
-    left: 0.5em;
-    bottom: -0.1em;
+    left: 2em;
+    top: -2.6em;
     font-size: 0.35em;
 }
 .suggestDots span {
@@ -435,7 +436,7 @@ ul:not(.nobullets) > li {
     text-align: center;
     border-radius: 50%;
     top: -1em;
-    right: -1em;
+    left: -1em;
     text-decoration: none;
 }
 .badge[data-badge]:after {
