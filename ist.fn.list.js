@@ -130,7 +130,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
                     $(`<span>${'&#x25cf;'.repeat(numTasks)}</span>`).css(
                         'color',
                         `${PRIORITIES[priority]}`
-                    ).data('priority', priority)
+                    ).attr('data-priority', priority)
                 );
             });
 
