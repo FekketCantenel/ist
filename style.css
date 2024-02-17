@@ -319,6 +319,9 @@ ul:not(.nobullets) > li {
 
 .suggestDots {
     position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 94%;
     left: 2em;
     top: -2.6em;
     font-size: 0.35em;
@@ -326,19 +329,11 @@ ul:not(.nobullets) > li {
 .suggestDots span {
     padding-right: 0.25em;
     white-space: nowrap;
-    overflow: hidden;
     display: inline-block;
+    width: 5%;
 }
-.suggestDots span[data-priority='3'] {
-    margin-left: 20%;
-}
-
-.suggestDots span[data-priority='2'] {
-    margin-left: 60%;
-}
-
-.suggestDots span[data-priority='1'] {
-    margin-left: 80%;
+.suggestDots span:last-child {
+    text-align: right;
 }
 
 /* https://codepen.io/mike-schultz/pen/NgQvGO */
