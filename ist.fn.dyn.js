@@ -23,38 +23,38 @@ function getDynalistContent(commentContent, taskID) {
         return dynalistAuthHTML;
     } else {
         const [dynalistFileID, dynalistSubItem] = commentContent
-                .slice(commentContent.lastIndexOf('/') + 1)
-                .split('#z='),
+            .slice(commentContent.lastIndexOf('/') + 1)
+            .split('#z='),
             readCommands = { file_id: dynalistFileID };
 
         postDynalistAPI('read', readCommands, function (output) {
             const dynalistMenuButtonsArray = [
-                    {
-                        name: 'read',
-                        symbol: '&#128220;',
-                        tooltip:
-                            'View this Dynalist document as a comment. Useful for Todoist comments that require a more robust editing interface.'
-                    },
-                    {
-                        name: 'checklist',
-                        symbol: '&#127937;',
-                        tooltip:
-                            'View this Dynalist document as a checklist; when each top-level item is checked, the next is shown. Useful for tasks with many steps.'
-                    },
-                    {
-                        name: 'rotating',
-                        symbol: '&#9196;',
-                        tooltip:
-                            'WARNING! THIS EDITS THIS DOCUMENT. View the first top-level item in this Dynalist document; when marked done, it will be sent to the bottom of the document. Useful for lists of chores that only need to be done once in a while.'
-                    },
-                    {
-                        name: 'project',
-                        symbol: '&#128206;',
-                        tooltip:
-                            'WARNING! THIS EDITS THIS DOCUMENT. View the first deepest item in this Dynalist document; when marked done, it will be marked done in Dynalist. Useful for projects with a set list of steps.'
-                    }
-                ],
-                dynalistMenu = $("<div id='dynalistmenu'></div>");
+                {
+                    name: 'read',
+                    symbol: '&#128220;',
+                    tooltip:
+                        'View this Dynalist document as a comment. Useful for Todoist comments that require a more robust editing interface.'
+                },
+                {
+                    name: 'checklist',
+                    symbol: '&#127937;',
+                    tooltip:
+                        'View this Dynalist document as a checklist; when each top-level item is checked, the next is shown. Useful for tasks with many steps.'
+                },
+                {
+                    name: 'rotating',
+                    symbol: '&#9196;',
+                    tooltip:
+                        'WARNING! THIS EDITS THIS DOCUMENT. View the first top-level item in this Dynalist document; when marked done, it will be sent to the bottom of the document. Useful for lists of chores that only need to be done once in a while.'
+                },
+                {
+                    name: 'project',
+                    symbol: '&#128206;',
+                    tooltip:
+                        'WARNING! THIS EDITS THIS DOCUMENT. View the first deepest item in this Dynalist document; when marked done, it will be marked done in Dynalist. Useful for projects with a set list of steps.'
+                }
+            ],
+                dynalistMenu = $("<div class='dynalistmenu'></div>");
 
             $.each(dynalistMenuButtonsArray, (i, button) => {
                 const buttonHTML = $(
@@ -69,33 +69,33 @@ function getDynalistContent(commentContent, taskID) {
             dynalistMenu.append(dynalistLinkSymbol);
 
             $('#spinnerDynalist').remove();
-            $('.taskComments').append(dynalistMenu);
 
             const dynalistNodesOpen = _.filter(output.nodes, function (node) {
-                    if (node.checked !== true) {
-                        return true;
-                    }
-                }),
+                if (node.checked !== true) {
+                    return true;
+                }
+            }),
                 parentID = dynalistSubItem || 'root',
                 parentNode = dynalistNodesOpen.find(
                     (task) => task.id === parentID
                 ),
-                dynalistNodesOrdered = treeDynalist(
-                    dynalistNodesOpen,
-                    parentID
-                ),
+                { childNodes: dynalistNodesOrdered, parentNode: dynalistNodeParent } = treeDynalist(dynalistNodesOpen, parentID),
                 dynalistHTML = getDynalistHTML(
                     dynalistNodesOrdered,
                     taskID,
                     dynalistFileID,
-                    parentNode
+                    parentNode,
+                    dynalistNodeParent
                 );
+
+            if (!$(dynalistHTML).attr('dynalistView').startsWith('count')) {
+                dynalistHTML.prepend(dynalistMenu)
+            }
+            $('.taskComments').append(dynalistHTML);
 
             if (
                 parentNode.note &&
-                ['checklist', 'rotating', 'project'].indexOf(
-                    parentNode.note
-                ) === -1
+                !['checklist', 'rotating', 'project', 'count'].includes(parentNode.note.split(' ')[0])
             ) {
                 const converter = new showdown.Converter(),
                     parentNote = converter.makeHtml(parentNode.note),
@@ -103,7 +103,7 @@ function getDynalistContent(commentContent, taskID) {
                         `<div id='parentnote'>${parentNote}</div>`
                     );
 
-                $('.taskComments').append(parentNoteBox);
+                $(`.taskComment#${parentNode.id}`).append(parentNoteBox);
             }
             $('.taskComments').append(dynalistHTML);
             $('li:has(table)').css('list-style-type', 'none');
@@ -132,12 +132,15 @@ function postDynalistAPI(endpoint, commands, callback) {
 }
 
 function treeDynalist(nodesOpen, parentID) {
-    const nodesRoot = _.find(nodesOpen, function (value) {
-            return value.id === parentID;
-        }).children,
-        nodesTree = treeGetChildren(nodesRoot, nodesOpen, parentID);
+    const parentNode = _.find(nodesOpen, function (value) {
+        return value.id === parentID;
+    });
 
-    return nodesTree;
+    const childNodes = parentNode.children;
+    const nodesTree = treeGetChildren(childNodes, nodesOpen, parentID);
+    delete parentNode.children;
+
+    return { childNodes: nodesTree, parentNode: parentNode };
 }
 
 function treeGetChildren(ids, nodesOpen) {
@@ -161,22 +164,39 @@ function treeGetChildren(ids, nodesOpen) {
     return nodesNew;
 }
 
-function getDynalistHTML(tree, taskID, dynalistFileID, parentNode) {
+function getDynalistHTML(tree, taskID, dynalistFileID, parentNode, dynalistNodeParent) {
     const treeHTML = $('<div></div>').addClass('taskComment');
     let dynalistView = localStorage.getItem(`dynalistview.${taskID}`);
 
     if (
         !dynalistView &&
-        ['checklist', 'rotating', 'project'].indexOf(parentNode.note) !== -1
+        parentNode.note &&
+        ['checklist', 'rotating', 'project', 'count'].includes(parentNode.note.split(' ')[0])
     ) {
         dynalistView = parentNode.note;
+    } else {
+        dynalistView = 'read'
     }
 
-    $(`button[dynalistview='${dynalistView || 'read'}']`).addClass('important');
+    let count;
+    if (dynalistView.indexOf('count') === 0) {
+        const parts = dynalistView.split(' ');
+        count = {
+            total: parseInt(parts[1].split('/')[0]),
+            current: parts[1].split('/')[1] ? parseInt(parts[1].split('/')[1]) : 0,
+            date: parts[2] ? parts[2] : new Date().toLocaleDateString('en-US', {
+                month: '2-digit', day: '2-digit', year: 'numeric'
+            })
+        }
+
+        if ((!count.date) || (count.date && count.date < (new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })))) {
+            count.current = 0
+        }
+    }
 
     let treeHTMLRender;
 
-    switch (dynalistView) {
+    switch (parentNode.note.split(' ')[0]) {
         default:
         case 'read':
             treeHTMLRender = treeHTMLGetChildren(tree, 'root', dynalistFileID);
@@ -202,7 +222,14 @@ function getDynalistHTML(tree, taskID, dynalistFileID, parentNode) {
                 treeHTMLGetProject(tree, dynalistFileID, parentNode.id)
             );
             break;
+        case 'count':
+            treeHTML.append(
+                treeHTMLGetCount(dynalistNodeParent, count)
+            );
+            break;
     }
+
+    treeHTML.attr('dynalistView', dynalistView).attr('id', parentNode.id).attr('dynalistFileID', dynalistFileID).attr('viewType', parentNode.note.split(' ')[0])
 
     return treeHTML;
 }
@@ -236,12 +263,37 @@ function treeHTMLGetChildren(children, parentID, dynalistFileID) {
     return treeHTMLInner;
 }
 
+function treeHTMLGetCount(dynalistNodeParent, count) {
+    const dynalistNodeParentHTML = $(`<ul>${dynalistNodeParent.content}</ul>`);
+    dynalistNodeParentHTML.addClass('nobullets');
+
+    if (count.current >= count.total) {
+        $(this).parent().addClass('completed').siblings('.currentCount').addClass('completed')
+    }
+
+    const countsContainer = $('<span class="counts"></span>'),
+        currentCountClass = count.current >= count.total ? ' completed' : '',
+        countsElements = $(`<span class="currentCount${currentCountClass}">${count.current}</span>/<span class="goalCount">${count.total}</span><br />`),
+        countsAmounts = [1, 5, 10];
+
+    let countsButtons = $(`<span class="countButtons${currentCountClass}"></span>`);
+    $.each(countsAmounts, (i, number) => {
+        countsButtons.append(`<button class="count-add-${number}">+${number}</button>`);
+    });
+
+    countsContainer.append(countsElements, countsButtons);
+
+    dynalistNodeParentHTML.append(countsContainer);
+
+    return dynalistNodeParentHTML;
+}
+
 function treeHTMLGetChecklist(tree, view, dynalistFileID, parentID) {
     const treeHTMLChildren = treeHTMLGetChildren(
-            tree,
-            parentID,
-            dynalistFileID
-        ),
+        tree,
+        parentID,
+        dynalistFileID
+    ),
         treeHTMLChildrenCount = treeHTMLChildren.children().length;
 
     treeHTMLChildren.addClass('nobullets');
@@ -346,15 +398,48 @@ function dynalistSetEvents(link, taskID) {
             spinOut();
         });
     });
+
+    $('.count-add-1, .count-add-5, .count-add-10').on('click auxclick', function () {
+        const added = Number($(this).attr('class').split('-').pop()),
+            currentCountElement = $(this).parent().siblings('.currentCount'),
+            oldCount = Number(currentCountElement.text()),
+            currentCount = oldCount + added,
+            goalCount = $(this).parent().siblings('.goalCount').text(),
+            today = new Date(),
+            formattedDate = (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getFullYear(),
+            newCountString = `count ${goalCount}/${currentCount} ${formattedDate}`,
+            dynalistFileID = $(this).closest('.taskComment').attr('dynalistFileID'),
+            nodeID = $(this).closest('.taskComment').attr('id');
+
+        const writeCommands = {
+            file_id: dynalistFileID,
+            changes: [
+                {
+                    action: 'edit',
+                    node_id: nodeID,
+                    note: newCountString
+                }
+            ]
+        };
+
+        postDynalistAPI('edit', writeCommands, function (output) {
+            $(currentCountElement).text(currentCount)
+
+            if (currentCount >= goalCount) {
+                $(this).parent().addClass('completed').siblings('.currentCount').addClass('completed')
+            }
+        });
+    });
 }
 
 function dynalistSetAuthEvents() {
     $('#dynalistAuthSubmit').on('submit', function (event) {
         event.preventDefault();
 
-        const authURL = `?state=dynalist&code=${$('input[name=dynalistSecret]')
+        const authURL = `? state = dynalist & code=${$('input[name=dynalistSecret]')
             .val()
-            .replace(/[^a-z0-9áéíóúñü .,_-]/gim)}`;
+            .replace(/[^a-z0-9áéíóúñü .,_-]/gim)
+            }`;
 
         window.location.replace(authURL);
     });

@@ -227,26 +227,26 @@ ul:not(.nobullets) > li {
     margin-left: 1em;
 }
 
-#dynalistmenu {
+.dynalistmenu {
     text-align: center !important;
 }
 
-#dynalistmenu > button {
+.dynalistmenu > button {
     margin: 0;
     border-radius: 0 !important;
 }
 
-#dynalistmenu > button:hover {
+.dynalistmenu > button:hover {
     background-color: #a73124;
     border-color: #a73124;
 }
 
-#dynalistmenu > button:first-of-type {
+.dynalistmenu > button:first-of-type {
     border-top-left-radius: 0.25em !important;
     border-bottom-left-radius: 0.25em !important;
 }
 
-#dynalistmenu > button:last-of-type {
+.dynalistmenu > button:last-of-type {
     border-top-right-radius: 0.25em !important;
     border-bottom-right-radius: 0.25em !important;
 }
@@ -258,6 +258,26 @@ ul:not(.nobullets) > li {
 .dynalistLink {
     margin-left: 0.25em;
     cursor: pointer;
+}
+
+.taskComment .nobullets {
+    display: flex;
+    justify-content: space-between;
+}
+.counts {
+    text-align: right;
+}
+.countButtons button {
+    margin: 0 0 0 15px;
+}
+.currentCount.completed {
+    color: lime;
+}
+.countButtons.completed {
+    opacity: 0.5;
+}
+[viewtype='count'] .nobullets {
+    margin-left: -1em !important;
 }
 
 .taskComment * table {
@@ -583,7 +603,7 @@ ul:not(.nobullets) > li {
         display: inline !important;
     }
 
-    #dynalistmenu {
+    .dynalistmenu {
         font-size: 0.8em;
     }
     .dynalistMenuButton {
