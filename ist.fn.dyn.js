@@ -88,9 +88,12 @@ function getDynalistContent(commentContent, taskID) {
                     dynalistNodeParent
                 );
 
-            if (!$(dynalistHTML).attr('dynalistView').startsWith('count')) {
+            const dynalistView = $(dynalistHTML).attr('dynalistView');
+            if (!dynalistView.startsWith('count')) {
+                $(dynalistMenu).find(`button[dynalistview='${dynalistView}']`).addClass('important');
                 dynalistHTML.prepend(dynalistMenu)
             }
+
             $('.taskComments').append(dynalistHTML);
 
             if (
@@ -165,20 +168,22 @@ function treeGetChildren(ids, nodesOpen) {
 }
 
 function getDynalistHTML(tree, taskID, dynalistFileID, parentNode, dynalistNodeParent) {
-    const treeHTML = $('<div></div>').addClass('taskComment');
+    const treeHTML = $('<div class="taskComment"></div>');
     let dynalistView = localStorage.getItem(`dynalistview.${taskID}`);
 
     if (['count'].includes(parentNode.note.split(' ')[0])) {
         dynalistView = parentNode.note
-    } else if (
-        !dynalistView &&
-        parentNode.note &&
-        ['checklist', 'rotating', 'project'].includes(parentNode.note.split(' ')[0])
-    ) {
-        dynalistView = parentNode.note;
-    } else {
-        dynalistView = 'read'
+    } else if (!dynalistView) {
+        if (
+            parentNode.note &&
+            ['checklist', 'rotating', 'project'].includes(parentNode.note.split(' ')[0])
+        ) {
+            dynalistView = parentNode.note;
+        } else {
+            dynalistView = 'read'
+        }
     }
+    $(`.taskComment#${parentNode.id} .dynalistmenu button[dynalistview='${dynalistView || 'read'}']`).addClass('important');
 
     let count;
     if (dynalistView.indexOf('count') === 0) {

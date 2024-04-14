@@ -188,7 +188,7 @@ button > small {
 
 .nobullets > li {
     text-indent: 0;
-    margin-left: 2.25em;
+    margin-left: 1.5em;
 }
 
 li.nobullets > ul {
@@ -210,8 +210,8 @@ ul:not(.nobullets) > li {
 }
 
 .taskComment > ul {
-    margin-top: 0.25em;
-    margin-bottom: 0.25em;
+    margin-top: 0em;
+    margin-bottom: 0em;
 }
 
 .taskComment * img {
@@ -229,6 +229,7 @@ ul:not(.nobullets) > li {
 
 .dynalistmenu {
     text-align: center !important;
+    margin-bottom: 0.5em;
 }
 
 .dynalistmenu > button {
@@ -280,7 +281,11 @@ ul:not(.nobullets) > li {
     opacity: 0.5;
 }
 [viewtype='count'] .nobullets {
-    margin-left: -1em !important;
+    margin-left: -1.25em !important;
+    text-align: left;
+}
+[viewtype='checklist'] .nobullets {
+    margin-left: 0px !important;
     text-align: left;
 }
 
@@ -594,6 +599,9 @@ ul:not(.nobullets) > li {
     }
 
     .taskComment > .nobullets {
+        /* margin-left: -1.75em !important; */
+    }
+    [viewtype='count'] .nobullets {
         margin-left: -1.25em !important;
     }
 
