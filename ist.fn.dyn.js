@@ -168,10 +168,12 @@ function getDynalistHTML(tree, taskID, dynalistFileID, parentNode, dynalistNodeP
     const treeHTML = $('<div></div>').addClass('taskComment');
     let dynalistView = localStorage.getItem(`dynalistview.${taskID}`);
 
-    if (
+    if (['count'].includes(parentNode.note.split(' ')[0])) {
+        dynalistView = parentNode.note
+    } else if (
         !dynalistView &&
         parentNode.note &&
-        ['checklist', 'rotating', 'project', 'count'].includes(parentNode.note.split(' ')[0])
+        ['checklist', 'rotating', 'project'].includes(parentNode.note.split(' ')[0])
     ) {
         dynalistView = parentNode.note;
     } else {
