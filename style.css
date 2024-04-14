@@ -267,8 +267,11 @@ ul:not(.nobullets) > li {
 .counts {
     text-align: right;
 }
+.countButtons {
+    display: flex;
+}
 .countButtons button {
-    margin: 0 0 0 15px;
+    margin: 0 0 0 12px;
 }
 .currentCount.completed {
     color: lime;
@@ -278,6 +281,7 @@ ul:not(.nobullets) > li {
 }
 [viewtype='count'] .nobullets {
     margin-left: -1em !important;
+    text-align: left;
 }
 
 .taskComment * table {
