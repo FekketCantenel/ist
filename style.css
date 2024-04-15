@@ -268,16 +268,21 @@ ul:not(.nobullets) > li {
 .counts {
     text-align: right;
 }
+.counts small {
+    font-size: 0.5em;
+    margin-right: 1em;
+    vertical-align: middle;
+}
 .countButtons {
     display: flex;
 }
 .countButtons button {
     margin: 0 0 0 12px;
 }
-.currentCount.completed {
+.counts.completed .currentCount {
     color: lime;
 }
-.countButtons.completed {
+.counts.completed .countButtons {
     opacity: 0.5;
 }
 [viewtype='count'] .nobullets {

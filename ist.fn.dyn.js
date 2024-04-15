@@ -268,16 +268,13 @@ function treeHTMLGetCount(dynalistNodeParent, count) {
     const dynalistNodeParentHTML = $(`<ul>${dynalistNodeParent.content}</ul>`);
     dynalistNodeParentHTML.addClass('nobullets');
 
-    if (count.current >= count.total) {
-        $(this).parent().addClass('completed').siblings('.currentCount').addClass('completed')
-    }
-
-    const countsContainer = $('<span class="counts"></span>'),
-        currentCountClass = count.current >= count.total ? ' completed' : '',
-        countsElements = $(`<span class="currentCount${currentCountClass}">${count.current}</span>/<span class="goalCount">${count.total}</span><br />`),
+    const currentCountClass = count.current >= count.total ? ' completed' : '',
+        countsContainer = $(`<span class="counts${currentCountClass}"></span>`),
+        currentCountPercent = Math.round((count.current / count.total) * 100) + '%',
+        countsElements = $(`<small>${currentCountPercent}</small><span class="currentCount">${count.current}</span>/<span class="goalCount">${count.total}</span><br />`),
         countsAmounts = [1, 5, 10];
 
-    let countsButtons = $(`<span class="countButtons${currentCountClass}"></span>`);
+    let countsButtons = $(`<span class="countButtons"></span>`);
     $.each(countsAmounts, (i, number) => {
         countsButtons.append(`<button class="count-add-${number}">+${number}</button>`);
     });
@@ -401,16 +398,19 @@ function dynalistSetEvents(link, taskID) {
     });
 
     $('.count-add-1, .count-add-5, .count-add-10').on('click auxclick', function () {
-        const added = Number($(this).attr('class').split('-').pop()),
-            currentCountElement = $(this).parent().siblings('.currentCount'),
+        const buttonClicked = this,
+            added = Number($(buttonClicked).attr('class').split('-').pop()),
+            currentCountElement = $(buttonClicked).parent().siblings('.currentCount'),
             oldCount = Number(currentCountElement.text()),
             currentCount = oldCount + added,
-            goalCount = $(this).parent().siblings('.goalCount').text(),
-            today = new Date(),
-            formattedDate = (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getFullYear(),
+            goalCount = $(buttonClicked).parent().siblings('.goalCount').text(),
+            countPercent = Math.round((currentCount / goalCount) * 100) + '%',
+            today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const formattedDate = (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getFullYear(),
             newCountString = `count ${goalCount}/${currentCount} ${formattedDate}`,
-            dynalistFileID = $(this).closest('.taskComment').attr('dynalistFileID'),
-            nodeID = $(this).closest('.taskComment').attr('id');
+            dynalistFileID = $(buttonClicked).closest('.taskComment').attr('dynalistFileID');
+        const nodeID = $(buttonClicked).closest('.taskComment').attr('id');
 
         const writeCommands = {
             file_id: dynalistFileID,
@@ -425,9 +425,10 @@ function dynalistSetEvents(link, taskID) {
 
         postDynalistAPI('edit', writeCommands, function (output) {
             $(currentCountElement).text(currentCount)
+            $(currentCountElement).siblings('small').text(countPercent)
 
             if (currentCount >= goalCount) {
-                $(this).parent().addClass('completed').siblings('.currentCount').addClass('completed')
+                $(buttonClicked).closest('.counts').addClass('completed');
             }
         });
     });
@@ -442,7 +443,6 @@ function dynalistSetAuthEvents() {
             .replace(/[^a-z0-9áéíóúñü .,_-]/gim)
             }`;
 
-        console.log(authURL)
         window.location.replace(authURL);
     });
 }
