@@ -4,21 +4,17 @@ export { getDynalistContent, dynalistSetAuthEvents };
 
 function getDynalistContent(commentContent, taskID) {
     if (Cookies.get('dynalistToken') === undefined) {
-        const dynalistAuthHTML = $('<small></small>').append(
-            $('<em></em>')
-                .html(
-                    "To authorize Ist to display your Dynalist documents, enter your <a href='https://dynalist.io/developer' target='_blank'>secret token</a>:"
+        const dynalistAuthHTML = $("<small>")
+            .append(
+                $("<em>").html(
+                    "To authorize Ist to display your Dynalist documents, enter your " +
+                    "<a href='https://dynalist.io/developer' target='_blank'>secret token</a>:" +
+                    "<form id='dynalistAuthSubmit'>" +
+                    "<input type='text' name='dynalistSecret' />" +
+                    "<button name='submit' type='submit'>↵</button>" +
+                    "</form>"
                 )
-                .append(
-                    $("<form id='dynalistAuthSubmit'></form>")
-                        .append(
-                            $("<input type='text' name='dynalistSecret' />")
-                        )
-                        .append(
-                            $("<button name='submit' type='submit'>↵</button>")
-                        )
-                )
-        );
+            );
 
         return dynalistAuthHTML;
     } else {
@@ -191,12 +187,10 @@ function getDynalistHTML(tree, taskID, dynalistFileID, parentNode, dynalistNodeP
         count = {
             total: parseInt(parts[1].split('/')[0]),
             current: parts[1].split('/')[1] ? parseInt(parts[1].split('/')[1]) : 0,
-            date: parts[2] ? parts[2] : new Date().toLocaleDateString('en-US', {
-                month: '2-digit', day: '2-digit', year: 'numeric'
-            })
+            date: parts[2] ? new Date(parts[2]) : null
         }
 
-        if ((!count.date) || (count.date && count.date < (new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })))) {
+        if ((!count.date) || (count.date && count.date < new Date().setHours(0, 0, 0, 0))) {
             count.current = 0
         }
     }
@@ -443,11 +437,12 @@ function dynalistSetAuthEvents() {
     $('#dynalistAuthSubmit').on('submit', function (event) {
         event.preventDefault();
 
-        const authURL = `? state = dynalist & code=${$('input[name=dynalistSecret]')
+        const authURL = `?state=dynalist&code=${$('input[name=dynalistSecret]')
             .val()
             .replace(/[^a-z0-9áéíóúñü .,_-]/gim)
             }`;
 
+        console.log(authURL)
         window.location.replace(authURL);
     });
 }
