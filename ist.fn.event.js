@@ -69,13 +69,18 @@ function setEvents(dueTasks, allTasks) {
                     : ' tingle-btn--row';
 
         $.each(deferArray, (i, deferAmount) => {
+            const newTime = moment().add(deferAmount[1], 'ms');
+            let buttonContent = `${deferAmount[0]}`;
+
+            if (task.due.all_day === 0 && deferAmount[1] >= 1800000 && i > 0) {
+                buttonContent += `<small>${newTime.format('hh:mm A')}</small>`;
+            }
+
             modal.addFooterBtn(
-                deferAmount[0],
+                buttonContent,
                 `tingle-btn tingle-btn--primary${deferButtonClass}`,
                 () => {
-                    const newTime = moment().add(deferAmount[1], 'ms');
                     let taskNewDate = '';
-
                     taskNewDate = newTime.format(
                         task.due.all_day === 0
                             ? 'YYYY-MM-DDTHH:mm:ss'
@@ -117,13 +122,13 @@ function spinOut() {
 
 function getDeferArrayDays(allTasks, task) {
     const dateTasks = _.groupBy(
-            _.filter(allTasks, (thisTask) => {
-                return thisTask.project_id === task.project_id;
-            }),
-            (thisTask) => {
-                return thisTask.due.date;
-            }
-        ),
+        _.filter(allTasks, (thisTask) => {
+            return thisTask.project_id === task.project_id;
+        }),
+        (thisTask) => {
+            return thisTask.due.date;
+        }
+    ),
         deferArrayDays = [];
 
     _.each(
@@ -160,11 +165,9 @@ function tasksPriorityCountHTML(tasksPriorityCount, priority) {
             .map((e, i) => i + 1)
             .reverse(),
         (key) => {
-            tasksPriorityCountString += `<span ${
-                key !== priority ? " class='dim'" : ''
-            }><span style='color: ${PRIORITIES[key]}'>&#x${2775 + key}</span> ${
-                tasksPriorityCount[key] || 0
-            }</span> &nbsp;&nbsp;`;
+            tasksPriorityCountString += `<span ${key !== priority ? " class='dim'" : ''
+                }><span style='color: ${PRIORITIES[key]}'>&#x${2775 + key}</span> ${tasksPriorityCount[key] || 0
+                }</span> &nbsp;&nbsp;`;
         }
     );
 
