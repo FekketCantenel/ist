@@ -73,7 +73,7 @@ function setEvents(dueTasks, allTasks) {
             let buttonContent = `${deferAmount[0]}`;
 
             if (task.due.all_day === 0 && deferAmount[1] >= 1800000 && i > 0) {
-                buttonContent += `<small>${newTime.format('hh:mm A')}</small>`;
+                buttonContent += `<small>${newTime.format('h:mm A')}</small>`;
             }
 
             modal.addFooterBtn(

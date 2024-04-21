@@ -525,6 +525,7 @@ ul:not(.nobullets) > li {
 
 .tingle-btn {
     padding: 0.85rem 0.75rem !important;
+    position: relative;
 }
 
 .tingle-btn--column {
@@ -548,11 +549,12 @@ ul:not(.nobullets) > li {
     padding: 0.75rem 0.5rem !important;
 }
 .tingle-btn small {
-    display: block;
-    margin: -1em -0.5em -1em 0;
     opacity: 0.5;
     font-size: 0.7em;
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 0.25em;
 }
 
 /* ===============
