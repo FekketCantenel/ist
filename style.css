@@ -175,6 +175,8 @@ button > small {
 
 #cog-button {
     cursor: pointer;
+    color: grey;
+    font-size: 1.5em;
 }
 
 #settings {
@@ -190,6 +192,9 @@ button > small {
 #settings .toggle-button {
     display: block;
     margin-bottom: 5px;
+}
+#settings .toggle-button button {
+    margin: 0.25em;
 }
 
 button[aria-pressed='false'] {
