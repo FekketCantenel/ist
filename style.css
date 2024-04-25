@@ -560,10 +560,12 @@ ul:not(.nobullets) > li {
 }
 
 #deferModal > button {
-    margin-top: 1.5em;
+    font-family: liberation;
+    margin-top: 0.25em;
     font-size: 0.75em;
     background-color: #3498db;
     border: none;
+    line-height: 1.25em;
 }
 
 .deferModal-btn {
@@ -616,13 +618,13 @@ ul:not(.nobullets) > li {
     }
 
     #deferModal > button {
-        margin-top: 0.25em !important;
+        margin: 0.5em;
     }
     .deferModal-btn--row {
         flex-basis: 100%;
     }
     .deferModal-btn--column:nth-child(n + 10):nth-child(-n + 17) {
-        flex-basis: 15%;
+        flex-basis: 20%;
     }
 
     .mainTask > p {
