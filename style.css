@@ -502,53 +502,52 @@ ul:not(.nobullets) > li {
     DEFER DIALOG
    =============== */
 
-.tingle-modal-box__content {
-    display: none;
-}
-
-.tingle-modal-box__footer {
+#deferModal {
     background-color: #353535 !important;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    border: none;
+    width: 90%;
 }
 
-.tingle-modal-box__footer::after {
+#deferModal::after {
     display: none;
 }
 
-.tingle-modal-box__footer > button {
+#deferModal > button {
     margin-top: 1.5em;
     font-size: 0.75em;
     background-color: #3498db;
+    border: none;
 }
 
-.tingle-btn {
+.deferModal-btn {
     padding: 0.85rem 0.75rem !important;
     position: relative;
 }
 
-.tingle-btn--column {
+.deferModal-btn--column {
     flex-basis: 40%;
 }
 
-.tingle-btn--row {
+.deferModal-btn--row {
     flex-basis: 95%;
 }
 
-.tingle-btn--column:first-child {
+.deferModal-btn--column:first-child {
     flex-basis: 100%;
 }
 
-.tingle-btn--column:not(:first-child) {
+.deferModal-btn--column:not(:first-child) {
     flex-grow: 2;
 }
 
-.tingle-btn--column:nth-child(n + 10):nth-child(-n + 17) {
+.deferModal-btn--column:nth-child(n + 10):nth-child(-n + 17) {
     flex-basis: 20%;
     padding: 0.75rem 0rem !important;
 }
-.tingle-btn small {
+.deferModal-btn small {
     opacity: 0.5;
     font-size: 0.7em;
     position: absolute;
@@ -561,26 +560,25 @@ ul:not(.nobullets) > li {
         MOBILE
    =============== */
 
-@media only screen and (max-width: 400px) {
-    .tingle-btn--column:nth-child(n + 10):nth-child(-n + 17) {
+/* @media only screen and (max-width: 400px) {
+    .deferModal-btn--column:nth-child(n + 10):nth-child(-n + 17) {
         flex-basis: 15%;
     }
-}
+} */
 
 @media only screen and (max-width: 650px) {
     body {
         font-size: 1.25em; /* changing this zooms page */
     }
 
-    .tingle-modal-box__footer > button {
+    #deferModal > button {
         margin-top: 0.25em !important;
     }
-    .tingle-btn--row {
+    .deferModal-btn--row {
         flex-basis: 100%;
     }
-    .tingle-modal-box {
-        width: 100% !important;
-        text-align: center;
+    .deferModal-btn--column:nth-child(n + 10):nth-child(-n + 17) {
+        flex-basis: 15%;
     }
 
     .mainTask > p {

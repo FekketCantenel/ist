@@ -1,4 +1,4 @@
-/* global $, _, tingle, moment, location, sessionStorage */
+/* global $, _, moment, location, sessionStorage */
 import PRIORITIES from './priorities.js';
 import { asyncCall, uuidv4, postNewTaskTime } from './ist.fn.api.js';
 import { getTaskRepeatMoment } from './ist.fn.task.js';
@@ -32,10 +32,7 @@ function setEvents(dueTasks, allTasks) {
             task = _.findWhere(dueTasks, {
                 id: taskID
             }),
-            modal = new tingle.modal({
-                footer: true,
-                closeMethods: ['overlay', 'escape']
-            }),
+            dialog = $('<dialog></dialog>').attr('id', 'deferModal'),
             taskNewMoment = getTaskRepeatMoment(task).add(1, 'days'),
             nowMoment = moment(),
             taskNewTime = taskNewMoment.format('LT').replace(':00', ''),
@@ -65,8 +62,8 @@ function setEvents(dueTasks, allTasks) {
                     : getDeferArrayDays(allTasks, task),
             deferButtonClass =
                 task.due.all_day === 0
-                    ? ' tingle-btn--column'
-                    : ' tingle-btn--row';
+                    ? ' deferModal-btn--column'
+                    : ' deferModal-btn--row';
 
         $.each(deferArray, (i, deferAmount) => {
             const newTime = moment().add(deferAmount[1], 'ms');
@@ -76,32 +73,41 @@ function setEvents(dueTasks, allTasks) {
                 buttonContent += `<small>${newTime.format('h:mm A')}</small>`;
             }
 
-            modal.addFooterBtn(
-                buttonContent,
-                `tingle-btn tingle-btn--primary${deferButtonClass}`,
-                () => {
-                    let taskNewDate = '';
-                    taskNewDate = newTime.format(
-                        task.due.all_day === 0
-                            ? 'YYYY-MM-DDTHH:mm:ss'
-                            : 'YYYY-MM-DD'
-                    );
+            const btn = document.createElement('button');
+            btn.className = `deferModal-btn deferModal-btn--primary${deferButtonClass}`;
+            btn.innerHTML = buttonContent;
+            btn.addEventListener('click', () => {
+                let taskNewDate = '';
+                taskNewDate = newTime.format(
+                    task.due.all_day === 0
+                        ? 'YYYY-MM-DDTHH:mm:ss'
+                        : 'YYYY-MM-DD'
+                );
 
-                    const taskToDefer = [
-                        {
-                            id: task.id,
-                            string: task.due.string,
-                            date: taskNewDate
-                        }
-                    ];
+                const taskToDefer = [
+                    {
+                        id: task.id,
+                        string: task.due.string,
+                        date: taskNewDate
+                    }
+                ];
 
-                    postNewTaskTime(taskToDefer);
+                postNewTaskTime(taskToDefer);
 
-                    modal.close();
-                }
-            );
+                dialog[0].remove();
+            });
+
+            dialog[0].appendChild(btn);
         });
-        modal.open();
+
+        document.body.appendChild(dialog[0]);
+        dialog[0].showModal();
+
+        dialog[0].addEventListener('click', (e) => {
+            if (e.target === dialog[0]) {
+                dialog[0].remove();
+            }
+        });
     });
 
     $('.suggest').on('click auxclick', function () {
