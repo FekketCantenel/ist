@@ -76,8 +76,8 @@ $(function () {
             if (highestPriorityTask) {
                 $('.status').text('getting task comments...');
                 const todoistRawComments = await getAPI(
-                        `comments?task_id=${highestPriorityTask.id}`
-                    ),
+                    `comments?task_id=${highestPriorityTask.id}`
+                ),
                     mainTask = getTaskHTML(
                         highestPriorityTask,
                         projects,

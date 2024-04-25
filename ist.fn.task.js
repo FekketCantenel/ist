@@ -12,8 +12,8 @@ export {
 function getHighestPriorityTask(dueTasks, projects) {
     let task = {};
     const projectRoutine = projects.reduce((prev, curr) =>
-            (prev.order || 100) < (curr.order || 100) ? prev : curr
-        ),
+        (prev.order || 100) < (curr.order || 100) ? prev : curr
+    ),
         projectChosenID = sessionStorage.getItem('project.id') || 0;
 
     $.each([projectRoutine.id, projectChosenID], (i, projectID) => {
@@ -66,10 +66,9 @@ function getTaskHTML(task, projects, comments, dueTasks) {
         dueTasksText = $('<p></p>')
             .attr('id', 'dueTasksInProject')
             .html(
-                `${
-                    dueTasksInProject > 1
-                        ? `${dueTasksInProject} tasks`
-                        : 'last task'
+                `${dueTasksInProject > 1
+                    ? `${dueTasksInProject} tasks`
+                    : 'last task'
                 } remaining in context`
             ),
         taskName = converter.makeHtml(task.content),
