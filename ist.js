@@ -18,11 +18,17 @@ $(function () {
     async function asyncCall() {
         const authCode = getURLParameter('code'),
             authState = getURLParameter('state');
-        let autoMode = false;
+        let autoMode = false,
+            importantMode = false;
 
-        if (location.search === '?auto') {
+        const searchParams = new URLSearchParams(location.search.slice(1));
+        if (searchParams.has('auto')) {
             autoMode = true;
             $('body').addClass('automode');
+        }
+        if (searchParams.has('important')) {
+            importantMode = true;
+            $('body').addClass('importantmode');
         }
 
         if (Cookies.get('todoistToken') === undefined) {
@@ -70,7 +76,8 @@ $(function () {
             const projects = await getAPI('projects'),
                 highestPriorityTask = getHighestPriorityTask(
                     dueTasks,
-                    projects
+                    projects,
+                    importantMode
                 );
 
             if (highestPriorityTask) {
@@ -108,7 +115,8 @@ $(function () {
                     dueTasks,
                     projects,
                     activity,
-                    autoMode
+                    autoMode,
+                    importantMode
                 );
 
                 if (suggestTasks[0].childElementCount > 0) {

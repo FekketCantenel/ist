@@ -80,7 +80,7 @@ function getDueTasks(allTasks) {
     return dueTasks;
 }
 
-function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
+function getSuggestTasksHTML(dueTasks, projects, activity, autoMode, importantMode) {
     const suggestTasks = $('<div></div>').addClass('suggestTasks'),
         countedTasks = _.countBy(dueTasks, 'project_id'),
         activityDisplay = $('<div id="activityDisplay"></div>'),
@@ -125,7 +125,9 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
 
             const suggestTaskDots = $('<div></div>').addClass('suggestDots');
 
-            for (let priority = 1; priority <= 4; priority++) {
+            const priorityOrder = importantMode ? [1, 3, 4, 2] : [1, 2, 3, 4];
+
+            for (const priority of priorityOrder) {
                 const numTasks = project.countByPriority[priority] || 0;
 
                 const spanElement = $(`<span>${'&#x25cf;'.repeat(numTasks)}</span>`).css(
@@ -179,7 +181,7 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
 
     suggestTasks.append(activityDisplay);
 
-    const chosenProjectID = getHighestPriorityProjectID(dueTasks, projects);
+    const chosenProjectID = getHighestPriorityProjectID(dueTasks, projects, importantMode);
 
     if (autoMode === true && chosenProjectID) {
         sessionStorage.setItem('project.id', chosenProjectID);
@@ -194,10 +196,11 @@ function getSuggestTasksHTML(dueTasks, projects, activity, autoMode) {
     return suggestTasks;
 }
 
-function getHighestPriorityProjectID(dueTasks, projects) {
+function getHighestPriorityProjectID(dueTasks, projects, importantMode) {
     let priorityProjectID = 0;
+    const priorityOrder = importantMode ? [2, 4, 3, 1, 0] : [4, 3, 2, 1, 0];
 
-    $.each([4, 3, 2, 1, 0], (i, currentPriority) => {
+    $.each(priorityOrder, (i, currentPriority) => {
         const priorityTasks = dueTasks.filter(
             ({ priority }) => currentPriority === priority
         );

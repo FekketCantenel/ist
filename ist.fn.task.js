@@ -9,7 +9,7 @@ export {
     getTaskRepeatMoment
 };
 
-function getHighestPriorityTask(dueTasks, projects) {
+function getHighestPriorityTask(dueTasks, projects, importantMode) {
     let task = {};
     const projectRoutine = projects.reduce((prev, curr) =>
         (prev.order || 100) < (curr.order || 100) ? prev : curr
@@ -17,7 +17,7 @@ function getHighestPriorityTask(dueTasks, projects) {
         projectChosenID = sessionStorage.getItem('project.id') || 0;
 
     $.each([projectRoutine.id, projectChosenID], (i, projectID) => {
-        task = getHighestPriorityTaskByProject(dueTasks, projectID);
+        task = getHighestPriorityTaskByProject(dueTasks, projectID, importantMode);
 
         if (_.size(task) > 0) {
             return false;
@@ -27,10 +27,11 @@ function getHighestPriorityTask(dueTasks, projects) {
     return task;
 }
 
-function getHighestPriorityTaskByProject(dueTasks, projectID) {
+function getHighestPriorityTaskByProject(dueTasks, projectID, importantMode) {
     let task = {};
+    let priorityOrder = importantMode ? [2, 4, 3, 1] : [4, 3, 2, 1];
 
-    $.each([4, 3, 2, 1], (i, priority) => {
+    $.each(priorityOrder, (i, priority) => {
         task = _.findWhere(dueTasks, {
             priority,
             project_id: projectID
