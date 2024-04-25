@@ -7,7 +7,7 @@ import {
     getSuggestTasksHTML
 } from './ist.fn.list.js';
 import { getHighestPriorityTask, getTaskHTML } from './ist.fn.task.js';
-import { setEvents } from './ist.fn.event.js';
+import { setEvents, setFirstEvents } from './ist.fn.event.js';
 import { dynalistSetAuthEvents } from './ist.fn.dyn.js';
 
 showdown.setOption('openLinksInNewWindow', 'true');
@@ -15,6 +15,8 @@ showdown.setOption('strikethrough', 'true');
 showdown.setOption('tables', 'true');
 
 $(function () {
+    setFirstEvents();
+
     async function asyncCall() {
         const authCode = getURLParameter('code'),
             authState = getURLParameter('state');
@@ -22,14 +24,14 @@ $(function () {
             importantMode = false;
 
         const searchParams = new URLSearchParams(location.search.slice(1));
-        if (searchParams.has('auto')) {
-            autoMode = true;
-            $('body').addClass('automode');
-        }
-        if (searchParams.has('important')) {
-            importantMode = true;
-            $('body').addClass('importantmode');
-        }
+        ['auto', 'important'].forEach(param => {
+            if (searchParams.has(param)) {
+                $('body').addClass(`${param}mode`);
+                $(`#toggle-${param}`).attr('aria-pressed', 'true');
+                autoMode = param === 'auto' ? true : autoMode;
+                importantMode = param === 'important' ? true : importantMode;
+            }
+        });
 
         if (Cookies.get('todoistToken') === undefined) {
             if (authCode && authState === 'todoist') {

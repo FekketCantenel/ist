@@ -2,7 +2,33 @@
 import PRIORITIES from './priorities.js';
 import { asyncCall, uuidv4, postNewTaskTime } from './ist.fn.api.js';
 import { getTaskRepeatMoment } from './ist.fn.task.js';
-export { setEvents, spinOut };
+export { setEvents, setFirstEvents, spinOut };
+
+function setFirstEvents() {
+    $('#cog-button').on('click auxclick', function () {
+        $('#settings')[0].showModal();
+        $('#settings').on('click', function (event) {
+            if (event.target === this) {
+                $(this)[0].close();
+            }
+        });
+
+        $('#toggle-auto, #toggle-important').on('click', function () {
+            const param = $(this).attr('id').replace('toggle-', '');
+            const url = new URL(window.location.href);
+            const searchParams = new URLSearchParams(url.search);
+
+            if (searchParams.has(param)) {
+                searchParams.delete(param);
+            } else {
+                searchParams.set(param, '');
+            }
+
+            url.search = searchParams.toString().replace(/=/g, '');
+            window.location.href = url.toString();
+        });
+    });
+}
 
 function setEvents(dueTasks, allTasks) {
     $('.doneButton').on('click auxclick', function (event) {

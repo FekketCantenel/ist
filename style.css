@@ -162,6 +162,45 @@ button > small {
     background: #e44332;
 }
 
+/* ===============
+        SETTINGS
+   =============== */
+
+#settingscontainer {
+    position: fixed;
+    top: 0.25em;
+    right: 0.75em;
+    padding: 0.5em;
+}
+
+#cog-button {
+    cursor: pointer;
+}
+
+#settings {
+    background-color: #1d1f20;
+    padding: 10px;
+    border: none;
+    margin-top: 1.5em;
+    margin-right: 0.75em;
+    color: white;
+    font-size: 1.5em;
+}
+
+#settings .toggle-button {
+    display: block;
+    margin-bottom: 5px;
+}
+
+button[aria-pressed='false'] {
+    background-color: grey;
+    border: none;
+}
+
+button[aria-pressed='true'] {
+    background-color: #e44332;
+}
+
 /* body.automode * .deferButton {
     display: none;
 } */
