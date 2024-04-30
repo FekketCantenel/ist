@@ -36,15 +36,17 @@ body {
 #spinner,
 #spinnerDynalist {
     width: 100%;
-    text-align: center;
-    color: white;
+
     font-family: liberation;
     font-size: 2em;
+    text-align: center;
+    color: white;
 }
 #spinner > img {
+    height: 3em;
+
     object-fit: none;
     object-position: center -0.5em;
-    height: 3em;
 }
 #spinner > p.status {
     color: #e44332 !important;
@@ -75,20 +77,22 @@ body {
 }
 
 .mainTask > p {
+    padding: 0% 10%;
+
     font-size: 1.25em;
+
     margin-block: 0;
     margin-block-start: 0;
     margin-block-end: 0;
-    padding: 0% 10%;
     text-underline-offset: 0.15em;
 }
 
 #dueTasksInProject {
     /* "X tasks remaining in context" */
     font-size: 0.4em;
-    color: grey;
     font-style: italic;
     text-align: center;
+    color: grey;
 }
 
 body.automode * #dueTasksInProject {
@@ -104,15 +108,17 @@ body.automode * #dueTasksInProject {
 }
 
 button {
-    background-color: #e44332;
-    border-radius: 3px !important;
-    border: 2px solid #e44332;
-    color: #fff;
-    padding: 0.55em;
-    font-weight: bold;
-    font-size: 0.5em;
-    cursor: pointer;
     margin: 15px;
+    padding: 0.55em;
+    border: 2px solid #e44332;
+    border-radius: 3px !important;
+    background-color: #e44332;
+
+    font-size: 0.5em;
+    font-weight: bold;
+    color: #fff;
+
+    cursor: pointer;
     line-height: 0.9em;
 }
 
@@ -138,17 +144,20 @@ button > small {
 }
 
 .roundbutton {
-    font-size: 0.75em;
-    color: white !important;
-    text-align: center;
-    line-height: 1.25em;
-    border-radius: 50%;
-    text-decoration: none;
-    padding: 0.15em 0.2em;
-    margin-left: 0.25em;
+    display: inline-block;
+
     width: 1.25em;
     height: 1.25em;
-    display: inline-block;
+    margin-left: 0.25em;
+    padding: 0.15em 0.2em;
+    border-radius: 50%;
+
+    font-size: 0.75em;
+    text-align: center;
+    text-decoration: none;
+    color: white !important;
+
+    line-height: 1.25em;
 }
 .roundbutton > svg {
     vertical-align: middle;
@@ -168,8 +177,9 @@ button > small {
 
 #settingscontainer {
     position: fixed;
-    top: 0.25em;
     right: 0.75em;
+    top: 0.25em;
+
     padding: 0.5em;
 }
 
@@ -180,13 +190,14 @@ button > small {
 }
 
 #settings {
-    background-color: #1d1f20;
+    margin-right: 0.75em;
+    margin-top: 1.5em;
     padding: 10px;
     border: none;
-    margin-top: 1.5em;
-    margin-right: 0.75em;
-    color: white;
+    background-color: #1d1f20;
+
     font-size: 1.5em;
+    color: white;
 }
 
 #settings .toggle-button {
@@ -215,14 +226,15 @@ button[aria-pressed='true'] {
    =============== */
 
 .taskComments {
-    border: 1px solid white;
     width: 50%;
     margin: auto;
     margin-top: 0.5em !important;
-    text-align: justify;
     padding: 0.5em;
     padding-bottom: 0.25em;
+    border: 1px solid white;
+
     font-size: 0.75em;
+    text-align: justify;
 }
 
 .nobullets {
@@ -313,8 +325,10 @@ ul:not(.nobullets) > li {
     text-align: right;
 }
 .counts small {
-    font-size: 0.5em;
     margin-right: 1em;
+
+    font-size: 0.5em;
+
     vertical-align: middle;
 }
 .countButtons {
@@ -339,25 +353,26 @@ ul:not(.nobullets) > li {
 }
 
 .taskComment * table {
-    border: 5px double white;
     width: 119%;
-    margin-left: -3.18em;
     margin-bottom: 0.5em;
+    margin-left: -3.18em;
+    border: 5px double white;
 }
 .taskComment * thead {
     border-bottom: 5px solid white;
 }
 .taskComment * th,
 .taskComment * td {
-    border-right: 1px solid grey;
-    border-bottom: 1px solid grey;
     padding-left: 0.25em;
+    border-bottom: 1px solid grey;
+    border-right: 1px solid grey;
 }
 
 #parentnote {
-    font-size: 0.65em;
-    border: 1px grey solid;
     margin-top: 0.5em;
+    border: 1px grey solid;
+
+    font-size: 0.65em;
 }
 #parentnote > p {
     margin: 0;
@@ -368,8 +383,9 @@ ul:not(.nobullets) > li {
 .donerotating,
 .doneproject {
     position: absolute;
-    margin-top: 0em;
+
     margin-left: -4.5em;
+    margin-top: 0em;
     padding: 0.3em 0.65em;
 }
 
@@ -388,64 +404,78 @@ ul:not(.nobullets) > li {
    =============== */
 
 .suggest {
-    width: 11em;
     position: relative;
-    letter-spacing: 0.1em;
+
+    width: 11em;
     background-color: transparent;
+
     font-family: liberation;
+
+    letter-spacing: 0.1em;
 }
 
 .suggestDots {
-    position: absolute;
     display: flex;
     justify-content: space-between;
-    width: 61%;
+
+    position: absolute;
     left: 1.5em;
     top: -2.6em;
+
+    width: 61%;
+
     font-size: 0.35em;
 }
 .suggestDots span {
-    white-space: nowrap;
     display: inline-block;
+
     width: 5%;
+
+    white-space: nowrap;
 }
 .suggestDots span:not(:first-child)::before {
     content: '';
-    border-right: 1px solid #333;
+
     margin-right: 5px;
+    border-right: 1px solid #333;
 }
 
 /* https://codepen.io/mike-schultz/pen/NgQvGO */
 .chosen {
-    --borderWidth: 0.15em;
-    background: #1d1f20 !important;
-    border: none;
     position: relative;
+
+    border: none;
     border-radius: var(--borderWidth);
+    background: #1d1f20 !important;
+
+    --borderWidth: 0.15em;
 }
 
 .chosen:after {
     content: '';
+
     position: absolute;
-    top: calc(-1 * var(--borderWidth));
     left: calc(-1 * var(--borderWidth));
-    height: calc(100% + var(--borderWidth) * 2);
-    width: calc(100% + var(--borderWidth) * 2);
-    background: linear-gradient(
-        60deg,
-        #f79533,
-        #f37055,
-        #ef4e7b,
-        #a166ab,
-        #5073b8,
-        #1098ad,
-        #07b39b,
-        #6fba82
-    );
-    border-radius: calc(2 * var(--borderWidth));
+    top: calc(-1 * var(--borderWidth));
     z-index: -1;
+
+    width: calc(100% + var(--borderWidth) * 2);
+    height: calc(100% + var(--borderWidth) * 2);
+    border-radius: calc(2 * var(--borderWidth));
+    background: linear-gradient(
+            60deg,
+            #f79533,
+            #f37055,
+            #ef4e7b,
+            #a166ab,
+            #5073b8,
+            #1098ad,
+            #07b39b,
+            #6fba82
+        )
+        0 0 / 300% 300%;
+
     animation: animatedgradient 3s ease alternate infinite;
-    background-size: 300% 300%;
 }
 
 @keyframes animatedgradient {
@@ -465,16 +495,18 @@ ul:not(.nobullets) > li {
 }
 
 #activityDisplay {
-    height: 2em;
-    font-size: 0.22em;
-    width: 25em;
     display: inline-flex;
-    justify-content: space-between;
     align-items: center;
-    outline: 1px #8c8c8c dashed;
-    color: #8c8c8c;
-    outline-offset: -2.5px;
+    justify-content: space-between;
+
+    width: 25em;
+    height: 2em;
     margin-left: 0.25em;
+    outline: 1px #8c8c8c dashed;
+    outline-offset: -2.5px;
+
+    font-size: 0.22em;
+    color: #8c8c8c;
 }
 
 #activityDisplay > div:first-child {
@@ -489,9 +521,11 @@ ul:not(.nobullets) > li {
 
 #activityDisplay > div {
     flex-basis: 1em;
+
+    z-index: 1;
+
     overflow: hidden;
     white-space: nowrap;
-    z-index: 1;
 }
 
 #activityDisplay * p {
@@ -502,11 +536,14 @@ ul:not(.nobullets) > li {
 
 .projectLink,
 .projectLinkMobile {
-    text-decoration: none;
-    font-size: 0.25em;
     position: absolute;
+
     margin-left: -0.25em;
     margin-top: 3em;
+
+    font-size: 0.25em;
+    text-decoration: none;
+
     opacity: 50%;
 }
 
@@ -517,29 +554,35 @@ ul:not(.nobullets) > li {
 
 .badge {
     position: absolute;
-    font-size: 0.7em;
-    background: #1f1f1f;
-    color: #e44332;
+    left: -1em;
+    top: -1em;
+
     width: 1.75em;
     height: 1.5em;
-    text-align: center;
     border-radius: 50%;
-    top: -1em;
-    left: -1em;
+    background: #1f1f1f;
+
+    font-size: 0.7em;
+    text-align: center;
     text-decoration: none;
+    color: #e44332;
 }
 .badge[data-badge]:after {
     content: attr(data-badge);
+
     position: absolute;
-    font-size: 1em;
-    background: #1f1f1f;
-    color: #e44332;
+
     width: 1.5em;
     height: 1.5em;
-    text-align: center;
-    line-height: 1.4em;
-    border-radius: 50%;
     margin-left: 0.25em;
+    border-radius: 50%;
+    background: #1f1f1f;
+
+    font-size: 1em;
+    text-align: center;
+    color: #e44332;
+
+    line-height: 1.4em;
 }
 
 /* ===============
@@ -547,12 +590,13 @@ ul:not(.nobullets) > li {
    =============== */
 
 #deferModal {
-    background-color: #353535 !important;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    border: none;
+
     width: 90%;
+    border: none;
+    background-color: #353535 !important;
 }
 
 #deferModal::after {
@@ -560,11 +604,13 @@ ul:not(.nobullets) > li {
 }
 
 #deferModal > button {
-    font-family: liberation;
     margin-top: 0.25em;
-    font-size: 0.75em;
-    background-color: #3498db;
     border: none;
+    background-color: #3498db;
+
+    font-family: liberation;
+    font-size: 0.75em;
+
     line-height: 1.25em;
 }
 
@@ -594,12 +640,15 @@ ul:not(.nobullets) > li {
     padding: 0.75rem 0rem !important;
 }
 .deferModal-btn small {
-    opacity: 0.5;
-    font-size: 0.7em;
     position: absolute;
-    top: 0;
     right: 0;
+    top: 0;
+
     margin-right: 0.25em;
+
+    font-size: 0.7em;
+
+    opacity: 0.5;
 }
 
 /* ===============
@@ -656,9 +705,9 @@ ul:not(.nobullets) > li {
         margin-top: 1em !important;
     }
 
-    .taskComment > .nobullets {
-        /* margin-left: -1.75em !important; */
-    }
+    /* .taskComment > .nobullets {
+        margin-left: -1.75em !important;
+    } */
     [viewtype='count'] .nobullets {
         margin-left: -1.25em !important;
     }
